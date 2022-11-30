@@ -1,0 +1,20 @@
+# AI Coach
+Python script designed to be run on the Vizy platform.  To run this outside of Vizy you would need to replace the frame capture and the frame display systems.
+
+## Running on Vizy
+Copy this repo into the /home/pi/vizy/apps directory and Vizy should pick it up as "AI Coach" under the "Apps" menu.
+
+## Installation on Vizy
+Any or all of the following libraries might be required in order to run mediapipe on version 0.2.114 of Vizy.  We should figure out which ones are actually required.
+```
+sudo apt install ffmpeg python3-opencv python3-pip
+sudo apt install libxcb-shm0 libcdio-paranoia-dev libsdl2-2.0-0 libxv1 libtheora0 libva-drm2 libva-x11-2 libvdpau1 libharfbuzz0b libbluray2 libatlas-base-dev libhdf5-103 libgtk-3-0 libdc1394-22 libopenexr23
+sudo apt-get install python-opencv
+pip3 install mediapipe-rpi4
+```
+
+The pose system in mediapipe requires a TFLife model, this repo currently uses the following:
+```
+curl https://storage.googleapis.com/mediapipe-assets/pose_landmark_heavy.tflite --output pose_landmark_heavy.tflite
+sudo mv pose_landmark_heavy.tflite /usr/local/lib/python3.7/dist-packages/mediapipe/modules/pose_landmark/
+```
