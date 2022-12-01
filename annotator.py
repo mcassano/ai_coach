@@ -12,6 +12,8 @@ class Annotator():
         recordedCount = 0
         form = 0
         count = 0
+        per = 0
+        direction = 0
         if len(lmList) != 0:
             elbow = detector.findAngle(frame, 11, 13, 15)
             shoulder = detector.findAngle(frame, 13, 11, 23)
@@ -48,6 +50,6 @@ class Annotator():
 
             recordedCount = count
         else:
-            frame = None, None, None, None
+            return None, None, None, None, False
 
-        return frame, feedback, recordedCount, per
+        return frame, feedback, recordedCount, per, True

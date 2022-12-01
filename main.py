@@ -47,8 +47,9 @@ class AiCoach:
             while self.run_thread:
                 frame = self.stream.frame()[0]
                 # This was copied from https://github.com/terminalai/PushUpCounter
-                frame, feedback, count, per = annotator.annotateFrameWithDetector(frame)
-                if feedback:
+                success = False
+                frame, feedback, count, per, success = annotator.annotateFrameWithDetector(frame)
+                if success:
                     self.kapp.push_mods(self.overwrite_text.out_value("%s %s" % (feedback, recordedCount)))
 
                 self.video.push_frame(frame)

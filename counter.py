@@ -12,17 +12,17 @@ def main():
     form = 0
     feedback = "Fix Form"
     recordedCount = 0
-
+    per = 0
     while cap.isOpened():
         ret, frame = cap.read() #640 x 480
         #Determine dimensions of video - Help with creation of box in Line 43
         width  = cap.get(3)  # float `width`
         height = cap.get(4)  # float `height`
         # print(width, height)
+        success = False
+        frame, feedback, count, per, success = annotator.annotateFrameWithDetector(frame)
 
-        frame, feedback, count, per = annotator.annotateFrameWithDetector(frame)
-
-        if feedback != None:
+        if success:
             #Draw Bar
             if form == 1:
                 cv2.rectangle(frame, (580, 50), (600, 380), (0, 255, 0), 3)
@@ -41,7 +41,7 @@ def main():
             cv2.putText(frame, feedback, (500, 40 ), cv2.FONT_HERSHEY_PLAIN, 2,
                         (0, 255, 0), 2)
 
-        cv2.imshow('Pushup counter', frame)
+            cv2.imshow('Pushup counter', frame)
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
 
