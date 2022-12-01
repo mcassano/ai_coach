@@ -1,5 +1,5 @@
 # AI Coach
-Python script designed to be run on the Vizy platform or natively on a Macbook Pro.
+Python system to coach you on push-ups, designed to be run on the Vizy platform or natively on a Macbook Pro.
 
 ## Vizy
 Copy this repo into the /home/pi/vizy/apps directory and Vizy should pick it up as "AI Coach" under the "Apps" menu.
