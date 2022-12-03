@@ -4,7 +4,7 @@
         "steps": [
             {
                 "name": "Up",
-                "audio": "./audio/up.wav",
+                "audio": "./audio/up.mp3",
                 "requirement": [
                     {
                         "body": "elbow",
@@ -25,7 +25,7 @@
             },
             {
                 "name": "Down",
-                "audio": "./audio/down.wav",
+                "audio": "./audio/down.mp3",
                 "requirement": [
                     {
                         "body": "elbow",
