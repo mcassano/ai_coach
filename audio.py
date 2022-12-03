@@ -8,8 +8,8 @@ class Audio():
         self.timeSinceLastAudio = time.time()
 
     def playSoundIfApplicable(self, count, target, feedback, prior_feedback):
-        # Fix form but only after 5 seconds so that you don't get hammered over and over
-        if feedback == "Fix Form" and time.time() - self.timeSinceLastAudio > 5:
+        # Fix form but only after some seconds so that you don't get hammered over and over
+        if feedback == "Fix Form" and time.time() - self.timeSinceLastAudio > 2:
             playsound('./audio/fix_form.mp3')
             self.timeSinceLastAudio = time.time()
         # Was going down and now go up

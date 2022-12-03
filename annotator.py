@@ -1,3 +1,5 @@
+from annotation_result import AnnotationResult
+
 import numpy as np
 
 class Annotator():
@@ -14,6 +16,7 @@ class Annotator():
         lmList = detector.findPosition(frame, False)
         count = 0
         bar = 0
+        success = False
         if len(lmList) != 0:
             elbow = detector.findAngle(frame, 11, 13, 15)
             shoulder = detector.findAngle(frame, 13, 11, 23)
@@ -51,5 +54,12 @@ class Annotator():
                 self.feedback = "Fix Form"
 
             self.recorded_count = self.recorded_count + count
-            return frame, self.feedback, self.recorded_count, self.per, self.direction, bar, True
-        return frame, self.feedback, self.recorded_count, self.per, self.direction, bar, False
+            success = True
+        return AnnotationResult(frame,
+                                self.feedback,
+                                self.recorded_count,
+                                self.per,
+                                self.direction,
+                                bar,
+                                self.form,
+                                success)

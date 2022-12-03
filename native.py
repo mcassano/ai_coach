@@ -3,6 +3,8 @@ from pose import PoseDetector
 from audio import Audio
 from annotator import Annotator
 from movement_extractor import MovementExtractor
+from display import Display
+from annotation_result import AnnotationResult
 
 # Them
 import cv2
@@ -11,17 +13,13 @@ import sys
 def main():
     annotator = Annotator()
     audio = Audio()
-    movement = MovementExtractor.get_movement(sys.argv[1] if len(sys.argv) >= 2 else 'Push-up')
+    movement = MovementExtractor.get_movement(get_default_movement_name())
+    display = Display('AI Coach')
 
     print("Using '%s' movement" % movement["name"])
 
     cap = cv2.VideoCapture(0)
-
-    count = 0.0
-    direction = 0
-    form = 0
     feedback = "Fix Form"
-    per = 0
     target = 20
     detector = PoseDetector()
     while cap.isOpened():
@@ -31,37 +29,21 @@ def main():
         height = cap.get(4)  # float `height`
         success = False
         prior_feedback = feedback
-        frame, feedback, count, per, direction, bar, success = annotator.annotateFrameWithDetector(frame, detector)
+        result = annotator.annotateFrameWithDetector(frame, detector)
+        feedback = result.feedback
 
-        display_result(count, form, feedback, per, frame, bar)
+        display.display_result(result)
         
-        audio.playSoundIfApplicable(count, target, feedback, prior_feedback)
+        audio.playSoundIfApplicable(result.count, target, result.feedback, prior_feedback)
     
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
 
     cap.release()
-    cv2.destroyAllWindows()
+    display.close()
 
-def display_result(count, form, feedback, per, frame, bar):
-    #Draw Bar
-    if form == 1:
-        cv2.rectangle(frame, (580, 50), (600, 380), (0, 255, 0), 3)
-        cv2.rectangle(frame, (580, int(bar)), (600, 380), (0, 255, 0), cv2.FILLED)
-        cv2.putText(frame, f'{int(per)}%', (565, 430), cv2.FONT_HERSHEY_PLAIN, 2,
-                        (255, 0, 0), 2)
-
-    #Pushup counter
-    cv2.rectangle(frame, (0, 380), (100, 480), (0, 255, 0), cv2.FILLED)
-    cv2.putText(frame, str(int(count)), (25, 455), cv2.FONT_HERSHEY_PLAIN, 5,
-                    (255, 0, 0), 5)
-
-    #Feedback
-    cv2.rectangle(frame, (500, 0), (640, 40), (255, 255, 255), cv2.FILLED)
-    cv2.putText(frame, feedback, (500, 40 ), cv2.FONT_HERSHEY_PLAIN, 2,
-                    (0, 255, 0), 2)
-
-    cv2.imshow('AI Coach', frame)
+def get_default_movement_name():
+    return sys.argv[1] if len(sys.argv) >= 2 else 'Push-up'
 
 if __name__ == "__main__":
     main()
