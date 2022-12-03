@@ -1,1 +1,11 @@
 my_venv
+
+# A scratch directory
+tmp/
+
+__pycache__
+
+# emacs droppings
+*~
+#*#
+
