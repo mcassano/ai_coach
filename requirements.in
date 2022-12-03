@@ -1,0 +1,8 @@
+numpy
+mediapipe; platform_system == "Darwin" and platform.machine != 'arm64'
+mediapipe-silicon; platform_system == "Darwin" and platform.machine == 'arm64'
+opencv-python
+playsound
+PyObjC
+gTTS
+pyttsx3

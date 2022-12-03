@@ -27,7 +27,15 @@ python3 -m venv my_venv
 pip3 install -r requirements.txt
 ```
 
-Run the application:
+## Regenerate requirements.txt
+
+```
+pip-compile
+```
+
+# Run the application
+
+
 ```
 python3 ./native.py
 ```
