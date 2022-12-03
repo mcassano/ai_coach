@@ -1,6 +1,7 @@
 from playsound import playsound
 import time
 import os
+from gtts import gTTS
 
 class Audio():
     def __init__(self):

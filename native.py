@@ -1,18 +1,21 @@
-import cv2
-import numpy as np
+# Us
 from pose import PoseDetector
 from audio import Audio
 from annotator import Annotator
-from gtts import gTTS
-import json
+from movement_extractor import MovementExtractor
+
+# Them
+import cv2
 import sys
 
 def main():
-    cap = cv2.VideoCapture(0)
     annotator = Annotator()
     audio = Audio()
+    movement = MovementExtractor.get_movement(sys.argv[1] if len(sys.argv) >= 2 else 'Push-up')
 
-    movement = get_desired_movement()
+    print("Using '%s' movement" % movement["name"])
+
+    cap = cv2.VideoCapture(0)
 
     count = 0.0
     direction = 0
@@ -39,35 +42,6 @@ def main():
 
     cap.release()
     cv2.destroyAllWindows()
-
-def get_desired_movement():
-    movements = read_movements('movements.json')
-
-    movement_name = get_desired_movement_name_from_sys_argv()
-
-    movement = None
-    for each_movement in movements:
-        if each_movement["name"] == movement_name:
-            movement = each_movement
-            break
-
-    if movement == None:
-        sys.exit("Movement '%s' not found in movements.json" % (movement_name))
-
-    return movement
-
-def get_desired_movement_name_from_sys_argv():
-    movement_name = None
-    try:
-        movement_name = sys.argv[1]
-    except IndexError:
-        movement_name = "Push-up"
-    return movement_name
-
-def read_movements(path):
-    f = open(path)
-    movements = json.load(f)
-    return movements
 
 def display_result(count, form, feedback, per, frame, bar):
     #Draw Bar
