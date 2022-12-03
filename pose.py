@@ -3,9 +3,7 @@ import cv2
 import math
 from base import BasePoseDetector
 
-
 class PoseDetector(BasePoseDetector):
-
     def findAngle(self, img, p1, p2, p3, draw=True):
         # Get the landmarks
         x1, y1 = self.lmList[p1][1:]
@@ -38,22 +36,3 @@ class PoseDetector(BasePoseDetector):
             cv2.putText(img, str(int(angle)), (x2-50, y2+50),
                         cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
         return angle
-
-
-def main():
-    detector = PoseDetector()
-    cap = cv2.VideoCapture(0)
-    while cap.isOpened():
-        ret, img = cap.read()
-        if ret:
-            img = detector.findPose(img)
-            cv2.imshow('Pose Detection', img)
-        if cv2.waitKey(10) & 0xFF == ord('q'):
-            break
-
-    cap.release()
-    cv2.destroyAllWindows()
-
-
-if __name__ == "__main__":
-    main()

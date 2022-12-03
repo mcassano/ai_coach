@@ -1,5 +1,4 @@
 import cv2
-from annotation_result import AnnotationResult
 
 class Display:
     def __init__(self, display_name):

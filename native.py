@@ -4,7 +4,6 @@ from audio import Audio
 from annotator import Annotator
 from movement_extractor import MovementExtractor
 from display import Display
-from annotation_result import AnnotationResult
 
 # Them
 import cv2
@@ -15,26 +14,23 @@ def main():
     audio = Audio()
     movement = MovementExtractor.get_movement(get_default_movement_name())
     display = Display('AI Coach')
+    detector = PoseDetector()
 
     print("Using '%s' movement" % movement["name"])
 
     cap = cv2.VideoCapture(0)
     feedback = "Fix Form"
-    target = 20
-    detector = PoseDetector()
+    target = movement["end_at"]
     while cap.isOpened():
-        ret, frame = cap.read() #640 x 480
-        #Determine dimensions of video - Help with creation of box in Line 43
-        width  = cap.get(3)  # float `width`
-        height = cap.get(4)  # float `height`
-        success = False
-        prior_feedback = feedback
-        result = annotator.annotateFrameWithDetector(frame, detector)
-        feedback = result.feedback
+        ret, frame = cap.read()
+        if ret:
+            prior_feedback = feedback
+            result = annotator.annotateFrameWithDetector(frame, detector)
+            feedback = result.feedback
 
-        display.display_result(result)
-        
-        audio.playSoundIfApplicable(result.count, target, result.feedback, prior_feedback)
+            display.display_result(result)
+
+            audio.playSoundIfApplicable(result.count, target, result.feedback, prior_feedback)
     
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
