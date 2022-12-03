@@ -16,6 +16,7 @@ def main():
     form = 0
     feedback = "Fix Form"
     per = 0
+    target = 20
     detector = PoseDetector()
     timeSinceLastAudio = time.time()
     while cap.isOpened():
@@ -29,7 +30,7 @@ def main():
 
         display_result(count, form, feedback, per, frame, bar)
         
-        timeSinceLastAudio = playSoundIfApplicable(count, feedback, prior_feedback, timeSinceLastAudio)
+        timeSinceLastAudio = playSoundIfApplicable(count, target, feedback, prior_feedback, timeSinceLastAudio)
     
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
@@ -57,15 +58,20 @@ def display_result(count, form, feedback, per, frame, bar):
 
     cv2.imshow('AI Coach', frame)
 
-def playSoundIfApplicable(count, feedback, prior_feedback, timeSinceLastAudio):
+def playSoundIfApplicable(count, target, feedback, prior_feedback, timeSinceLastAudio):
+    # Fix form but only after 5 seconds so that you don't get hammered over and over
     if feedback == "Fix Form" and time.time() - timeSinceLastAudio > 5:
         playsound('./audio/fix_form.wav')
         timeSinceLastAudio = time.time()
+    # Was going down and now go up
     elif prior_feedback == "Down" and feedback == "Up":
         playsound('./audio/up.wav')
         timeSinceLastAudio = time.time()
+    # Was coming up and completed a rep
     elif prior_feedback == "Up" and feedback == "Down":
-        if count % 5 == 0:
+        if count == target:
+            playsound('./audio/done.wav')
+        elif count % 5 == 0:
             path = "./audio/count/%d.wav" % (count)
             if not os.path.exists(path):
                 tts = gTTS(text="%d" % (count), lang='en', slow=False)
@@ -75,6 +81,7 @@ def playSoundIfApplicable(count, feedback, prior_feedback, timeSinceLastAudio):
         else:
             playsound('./audio/good.wav')
         timeSinceLastAudio = time.time()
+    # Fixed form
     elif prior_feedback == "Fix Form" and feedback == "Down":
         playsound('./audio/good.wav')
         timeSinceLastAudio = time.time()
