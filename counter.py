@@ -7,12 +7,13 @@ def main():
     cap = cv2.VideoCapture(0)
     annotator = Annotator()
 
-    count = 0
+    count = 0.0
     direction = 0
     form = 0
     feedback = "Fix Form"
     recordedCount = 0
     per = 0
+    detector = PoseDetector()
     while cap.isOpened():
         ret, frame = cap.read() #640 x 480
         #Determine dimensions of video - Help with creation of box in Line 43
@@ -20,7 +21,7 @@ def main():
         height = cap.get(4)  # float `height`
         # print(width, height)
         success = False
-        frame, feedback, count, per, success = annotator.annotateFrameWithDetector(frame)
+        frame, feedback, count, per, direction, bar, success = annotator.annotateFrameWithDetector(frame, detector)
 
         if success:
             #Draw Bar
