@@ -1,17 +1,17 @@
 import cv2
 import numpy as np
 from pose import PoseDetector
+from audio import Audio
 from annotator import Annotator
-from playsound import playsound
-import time
 from gtts import gTTS
-import os
 import json
 import sys
 
 def main():
     cap = cv2.VideoCapture(0)
     annotator = Annotator()
+    audio = Audio()
+
     movement = get_desired_movement()
 
     count = 0.0
@@ -21,7 +21,6 @@ def main():
     per = 0
     target = 20
     detector = PoseDetector()
-    timeSinceLastAudio = time.time()
     while cap.isOpened():
         ret, frame = cap.read() #640 x 480
         #Determine dimensions of video - Help with creation of box in Line 43
@@ -33,7 +32,7 @@ def main():
 
         display_result(count, form, feedback, per, frame, bar)
         
-        timeSinceLastAudio = playSoundIfApplicable(count, target, feedback, prior_feedback, timeSinceLastAudio)
+        audio.playSoundIfApplicable(count, target, feedback, prior_feedback)
     
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
@@ -89,35 +88,6 @@ def display_result(count, form, feedback, per, frame, bar):
                     (0, 255, 0), 2)
 
     cv2.imshow('AI Coach', frame)
-
-def playSoundIfApplicable(count, target, feedback, prior_feedback, timeSinceLastAudio):
-    # Fix form but only after 5 seconds so that you don't get hammered over and over
-    if feedback == "Fix Form" and time.time() - timeSinceLastAudio > 5:
-        playsound('./audio/fix_form.mp3')
-        timeSinceLastAudio = time.time()
-    # Was going down and now go up
-    elif prior_feedback == "Down" and feedback == "Up":
-        playsound('./audio/up.mp3')
-        timeSinceLastAudio = time.time()
-    # Was coming up and completed a rep
-    elif prior_feedback == "Up" and feedback == "Down":
-        if count == target:
-            playsound('./audio/done.mp3')
-        # Give specific count every quarter of target
-        elif count % (target / 4) == 0:
-            path = "./audio/count/%d.mp3" % (count)
-            if not os.path.exists(path):
-                tts = gTTS(text="%d" % (count), lang='en', slow=False)
-                tts.save(path)
-            playsound(path)
-        else:
-            playsound('./audio/good.mp3')
-        timeSinceLastAudio = time.time()
-    # Fixed form
-    elif prior_feedback == "Fix Form" and feedback == "Down":
-        playsound('./audio/good.mp3')
-        timeSinceLastAudio = time.time()
-    return timeSinceLastAudio
 
 if __name__ == "__main__":
     main()
