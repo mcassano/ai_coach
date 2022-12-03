@@ -4,6 +4,8 @@ from pose import PoseDetector
 from annotator import Annotator
 from playsound import playsound
 import time
+from gtts import gTTS
+import os
 
 def main():
     cap = cv2.VideoCapture(0)
@@ -13,7 +15,6 @@ def main():
     direction = 0
     form = 0
     feedback = "Fix Form"
-    recordedCount = 0
     per = 0
     detector = PoseDetector()
     timeSinceLastAudio = time.time()
@@ -44,7 +45,7 @@ def main():
         cv2.putText(frame, feedback, (500, 40 ), cv2.FONT_HERSHEY_PLAIN, 2,
                     (0, 255, 0), 2)
 
-        cv2.imshow('Pushup counter', frame)
+        cv2.imshow('AI Coach', frame)
         
         if feedback == "Fix Form" and time.time() - timeSinceLastAudio > 5:
             playsound('./audio/fix_form.wav')
@@ -53,7 +54,15 @@ def main():
             playsound('./audio/up.wav')
             timeSinceLastAudio = time.time()
         elif old_feedback == "Up" and feedback == "Down":
-            playsound('./audio/good.wav')
+            if count % 5 == 0:
+                path = "./audio/count/%d.wav" % (count)
+                if not os.path.exists(path):
+                    tts = gTTS(text="%d" % (count), lang='en', slow=False)
+                    # Saving the converted audio in a wav file named sample
+                    tts.save(path)
+                playsound(path)
+            else:
+                playsound('./audio/good.wav')
             timeSinceLastAudio = time.time()
         elif old_feedback == "Fix Form" and feedback == "Down":
             playsound('./audio/good.wav')

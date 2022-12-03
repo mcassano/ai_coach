@@ -3,4 +3,5 @@ mediapipe
 opencv-python
 playsound
 PyObjC
-
+gTTS
+pyttsx3
