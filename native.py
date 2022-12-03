@@ -6,10 +6,13 @@ from playsound import playsound
 import time
 from gtts import gTTS
 import os
+import json
+import sys
 
 def main():
     cap = cv2.VideoCapture(0)
     annotator = Annotator()
+    movement = get_desired_movement()
 
     count = 0.0
     direction = 0
@@ -37,6 +40,35 @@ def main():
 
     cap.release()
     cv2.destroyAllWindows()
+
+def get_desired_movement():
+    movements = read_movements('movements.json')
+
+    movement_name = get_desired_movement_name_from_sys_argv()
+
+    movement = None
+    for each_movement in movements:
+        if each_movement["name"] == movement_name:
+            movement = each_movement
+            break
+
+    if movement == None:
+        sys.exit("Movement '%s' not found in movements.json" % (movement_name))
+
+    return movement
+
+def get_desired_movement_name_from_sys_argv():
+    movement_name = None
+    try:
+        movement_name = sys.argv[1]
+    except IndexError:
+        movement_name = "Push-up"
+    return movement_name
+
+def read_movements(path):
+    f = open(path)
+    movements = json.load(f)
+    return movements
 
 def display_result(count, form, feedback, per, frame, bar):
     #Draw Bar
@@ -71,7 +103,8 @@ def playSoundIfApplicable(count, target, feedback, prior_feedback, timeSinceLast
     elif prior_feedback == "Up" and feedback == "Down":
         if count == target:
             playsound('./audio/done.wav')
-        elif count % 5 == 0:
+        # Give specific count every quarter of target
+        elif count % (target / 4) == 0:
             path = "./audio/count/%d.wav" % (count)
             if not os.path.exists(path):
                 tts = gTTS(text="%d" % (count), lang='en', slow=False)

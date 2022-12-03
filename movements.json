@@ -1,0 +1,47 @@
+[
+    {
+        "name": "Push-up",
+        "steps": [
+            {
+                "name": "Up",
+                "audio": "./audio/up.wav",
+                "requirement": [
+                    {
+                        "body": "elbow",
+                        "test": "gt",
+                        "angle": 160
+                    }, 
+                    {
+                        "body": "shoulder",
+                        "test": "gt",
+                        "angle": 40
+                    }, 
+                    {
+                        "body": "hip",
+                        "test": "gt",
+                        "angle": 160
+                    }
+                ]
+            },
+            {
+                "name": "Down",
+                "audio": "./audio/down.wav",
+                "requirement": [
+                    {
+                        "body": "elbow",
+                        "test": "lte",
+                        "angle": 90
+                    }, 
+                    {
+                        "body": "hip",
+                        "test": "gt",
+                        "angle": 160
+                    }
+                ]
+            }
+        ],
+        "start_at": 0,
+        "step_by": 1,
+        "end_at": 20
+    }
+]
