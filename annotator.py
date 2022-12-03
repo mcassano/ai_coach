@@ -52,4 +52,4 @@ class Annotator():
 
             self.recorded_count = self.recorded_count + count
             return frame, self.feedback, self.recorded_count, self.per, self.direction, bar, True
-        return None, "", 0, -1.0, self.direction, bar, False
+        return frame, self.feedback, self.recorded_count, self.per, self.direction, bar, False

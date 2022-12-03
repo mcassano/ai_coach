@@ -29,5 +29,5 @@ pip3 install -r requirements.txt
 
 Run the application:
 ```
-python3 ./counter.py
+python3 ./native.py
 ```
