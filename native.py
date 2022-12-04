@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # Us
-import sys
+import argparse
 
 # Them
 import cv2
@@ -15,10 +15,20 @@ from util import logging_basic_config
 
 
 def main():
-    logging_basic_config()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--log-level', '-l', help='log level',
+        choices=['NOTSET', 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'])
+    parser.add_argument(
+        '--movement', '-m', help='Movement name', default='Push-up',
+        choices=['Push-up'])
+    args = parser.parse_args()
+
+    logging_basic_config(args.log_level)
+
     annotator = Annotator()
     audio = Audio()
-    movement = MovementExtractor.get_movement(get_default_movement_name())
+    movement = MovementExtractor.get_movement(args.movement)
     display = Display('AI Coach')
     detector = PoseDetector()
 
@@ -44,10 +54,6 @@ def main():
 
     cap.release()
     display.close()
-
-
-def get_default_movement_name():
-    return sys.argv[1] if len(sys.argv) >= 2 else 'Push-up'
 
 
 if __name__ == '__main__':
