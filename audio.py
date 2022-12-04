@@ -1,7 +1,8 @@
-from playsound import playsound
+import os.path
 import time
-import os
+
 from gtts import gTTS
+from playsound import playsound
 
 
 class Audio:

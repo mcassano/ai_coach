@@ -2,6 +2,7 @@ import json
 
 
 class MovementExtractor:
+    @staticmethod
     def get_movement(movement_name):
         movements = MovementExtractor.read_movements('movements.json')
 
@@ -17,6 +18,7 @@ class MovementExtractor:
 
         return movement
 
+    @staticmethod
     def read_movements(path):
         f = open(path)
         movements = json.load(f)

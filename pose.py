@@ -1,6 +1,8 @@
 # This was copied from https://github.com/terminalai/PushUpCounter
-import cv2
 import math
+
+import cv2
+
 from base import BasePoseDetector
 
 

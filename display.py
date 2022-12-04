@@ -34,5 +34,6 @@ class Display:
 
         cv2.imshow(self.display_name, frame)
 
-    def close(self):
+    @staticmethod
+    def close():
         cv2.destroyAllWindows()

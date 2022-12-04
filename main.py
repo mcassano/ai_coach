@@ -1,7 +1,9 @@
 from threading import Thread
-import kritter
+
 import dash_html_components as html
+import kritter
 from vizy import Vizy
+
 from annotator import Annotator
 from pose import PoseDetector
 
@@ -52,7 +54,7 @@ class AiCoach:
         while self.run_thread:
             frame = self.stream.frame()[0]
             # This was copied from https://github.com/terminalai/PushUpCounter
-            (annotated_frame, new_feedback, new_count, per, direction, bar,
+            (annotated_frame, new_feedback, new_count, _per, _direction, _bar,
              success) = annotator.annotateFrameWithDetector(frame, detector)
             if success:
                 frame = annotated_frame

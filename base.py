@@ -21,6 +21,8 @@ class BasePoseDetector:
             self.mode, self.complexity, self.smooth_landmarks,
             self.enable_segmentation, self.smooth_segmentation,
             self.detectionCon, self.trackCon)
+        self.results = None
+        self.lmList = []
 
     def findPose(self, img, draw=True):
         imgRGB = img[:, :, ::-1]
@@ -35,12 +37,12 @@ class BasePoseDetector:
     def findPosition(self, img, draw=True):
         self.lmList = []
         if self.results.pose_landmarks:
-            for id, lm in enumerate(self.results.pose_landmarks.landmark):
+            for the_id, lm in enumerate(self.results.pose_landmarks.landmark):
                 # finding height, width of the image printed
-                h, w, c = img.shape
+                h, w, _c = img.shape
                 # Determining the pixels of the landmarks
                 cx, cy = int(lm.x * w), int(lm.y * h)
-                self.lmList.append([id, cx, cy])
+                self.lmList.append([the_id, cx, cy])
                 if draw:
                     cv2.circle(img, (cx, cy), 5, (255, 0, 0), cv2.FILLED)
         return self.lmList

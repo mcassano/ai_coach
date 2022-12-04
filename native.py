@@ -1,13 +1,14 @@
 # Us
-from pose import PoseDetector
-from audio import Audio
-from annotator import Annotator
-from movement_extractor import MovementExtractor
-from display import Display
+import sys
 
 # Them
 import cv2
-import sys
+
+from annotator import Annotator
+from audio import Audio
+from display import Display
+from movement_extractor import MovementExtractor
+from pose import PoseDetector
 
 
 def main():

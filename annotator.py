@@ -1,8 +1,8 @@
 import logging
 
-from annotation_result import AnnotationResult
-
 import numpy as np
+
+from annotation_result import AnnotationResult
 
 logger = logging.getLogger(__name__)
 
