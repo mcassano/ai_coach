@@ -33,9 +33,29 @@ pip3 install -r requirements.txt
 pip-compile
 ```
 
+
+Also install `pre-commit`:
+
+```
+brew install pre-commit
+pre-commit install
+```
+
+To run pre-commit on everything:
+
+```
+pre-commit run --all
+```
+
+To run the pylint check (a picky one):
+
+```
+pre-commit run --all pylint
+```
+
 # Run the application
 
-
+Run the application:
 ```
 python3 ./native.py
 ```

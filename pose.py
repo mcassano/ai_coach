@@ -1,7 +1,10 @@
 # This was copied from https://github.com/terminalai/PushUpCounter
-import cv2
 import math
+
+import cv2
+
 from base import BasePoseDetector
+
 
 class PoseDetector(BasePoseDetector):
     def findAngle(self, img, p1, p2, p3, draw=True):

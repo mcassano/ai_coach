@@ -1,12 +1,17 @@
-from annotation_result import AnnotationResult
+import logging
 
 import numpy as np
+
+from annotation_result import AnnotationResult
+
+logger = logging.getLogger(__name__)
+
 
 class Annotator():
     def __init__(self):
         self.recorded_count = 0
         self.direction = 0
-        self.feedback = ""
+        self.feedback = ''
         self.form = 0
         self.per = 0
 
@@ -20,38 +25,39 @@ class Annotator():
         if len(lmList) != 0:
             elbow = detector.findAngle(frame, 11, 13, 15)
             shoulder = detector.findAngle(frame, 13, 11, 23)
-            hip = detector.findAngle(frame, 11, 23,25)
+            hip = detector.findAngle(frame, 11, 23, 25)
 
-            #Percentage of success of pushup
+            # Percentage of success of pushup
             self.per = np.interp(elbow, (90, 160), (0, 100))
 
-            #Bar to show Pushup progress
+            # Bar to show Pushup progress
             bar = np.interp(elbow, (90, 160), (380, 50))
 
-            #Check to ensure right form before starting the program
+            logger.info(f'elbow {elbow} shoulder {shoulder} hip {hip}')
+            # Check to ensure right form before starting the program
             if elbow > 160 and shoulder > 40 and hip > 160:
                 self.form = 1
 
-            #Check for full range of motion for the pushup
+            # Check for full range of motion for the pushup
             if self.form == 1:
                 if self.per == 0:
                     if elbow <= 90 and hip > 160:
-                        self.feedback = "Up"
+                        self.feedback = 'Up'
                         if self.direction == 0:
                             count = 0.5
                             self.direction = 1
                     else:
-                        self.feedback = "Fix Form"
+                        self.feedback = 'Fix Form'
                 if self.per == 100:
                     if elbow > 160 and shoulder > 40 and hip > 160:
-                        self.feedback = "Down"
+                        self.feedback = 'Down'
                         if self.direction == 1:
                             count = 0.5
                             self.direction = 0
                     else:
-                        self.feedback = "Fix Form"
+                        self.feedback = 'Fix Form'
             else:
-                self.feedback = "Fix Form"
+                self.feedback = 'Fix Form'
 
             self.recorded_count = self.recorded_count + count
             success = True
