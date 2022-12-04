@@ -22,6 +22,8 @@ def main():
     parser.add_argument(
         '--movement', '-m', help='Movement name', default='Push-up',
         choices=['Push-up'])
+    parser.add_argument(
+        '--video-file', help='File with video of exercise (example: file.mp4)')
     args = parser.parse_args()
 
     logging_basic_config(args.log_level)
@@ -34,7 +36,11 @@ def main():
 
     print("Using '%s' movement" % movement['name'])
 
-    cap = cv2.VideoCapture(0)
+    capture_input = args.video_file
+    if not capture_input:
+        # live capture from camera 0
+        capture_input = 0
+    cap = cv2.VideoCapture(capture_input)
     feedback = 'Fix Form'
     target = movement['end_at']
     while cap.isOpened():
