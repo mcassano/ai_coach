@@ -1,21 +1,30 @@
 #!/usr/bin/env python
-
+import argparse
 import os
+from pathlib import PurePath
 
 import cv2
 import readchar
+
+DATA_DIR = 'data'
 
 
 def main():
     # Adapted from
     # https://www.geeksforgeeks.org/extract-images-from-video-in-python/
 
-    # Read the video from specified path
-    the_file = 'tmp/the-perfect-push-up-do-it-right.mp4'
-    cam = cv2.VideoCapture(the_file)
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--video-file', help='File with video of exercise (example: file.mp4)',
+        required=True)
+    args = parser.parse_args()
 
-    if not os.path.exists('data'):
-        os.makedirs('data')
+    # Read the video from specified path
+    cam = cv2.VideoCapture(args.video_file)
+    stem = PurePath(args.video_file).stem
+
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR)
 
     # frame
     current_frame = 0
@@ -37,9 +46,15 @@ def main():
                               f' (default: {current_label}): ')
                 if label:
                     current_label = label
-                name = f'./data/{current_label}.{current_frame:04d}.jpg'
+
+                dirname = f'{DATA_DIR}/{current_label}'
+                if not os.path.exists(dirname):
+                    os.makedirs(dirname)
+
+                name = f'{dirname}/{stem}.frame{current_frame:04d}.jpg'
                 print(f'Write {name}')
-                cv2.imwrite(name, frame)
+                status = cv2.imwrite(name, frame)
+                assert status, f"Couldn't write '{name}'"
             else:
                 print(f'Skip frame {current_frame}')
 
