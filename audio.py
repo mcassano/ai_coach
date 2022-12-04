@@ -1,8 +1,13 @@
+import logging
 import os.path
 import time
 
 from gtts import gTTS
 from playsound import playsound
+
+from advice_steps import AdviceSteps
+
+logger = logging.getLogger(__name__)
 
 
 class Audio:
@@ -11,31 +16,39 @@ class Audio:
 
     def play_sound_if_applicable(self, count, target, feedback,
                                  prior_feedback):
-        # Fix form but only after some seconds so that you don't get
-        # hammered over and over
-        if (feedback == 'Fix Form'
+        logger.debug(f'{count} {target} {feedback} {prior_feedback}')
+        # Get in Frame but only after some seconds
+        if (feedback == AdviceSteps.GET_IN_FRAME.value.title
                 and time.time() - self.time_since_last_audio > 2):
-            playsound('./audio/fix_form.mp3')
+            playsound(AdviceSteps.GET_IN_FRAME.value.audio_path)
+            self.time_since_last_audio = time.time()
+        # Fix form but only after some seconds
+        elif (feedback == AdviceSteps.FIX_FORM.value.title
+              and time.time() - self.time_since_last_audio > 2):
+            playsound(AdviceSteps.FIX_FORM.value.audio_path)
             self.time_since_last_audio = time.time()
         # Was going down and now go up
-        elif prior_feedback == 'Down' and feedback == 'Up':
-            playsound('./audio/up.mp3')
+        elif (prior_feedback == AdviceSteps.DOWN.value.title
+              and feedback == AdviceSteps.UP.value.title):
+            playsound(AdviceSteps.UP.value.audio_path)
             self.time_since_last_audio = time.time()
         # Was coming up and completed a rep
-        elif prior_feedback == 'Up' and feedback == 'Down':
+        elif (prior_feedback == AdviceSteps.UP.value.title
+              and feedback == AdviceSteps.DOWN.value.title):
             if count == target:
-                playsound('./audio/done.mp3')
+                playsound(AdviceSteps.DONE.value.audio_path)
             # Give specific count every quarter of target
             elif count % (target / 4) == 0:
-                path = './audio/count/%d.mp3' % (count)
+                path = './audio/count/%d.mp3' % count
                 if not os.path.exists(path):
-                    tts = gTTS(text='%d' % (count), lang='en', slow=False)
+                    tts = gTTS(text='%d' % count, lang='en', slow=False)
                     tts.save(path)
                 playsound(path)
             else:
-                playsound('./audio/good.mp3')
+                playsound(AdviceSteps.GOOD.value.audio_path)
             self.time_since_last_audio = time.time()
         # Fixed form
-        elif prior_feedback == 'Fix Form' and feedback == 'Down':
-            playsound('./audio/good.mp3')
+        elif (prior_feedback == AdviceSteps.FIX_FORM.value.title
+              and feedback == AdviceSteps.DOWN.value.title):
+            playsound(AdviceSteps.GOOD.value.audio_path)
             self.time_since_last_audio = time.time()

@@ -13,7 +13,7 @@ class Display:
         frame = annotation_result.frame
         bar = annotation_result.bar
         # Draw Bar
-        if form == 1:
+        if form:
             cv2.rectangle(frame, (580, 50), (600, 380), (0, 255, 0), 3)
             cv2.rectangle(frame, (580, int(bar)), (600, 380),
                           (0, 255, 0), cv2.FILLED)
@@ -21,7 +21,7 @@ class Display:
                         cv2.FONT_HERSHEY_PLAIN, 2,
                         (255, 0, 0), 2)
 
-        # Pushup counter
+        # Push up counter
         cv2.rectangle(frame, (0, 380), (100, 480), (0, 255, 0), cv2.FILLED)
         cv2.putText(frame, str(int(count)), (25, 455),
                     cv2.FONT_HERSHEY_PLAIN, 5,

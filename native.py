@@ -1,38 +1,26 @@
 #!/usr/bin/env python
 
-# Us
 import argparse
 
-# Them
 import cv2
 
+from advice_steps import AdviceSteps
 from annotator import Annotator
 from audio import Audio
 from display import Display
 from movement_extractor import MovementExtractor
-from pose import PoseDetector
 from util import logging_basic_config
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '--log-level', '-l', help='log level',
-        choices=['NOTSET', 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'])
-    parser.add_argument(
-        '--movement', '-m', help='Movement name', default='Push-up',
-        choices=['Push-up'])
-    parser.add_argument(
-        '--video-file', help='File with video of exercise (example: file.mp4)')
-    args = parser.parse_args()
+    args = run_argument_parser()
 
     logging_basic_config(args.log_level)
 
-    annotator = Annotator()
-    audio = Audio()
     movement = MovementExtractor.get_movement(args.movement)
+    annotator = Annotator(movement)
+    audio = Audio()
     display = Display('AI Coach')
-    detector = PoseDetector()
 
     print("Using '%s' movement" % movement['name'])
 
@@ -41,13 +29,13 @@ def main():
         # live capture from camera 0
         capture_input = 0
     cap = cv2.VideoCapture(capture_input)
-    feedback = 'Fix Form'
+    feedback = AdviceSteps.GET_IN_FRAME.value.title
     target = movement['end_at']
     while cap.isOpened():
         ret, frame = cap.read()
         if ret:
             prior_feedback = feedback
-            result = annotator.annotate_frame_with_detector(frame, detector)
+            result = annotator.annotate_frame(frame)
             feedback = result.feedback
 
             display.display_result(result)
@@ -60,6 +48,20 @@ def main():
 
     cap.release()
     display.close()
+
+
+def run_argument_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--log-level', '-l', help='log level',
+        choices=['NOTSET', 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'])
+    parser.add_argument(
+        '--movement', '-m', help='Movement name', default='Push-up',
+        choices=['Push-up'])
+    parser.add_argument(
+        '--video-file', help='File with video of exercise (example: file.mp4)')
+    args = parser.parse_args()
+    return args
 
 
 if __name__ == '__main__':
