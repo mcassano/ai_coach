@@ -46,10 +46,8 @@ class Annotator():
 
             logger.debug(f'elbow {elbow} shoulder {shoulder} hip {hip}')
             # Check to ensure right form before starting the program
-            right_form = False
-            if all_points_in_frame and (
-                    elbow > 160 and shoulder > 40 and hip > 160):
-                right_form = True
+            right_form = all_points_in_frame and (
+                    elbow > 160 and shoulder > 40 and hip > 160)
 
             # Check for full range of motion for the pushup
             if not all_points_in_frame:
