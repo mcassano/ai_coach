@@ -52,7 +52,7 @@ playsound==1.3.0
     # via -r requirements.in
 protobuf==3.20.3
     # via mediapipe
-pyobjc==9.0
+pyobjc==9.0 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyttsx3

@@ -3,6 +3,6 @@ mediapipe; platform_system == "Darwin" and platform.machine != 'arm64'
 mediapipe-silicon; platform_system == "Darwin" and platform.machine == 'arm64'
 opencv-python
 playsound
-PyObjC
+PyObjC; platform_system == "Darwin"
 gTTS
 pyttsx3
