@@ -1,5 +1,5 @@
 # Pose landmark names from
-# https://google.github.io/mediapipe/solutions/pose.html
+# https://google.github.io/mediapipe/solutions/pose.html#pose-landmark-model-blazepose-ghum-3d
 NOSE = 0
 LEFT_EYE_INNER = 1
 LEFT_EYE = 2
