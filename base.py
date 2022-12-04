@@ -1,6 +1,16 @@
 # This was copied from https://github.com/terminalai/PushUpCounter
+from dataclasses import dataclass
+
 import cv2
 import mediapipe as mp
+
+
+@dataclass
+class LandmarkLabel:
+    landmark_id: int
+    x: int
+    y: int
+    in_frame: bool
 
 
 class BasePoseDetector:
@@ -42,7 +52,8 @@ class BasePoseDetector:
                 h, w, _c = img.shape
                 # Determining the pixels of the landmarks
                 cx, cy = int(lm.x * w), int(lm.y * h)
-                self.lm_list.append([the_id, cx, cy])
+                in_frame = 0 <= lm.x <= 1 and 0 <= lm.y <= 1
+                self.lm_list.append(LandmarkLabel(the_id, cx, cy, in_frame))
                 if draw:
                     cv2.circle(img, (cx, cy), 5, (255, 0, 0), cv2.FILLED)
         return self.lm_list

@@ -14,23 +14,28 @@ class Annotator():
         self.recorded_count = 0
         self.direction = 0
         self.feedback = ''
-        self.form = 0
         self.per = 0
 
     def annotate_frame_with_detector(self, frame, detector):
         # This was copied from https://github.com/terminalai/PushUpCounter
         frame = detector.find_pose(frame, False)
         lm_list = detector.find_position(frame, False)
-        logger.debug(f'lm_list {lm_list}')
+        all_points_in_frame = lm_list and all(
+            lm_list[idx].in_frame
+            for idx in (LEFT_SHOULDER, LEFT_ELBOW, LEFT_WRIST,
+                        LEFT_HIP, LEFT_KNEE))
+        # logger.debug(f'in_frame {all_points_in_frame} lm_list {lm_list}')
+        logger.debug(f'in_frame {all_points_in_frame}')
         count = 0
         bar = 0
+        right_form = None
         success = False
-        if len(lm_list) != 0:
-            elbow = detector.find_angle(
+        if lm_list:
+            elbow = detector.find_and_draw_angle(
                 frame, LEFT_SHOULDER, LEFT_ELBOW, LEFT_WRIST)
-            shoulder = detector.find_angle(
+            shoulder = detector.find_and_draw_angle(
                 frame, LEFT_ELBOW, LEFT_SHOULDER, LEFT_HIP)
-            hip = detector.find_angle(
+            hip = detector.find_and_draw_angle(
                 frame, LEFT_SHOULDER, LEFT_HIP, LEFT_KNEE)
 
             # Percentage of success of pushup
@@ -41,11 +46,15 @@ class Annotator():
 
             logger.debug(f'elbow {elbow} shoulder {shoulder} hip {hip}')
             # Check to ensure right form before starting the program
-            if elbow > 160 and shoulder > 40 and hip > 160:
-                self.form = 1
+            right_form = False
+            if all_points_in_frame and (
+                    elbow > 160 and shoulder > 40 and hip > 160):
+                right_form = True
 
             # Check for full range of motion for the pushup
-            if self.form == 1:
+            if not all_points_in_frame:
+                self.feedback = 'Get In Frame'
+            elif right_form:
                 if self.per == 0:
                     if elbow <= 90 and hip > 160:
                         self.feedback = 'Up'
@@ -76,5 +85,5 @@ class Annotator():
                                 self.per,
                                 self.direction,
                                 bar,
-                                self.form,
+                                right_form,
                                 success)
