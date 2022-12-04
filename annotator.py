@@ -3,6 +3,8 @@ import logging
 import numpy as np
 
 from annotation_result import AnnotationResult
+from pose_landmark import (LEFT_ELBOW, LEFT_HIP, LEFT_KNEE, LEFT_SHOULDER,
+                           LEFT_WRIST)
 
 logger = logging.getLogger(__name__)
 
@@ -19,13 +21,17 @@ class Annotator():
         # This was copied from https://github.com/terminalai/PushUpCounter
         frame = detector.find_pose(frame, False)
         lm_list = detector.find_position(frame, False)
+        logger.debug(f'lm_list {lm_list}')
         count = 0
         bar = 0
         success = False
         if len(lm_list) != 0:
-            elbow = detector.find_angle(frame, 11, 13, 15)
-            shoulder = detector.find_angle(frame, 13, 11, 23)
-            hip = detector.find_angle(frame, 11, 23, 25)
+            elbow = detector.find_angle(
+                frame, LEFT_SHOULDER, LEFT_ELBOW, LEFT_WRIST)
+            shoulder = detector.find_angle(
+                frame, LEFT_ELBOW, LEFT_SHOULDER, LEFT_HIP)
+            hip = detector.find_angle(
+                frame, LEFT_SHOULDER, LEFT_HIP, LEFT_KNEE)
 
             # Percentage of success of pushup
             self.per = np.interp(elbow, (90, 160), (0, 100))
