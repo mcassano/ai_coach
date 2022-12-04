@@ -1,11 +1,12 @@
+gTTS
 numpy
 mediapipe; (platform_system == "Darwin" and platform.machine != 'arm64') or platform_system != "Darwin"
 mediapipe-silicon; platform_system == "Darwin" and platform.machine == 'arm64'
 opencv-python
 playsound
 PyObjC; platform_system == "Darwin"
-gTTS
 pyttsx3
+readchar
 
 # explicitly list PyObjC dependencies to add markers
 # A dastardly hack from https://github.com/jazzband/pip-tools/issues/1749
