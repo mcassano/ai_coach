@@ -1,5 +1,5 @@
 numpy
-mediapipe; platform_system == "Darwin" and platform.machine != 'arm64'
+mediapipe; (platform_system == "Darwin" and platform.machine != 'arm64') or platform_system != "Darwin"
 mediapipe-silicon; platform_system == "Darwin" and platform.machine == 'arm64'
 opencv-python
 playsound
