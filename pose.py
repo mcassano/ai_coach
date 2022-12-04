@@ -3,6 +3,7 @@ import cv2
 import math
 from base import BasePoseDetector
 
+
 class PoseDetector(BasePoseDetector):
     def findAngle(self, img, p1, p2, p3, draw=True):
         # Get the landmarks

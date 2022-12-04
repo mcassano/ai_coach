@@ -33,9 +33,17 @@ pip3 install -r requirements.txt
 pip-compile
 ```
 
+
+Also install `pre-commit`:
+
+```
+brew install pre-commit
+pre-commit install
+```
+
 # Run the application
 
-
+Run the application:
 ```
 python3 ./native.py
 ```

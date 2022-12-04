@@ -17,9 +17,10 @@ class BasePoseDetector:
 
         self.mpDraw = mp.solutions.drawing_utils
         self.mpPose = mp.solutions.pose
-        self.pose = self.mpPose.Pose(self.mode, self.complexity, self.smooth_landmarks,
-                                     self.enable_segmentation, self.smooth_segmentation,
-                                     self.detectionCon, self.trackCon)
+        self.pose = self.mpPose.Pose(
+            self.mode, self.complexity, self.smooth_landmarks,
+            self.enable_segmentation, self.smooth_segmentation,
+            self.detectionCon, self.trackCon)
 
     def findPose(self, img, draw=True):
         imgRGB = img[:, :, ::-1]
@@ -61,5 +62,5 @@ def main():
     cv2.destroyAllWindows()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

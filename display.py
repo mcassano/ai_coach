@@ -1,5 +1,6 @@
 import cv2
 
+
 class Display:
     def __init__(self, display_name):
         self.display_name = display_name
@@ -11,24 +12,27 @@ class Display:
         per = annotation_result.per
         frame = annotation_result.frame
         bar = annotation_result.bar
-        #Draw Bar
+        # Draw Bar
         if form == 1:
             cv2.rectangle(frame, (580, 50), (600, 380), (0, 255, 0), 3)
-            cv2.rectangle(frame, (580, int(bar)), (600, 380), (0, 255, 0), cv2.FILLED)
-            cv2.putText(frame, f'{int(per)}%', (565, 430), cv2.FONT_HERSHEY_PLAIN, 2,
-                            (255, 0, 0), 2)
+            cv2.rectangle(frame, (580, int(bar)), (600, 380),
+                          (0, 255, 0), cv2.FILLED)
+            cv2.putText(frame, f'{int(per)}%', (565, 430),
+                        cv2.FONT_HERSHEY_PLAIN, 2,
+                        (255, 0, 0), 2)
 
-        #Pushup counter
+        # Pushup counter
         cv2.rectangle(frame, (0, 380), (100, 480), (0, 255, 0), cv2.FILLED)
-        cv2.putText(frame, str(int(count)), (25, 455), cv2.FONT_HERSHEY_PLAIN, 5,
-                        (255, 0, 0), 5)
+        cv2.putText(frame, str(int(count)), (25, 455),
+                    cv2.FONT_HERSHEY_PLAIN, 5,
+                    (255, 0, 0), 5)
 
-        #Feedback
+        # Feedback
         cv2.rectangle(frame, (500, 0), (640, 40), (255, 255, 255), cv2.FILLED)
-        cv2.putText(frame, feedback, (500, 40 ), cv2.FONT_HERSHEY_PLAIN, 2,
-                        (0, 255, 0), 2)
+        cv2.putText(frame, feedback, (500, 40), cv2.FONT_HERSHEY_PLAIN, 2,
+                    (0, 255, 0), 2)
 
         cv2.imshow(self.display_name, frame)
 
-    def close():
+    def close(self):
         cv2.destroyAllWindows()

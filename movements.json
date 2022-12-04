@@ -10,12 +10,12 @@
                         "body": "elbow",
                         "test": "gt",
                         "angle": 160
-                    }, 
+                    },
                     {
                         "body": "shoulder",
                         "test": "gt",
                         "angle": 40
-                    }, 
+                    },
                     {
                         "body": "hip",
                         "test": "gt",
@@ -31,7 +31,7 @@
                         "body": "elbow",
                         "test": "lte",
                         "angle": 90
-                    }, 
+                    },
                     {
                         "body": "hip",
                         "test": "gt",
