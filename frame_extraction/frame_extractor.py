@@ -16,7 +16,8 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '--video-file', help='File with video of exercise (example: file.mp4)',
+        '--video-file',
+        help='File with video of frames to label (example: file.mp4)',
         required=True)
     args = parser.parse_args()
 
