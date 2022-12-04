@@ -33,7 +33,7 @@ class Annotator():
             # Bar to show Pushup progress
             bar = np.interp(elbow, (90, 160), (380, 50))
 
-            logger.info(f'elbow {elbow} shoulder {shoulder} hip {hip}')
+            logger.debug(f'elbow {elbow} shoulder {shoulder} hip {hip}')
             # Check to ensure right form before starting the program
             if elbow > 160 and shoulder > 40 and hip > 160:
                 self.form = 1
@@ -61,6 +61,9 @@ class Annotator():
 
             self.recorded_count = self.recorded_count + count
             success = True
+        else:
+            logger.debug('annotate frame found no pose ..')
+
         return AnnotationResult(frame,
                                 self.feedback,
                                 self.recorded_count,

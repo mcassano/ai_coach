@@ -58,6 +58,7 @@ repos:
         - --disable=too-few-public-methods
         - --disable=too-many-instance-attributes
         - --disable=too-many-arguments
+        - --disable=too-many-branches
         - --disable=unpacking-non-sequence
 
 - repo: https://github.com/pre-commit/mirrors-mypy

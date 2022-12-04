@@ -11,9 +11,11 @@ from audio import Audio
 from display import Display
 from movement_extractor import MovementExtractor
 from pose import PoseDetector
+from util import logging_basic_config
 
 
 def main():
+    logging_basic_config()
     annotator = Annotator()
     audio = Audio()
     movement = MovementExtractor.get_movement(get_default_movement_name())
