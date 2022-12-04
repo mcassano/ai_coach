@@ -39,7 +39,6 @@ repos:
       args:
         - --src=.
 
-# pylint is too strict for now:
 - repo: https://github.com/PyCQA/pylint
   rev: v2.13.4
   hooks:
