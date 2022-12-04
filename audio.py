@@ -7,19 +7,20 @@ from playsound import playsound
 
 class Audio:
     def __init__(self):
-        self.timeSinceLastAudio = time.time()
+        self.time_since_last_audio = time.time()
 
-    def playSoundIfApplicable(self, count, target, feedback, prior_feedback):
+    def play_sound_if_applicable(self, count, target, feedback,
+                                 prior_feedback):
         # Fix form but only after some seconds so that you don't get
         # hammered over and over
         if (feedback == 'Fix Form'
-                and time.time() - self.timeSinceLastAudio > 2):
+                and time.time() - self.time_since_last_audio > 2):
             playsound('./audio/fix_form.mp3')
-            self.timeSinceLastAudio = time.time()
+            self.time_since_last_audio = time.time()
         # Was going down and now go up
         elif prior_feedback == 'Down' and feedback == 'Up':
             playsound('./audio/up.mp3')
-            self.timeSinceLastAudio = time.time()
+            self.time_since_last_audio = time.time()
         # Was coming up and completed a rep
         elif prior_feedback == 'Up' and feedback == 'Down':
             if count == target:
@@ -33,8 +34,8 @@ class Audio:
                 playsound(path)
             else:
                 playsound('./audio/good.mp3')
-            self.timeSinceLastAudio = time.time()
+            self.time_since_last_audio = time.time()
         # Fixed form
         elif prior_feedback == 'Fix Form' and feedback == 'Down':
             playsound('./audio/good.mp3')
-            self.timeSinceLastAudio = time.time()
+            self.time_since_last_audio = time.time()

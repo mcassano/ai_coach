@@ -48,7 +48,6 @@ repos:
         - --disable=consider-using-in
         - --disable=disallowed-name
         - --disable=import-error
-        - --disable=invalid-name
         - --disable=logging-fstring-interpolation
         - --disable=missing-class-docstring
         - --disable=missing-function-docstring

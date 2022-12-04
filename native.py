@@ -31,12 +31,12 @@ def main():
         ret, frame = cap.read()
         if ret:
             prior_feedback = feedback
-            result = annotator.annotateFrameWithDetector(frame, detector)
+            result = annotator.annotate_frame_with_detector(frame, detector)
             feedback = result.feedback
 
             display.display_result(result)
 
-            audio.playSoundIfApplicable(
+            audio.play_sound_if_applicable(
                 result.count, target, result.feedback, prior_feedback)
 
         if cv2.waitKey(10) & 0xFF == ord('q'):

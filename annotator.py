@@ -15,17 +15,17 @@ class Annotator():
         self.form = 0
         self.per = 0
 
-    def annotateFrameWithDetector(self, frame, detector):
+    def annotate_frame_with_detector(self, frame, detector):
         # This was copied from https://github.com/terminalai/PushUpCounter
-        frame = detector.findPose(frame, False)
-        lmList = detector.findPosition(frame, False)
+        frame = detector.find_pose(frame, False)
+        lm_list = detector.find_position(frame, False)
         count = 0
         bar = 0
         success = False
-        if len(lmList) != 0:
-            elbow = detector.findAngle(frame, 11, 13, 15)
-            shoulder = detector.findAngle(frame, 13, 11, 23)
-            hip = detector.findAngle(frame, 11, 23, 25)
+        if len(lm_list) != 0:
+            elbow = detector.find_angle(frame, 11, 13, 15)
+            shoulder = detector.find_angle(frame, 13, 11, 23)
+            hip = detector.find_angle(frame, 11, 23, 25)
 
             # Percentage of success of pushup
             self.per = np.interp(elbow, (90, 160), (0, 100))

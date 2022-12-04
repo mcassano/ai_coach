@@ -55,7 +55,7 @@ class AiCoach:
             frame = self.stream.frame()[0]
             # This was copied from https://github.com/terminalai/PushUpCounter
             (annotated_frame, new_feedback, new_count, _per, _direction, _bar,
-             success) = annotator.annotateFrameWithDetector(frame, detector)
+             success) = annotator.annotate_frame_with_detector(frame, detector)
             if success:
                 frame = annotated_frame
                 if new_count != recorded_count or (

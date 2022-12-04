@@ -20,6 +20,6 @@ class MovementExtractor:
 
     @staticmethod
     def read_movements(path):
-        f = open(path)
-        movements = json.load(f)
+        with open(path) as the_file:
+            movements = json.load(the_file)
         return movements

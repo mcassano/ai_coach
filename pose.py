@@ -7,11 +7,11 @@ from base import BasePoseDetector
 
 
 class PoseDetector(BasePoseDetector):
-    def findAngle(self, img, p1, p2, p3, draw=True):
+    def find_angle(self, img, p1, p2, p3, draw=True):
         # Get the landmarks
-        x1, y1 = self.lmList[p1][1:]
-        x2, y2 = self.lmList[p2][1:]
-        x3, y3 = self.lmList[p3][1:]
+        x1, y1 = self.lm_list[p1][1:]
+        x2, y2 = self.lm_list[p2][1:]
+        x3, y3 = self.lm_list[p3][1:]
 
         # Calculate Angle
         angle = math.degrees(math.atan2(y3-y2, x3-x2) -
