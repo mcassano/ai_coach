@@ -21,7 +21,8 @@ class TestPose(unittest.TestCase):
 
         # When we run the frame through the pose finder
         self.detector = PoseDetector()
-        self.frame = self.detector.find_pose(self.frame, False)
+        self.frame = self.detector.find_pose_and_draw_landmarks(
+            self.frame, False)
         self.detector.find_position(self.frame, False)
 
     def test_straight_arm_is_near_180_degrees(self):

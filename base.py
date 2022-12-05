@@ -34,7 +34,14 @@ class BasePoseDetector:
         self.results = None
         self.lm_list = []
 
-    def find_pose(self, img, draw=True):
+    def find_pose_and_draw_landmarks(self, img, draw=True):
+        """Return img with landmarks drawn (if draw=True).
+
+        :param img  cv2 image (i.e. BGR)
+        :param draw  If true, draw landmarks on img before returning it
+
+        Also store pose landmarks in self.results."""
+        # pose.process takes RGB
         img_rgb = img[:, :, ::-1]
         self.results = self.pose.process(img_rgb)
 
@@ -66,7 +73,7 @@ def main():
         ret, img = cap.read()
         # ret is just the return variable, not much in there that we will use.
         if ret:
-            img = detector.find_pose(img)
+            img = detector.find_pose_and_draw_landmarks(img)
             cv2.imshow('Pose Detection', img)
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
