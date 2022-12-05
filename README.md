@@ -59,3 +59,8 @@ Run the application:
 ```
 python3 ./native.py
 ```
+
+Run the tests:
+```
+python -m unittest discover tests
+```

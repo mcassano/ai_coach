@@ -10,7 +10,7 @@ from pose_landmark import (LEFT_ELBOW, LEFT_HIP, LEFT_KNEE, LEFT_SHOULDER,
 logger = logging.getLogger(__name__)
 
 
-class Annotator():
+class Annotator:
     def __init__(self, movement):
         self.recorded_count = 0
         self.direction = 0
