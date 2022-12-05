@@ -22,5 +22,4 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        # this is a stub of a test
-        python -c "import native"
+        python -m unittest discover tests
