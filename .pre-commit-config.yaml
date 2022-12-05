@@ -32,12 +32,14 @@ repos:
       - --remove-unused-variables
       - --remove-all-unused-imports
 
-- repo: https://github.com/PyCQA/isort
-  rev: 5.10.1
-  hooks:
-    - id: isort
-      args:
-        - --src=.
+# isort and pylint disagree about sort order
+# I agree with pylint (third-party before local), so disable this.
+#- repo: https://github.com/PyCQA/isort
+#  rev: 5.10.1
+#  hooks:
+#    - id: isort
+#      args:
+#        - --src=.
 
 - repo: https://github.com/PyCQA/pylint
   rev: v2.13.4

@@ -8,8 +8,8 @@ import json
 import cv2
 import readchar
 
-from annotator import Annotator
-from util import logging_basic_config
+from src.annotator import Annotator
+from src.util import logging_basic_config
 
 
 def main():

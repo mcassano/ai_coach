@@ -4,9 +4,9 @@ import unittest
 
 import cv2
 
-from pose import PoseDetector
-from pose_landmark import (LEFT_ELBOW, LEFT_HIP, LEFT_KNEE, LEFT_SHOULDER,
-                           LEFT_WRIST)
+from src.pose import PoseDetector
+from src.pose_landmark import (LEFT_ELBOW, LEFT_HIP, LEFT_KNEE, LEFT_SHOULDER,
+                               LEFT_WRIST)
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
