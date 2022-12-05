@@ -17,8 +17,8 @@ def load_frame(path):
 class TestAnnotator(unittest.TestCase):
 
     def setUp(self):
-        self.pushup_up_file_name = 'pushup_starting_position.jpg'
-        self.pushup_down_file_name = 'pushup_down_position.jpg'
+        self.pushup_up_file_name = 'mike_pushup_up_small.jpg'
+        self.pushup_down_file_name = 'mike_pushup_down_small.jpg'
 
         # When we run the frame through the pose finder
         self.detector = PoseDetector()
@@ -27,14 +27,20 @@ class TestAnnotator(unittest.TestCase):
         annotator = Annotator([])
 
         # Go up-down ten times and check that the results are correct
-        for idx in range(0, 10):
+        for idx in range(0, 5):
+            for _ in range(0, 5):
+                annotator.annotate_frame(
+                    load_frame(self.pushup_up_file_name))
             result = annotator.annotate_frame(
                 load_frame(self.pushup_up_file_name))
             self.check_results([idx, 'Down', True, 100.0, True], result)
 
+            for _ in range(0, 5):
+                annotator.annotate_frame(
+                    load_frame(self.pushup_down_file_name))
             result = annotator.annotate_frame(
                 load_frame(self.pushup_down_file_name))
-            self.check_results([idx+0.5, 'Up', True, 0.0, True], result)
+            self.check_results([idx + 0.5, 'Up', True, 0.0, True], result)
 
     def check_results(self, expected, actual):
         self.assertEqual(expected[0], actual.count)
