@@ -22,7 +22,7 @@ class Annotator:
 
     def annotate_frame(self, frame):
         # This was inspired from https://github.com/terminalai/PushUpCounter
-        frame = self.detector.find_pose(frame, False)
+        frame = self.detector.find_pose_and_draw_landmarks(frame, False)
         lm_list = self.detector.find_position(frame, False)
         all_points_in_frame = lm_list and all(
             lm_list[idx].in_frame
@@ -33,6 +33,7 @@ class Annotator:
         count = 0
         bar = 0
         success = False
+        angles = {}
         if lm_list:
             elbow = self.detector.find_and_draw_angle(
                 frame, LEFT_SHOULDER, LEFT_ELBOW, LEFT_WRIST)
@@ -40,6 +41,7 @@ class Annotator:
                 frame, LEFT_ELBOW, LEFT_SHOULDER, LEFT_HIP)
             hip = self.detector.find_and_draw_angle(
                 frame, LEFT_SHOULDER, LEFT_HIP, LEFT_KNEE)
+            angles = {'elbow': elbow, 'shoulder': shoulder, 'hip': hip}
 
             # Percentage of success of push-up
             self.per = np.interp(elbow, (90, 160), (0, 100))
@@ -88,4 +90,5 @@ class Annotator:
                                 self.direction,
                                 bar,
                                 self.right_form,
-                                success)
+                                success,
+                                angles)
