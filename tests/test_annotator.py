@@ -3,8 +3,8 @@ import unittest
 
 import cv2
 
-from annotator import Annotator
-from pose import PoseDetector
+from src.annotator import Annotator
+from src.pose import PoseDetector
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 

@@ -55,12 +55,19 @@ pre-commit run --all pylint
 
 # Run the application
 
-Run the application:
-```
-python3 ./native.py
+Set PYTHONPATH.
+
+```buildoutcfg
+export PYTHONPATH=.
 ```
 
-Run the tests:
+Run:
+
+```
+./bin/native.py
+```
+
+# Run the tests
 ```
 python -m unittest discover tests
 ```

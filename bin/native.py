@@ -3,13 +3,13 @@
 import argparse
 
 import cv2
-
-from advice_steps import AdviceSteps
-from annotator import Annotator
-from audio import Audio
-from display import Display
-from movement_extractor import MovementExtractor
 from util import logging_basic_config
+
+from src.advice_steps import AdviceSteps
+from src.annotator import Annotator
+from src.audio import Audio
+from src.display import Display
+from src.movement_extractor import MovementExtractor
 
 
 def main():

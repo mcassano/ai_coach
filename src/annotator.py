@@ -2,10 +2,10 @@ import logging
 
 import numpy as np
 
-from annotation_result import AnnotationResult
-from pose import PoseDetector
-from pose_landmark import (LEFT_ELBOW, LEFT_HIP, LEFT_KNEE, LEFT_SHOULDER,
-                           LEFT_WRIST)
+from src.annotation_result import AnnotationResult
+from src.pose import PoseDetector
+from src.pose_landmark import (LEFT_ELBOW, LEFT_HIP, LEFT_KNEE, LEFT_SHOULDER,
+                               LEFT_WRIST)
 
 logger = logging.getLogger(__name__)
 
