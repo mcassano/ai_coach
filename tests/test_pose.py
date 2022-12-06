@@ -3,7 +3,6 @@ import os
 import unittest
 
 import cv2
-
 from src.pose import PoseDetector
 from src.pose_landmark import (LEFT_ELBOW, LEFT_HIP, LEFT_KNEE, LEFT_SHOULDER,
                                LEFT_WRIST)

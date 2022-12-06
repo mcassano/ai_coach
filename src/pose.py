@@ -2,7 +2,6 @@
 import math
 
 import cv2
-
 from src.base import BasePoseDetector
 
 

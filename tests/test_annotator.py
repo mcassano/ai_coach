@@ -2,7 +2,6 @@ import os
 import unittest
 
 import cv2
-
 from src.annotator import Annotator
 from src.pose import PoseDetector
 
