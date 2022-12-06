@@ -1,7 +1,6 @@
 import logging
 
 import numpy as np
-
 from src.annotation_result import AnnotationResult
 from src.pose import PoseDetector
 from src.pose_landmark import (LEFT_ELBOW, LEFT_HIP, LEFT_KNEE, LEFT_SHOULDER,

@@ -4,8 +4,7 @@ import time
 
 from gtts import gTTS
 from playsound import playsound
-
-from advice_steps import AdviceSteps
+from src.advice_steps import AdviceSteps
 
 logger = logging.getLogger(__name__)
 

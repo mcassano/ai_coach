@@ -1,13 +1,10 @@
 #!/usr/bin/env python
 
-# Us
 import argparse
-# Them
 import json
 
 import cv2
 import readchar
-
 from src.annotator import Annotator
 from src.util import logging_basic_config
 
