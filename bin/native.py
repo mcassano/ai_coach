@@ -8,7 +8,7 @@ from src.annotator import Annotator
 from src.audio import Audio
 from src.display import Display
 from src.movement_extractor import MovementExtractor
-from util import logging_basic_config
+from src.util import logging_basic_config
 
 
 def main():
