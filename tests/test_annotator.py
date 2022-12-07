@@ -25,7 +25,7 @@ class TestAnnotator(unittest.TestCase):
     def test_up_down_up_down_good_results(self):
         annotator = Annotator([])
 
-        # Go up-down ten times and check that the results are correct
+        # Go up-down several times and check that the results are correct
         for idx in range(0, 5):
             for _ in range(0, 5):
                 annotator.annotate_frame(
