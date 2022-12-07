@@ -32,7 +32,6 @@ class Annotator:
         # logger.debug(f'in_frame {all_points_in_frame} lm_list {lm_list}')
         logger.debug(f'in_frame {all_points_in_frame}')
         count = 0
-        bar = 0
         success = False
         angles = {}
         if lm_list:
@@ -48,9 +47,6 @@ class Annotator:
 
             # Percentage of success of push-up
             self.per = np.interp(angles['elbow'], (90, 160), (0, 100))
-
-            # Bar to show Push-up progress
-            bar = np.interp(angles['elbow'], (90, 160), (380, 50))
 
             logger.debug(f'elbow {angles["elbow"]} '
                          f'shoulder {angles["shoulder"]} '
@@ -97,7 +93,6 @@ class Annotator:
                                 self.recorded_count,
                                 self.per,
                                 self.direction,
-                                bar,
                                 self.right_form,
                                 success,
                                 angles)

@@ -11,11 +11,10 @@ class Display:
         feedback = annotation_result.feedback
         per = annotation_result.per
         frame = annotation_result.frame
-        bar = annotation_result.bar
         # Draw Bar
         if form:
             cv2.rectangle(frame, (580, 50), (600, 380), (0, 255, 0), 3)
-            cv2.rectangle(frame, (580, int(bar)), (600, 380),
+            cv2.rectangle(frame, (580, int(380-(380*per/100))), (600, 380),
                           (0, 255, 0), cv2.FILLED)
             cv2.putText(frame, f'{int(per)}%', (565, 430),
                         cv2.FONT_HERSHEY_PLAIN, 2,

@@ -1,13 +1,12 @@
 class AnnotationResult:
     def __init__(self, frame, feedback: str, count: float,
-                 per: float, direction: int, bar: float, form: bool,
+                 per: float, direction: int, form: bool,
                  success, angles: dict):
         self.frame = frame
         self.feedback = feedback
         self.count = count
         self.per = per
         self.direction = direction
-        self.bar = bar
         self.form = form
         self.success = success
         self.angles = angles
