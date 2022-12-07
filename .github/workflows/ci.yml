@@ -26,5 +26,7 @@ jobs:
         python -c "from bin import native"
         # run unit tests
         python -m unittest discover tests
+        # check if it starts, -h sets return code to 0
+        python ./bin/native.py -h
       env:
         PYTHONPATH: .
