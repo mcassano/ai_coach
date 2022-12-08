@@ -4,6 +4,7 @@ import unittest
 
 import cv2
 from src.annotator import Annotator
+from src.movement_extractor import MovementExtractor
 from src.pose import PoseDetector
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -24,7 +25,7 @@ class TestAnnotator(unittest.TestCase):
         self.detector = PoseDetector()
 
     def test_up_down_up_down_good_results(self):
-        annotator = Annotator([])
+        annotator = Annotator(MovementExtractor.get_movement('Push-up'))
 
         # Go up-down several times and check that the results are correct
         for idx in range(0, 5):
