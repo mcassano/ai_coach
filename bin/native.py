@@ -56,7 +56,7 @@ def run_argument_parser():
         choices=['NOTSET', 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'])
     parser.add_argument(
         '--movement', '-m', help='Movement name', default='Push-up',
-        choices=['Push-up'])
+        choices=['Push-up', 'Flapping-Cross'])
     parser.add_argument(
         '--video-file', help='File with video of exercise (example: file.mp4)')
     args = parser.parse_args()

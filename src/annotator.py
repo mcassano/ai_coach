@@ -75,8 +75,6 @@ class Annotator:
                         if self.direction == 0:
                             count = 0.5
                             self.direction = 1
-                    else:
-                        self.feedback = 'Fix Form'
                 if self.per == 100:
                     step = self.movement['steps'][0]
                     next_step = self.movement['steps'][1]
@@ -87,8 +85,6 @@ class Annotator:
                         if self.direction == 1:
                             count = 0.5
                             self.direction = 0
-                    else:
-                        self.feedback = 'Fix Form'
             else:
                 self.feedback = 'Fix Form'
 
