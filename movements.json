@@ -1,6 +1,20 @@
 [
     {
         "name": "Push-up",
+        "angles": [
+            {
+                "name": "elbow",
+                "recipe": "LEFT_SHOULDER,LEFT_ELBOW,LEFT_WRIST"
+            },
+            {
+                "name": "shoulder",
+                "recipe": "LEFT_ELBOW,LEFT_SHOULDER,LEFT_HIP"
+            },
+            {
+                "name": "hip",
+                "recipe": "LEFT_SHOULDER,LEFT_HIP,LEFT_KNEE"
+            }
+        ],
         "steps": [
             {
                 "name": "Up",

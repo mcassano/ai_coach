@@ -3,8 +3,7 @@ import logging
 import numpy as np
 from src.annotation_result import AnnotationResult
 from src.pose import PoseDetector
-from src.pose_landmark import (LEFT_ELBOW, LEFT_HIP, LEFT_KNEE, LEFT_SHOULDER,
-                               LEFT_WRIST)
+from src.pose_landmark import landmarks
 
 logger = logging.getLogger(__name__)
 
@@ -25,49 +24,66 @@ class Annotator:
         lm_list = self.detector.find_position(frame, False)
         all_points_in_frame = lm_list and all(
             lm_list[idx].in_frame
-            for idx in (LEFT_SHOULDER, LEFT_ELBOW, LEFT_WRIST,
-                        LEFT_HIP, LEFT_KNEE))
+            for idx in (
+                Annotator.landmark_indices_from_parts(
+                    Annotator.parts_from_all_recipes(self.movement['angles'])))
+        )
         # logger.debug(f'in_frame {all_points_in_frame} lm_list {lm_list}')
         logger.debug(f'in_frame {all_points_in_frame}')
         count = 0
-        bar = 0
         success = False
         angles = {}
         if lm_list:
-            elbow = self.detector.find_and_draw_angle(
-                frame, LEFT_SHOULDER, LEFT_ELBOW, LEFT_WRIST)
-            shoulder = self.detector.find_and_draw_angle(
-                frame, LEFT_ELBOW, LEFT_SHOULDER, LEFT_HIP)
-            hip = self.detector.find_and_draw_angle(
-                frame, LEFT_SHOULDER, LEFT_HIP, LEFT_KNEE)
-            angles = {'elbow': elbow, 'shoulder': shoulder, 'hip': hip}
+            for angle in self.movement['angles']:
+                # in the form of "LEFT_SHOULDER,LEFT_ELBOW,LEFT_WRIST"
+                recipe_array = angle['recipe'].split(',')
 
-            # Percentage of success of push-up
-            self.per = np.interp(elbow, (90, 160), (0, 100))
+                angles[angle['name']] = self.detector.find_and_draw_angle(
+                    frame,
+                    landmarks[recipe_array[0]],
+                    landmarks[recipe_array[1]],
+                    landmarks[recipe_array[2]])
 
-            # Bar to show Push-up progress
-            bar = np.interp(elbow, (90, 160), (380, 50))
+            # Percentage of success of movement
+            self.per = np.interp(
+                angles[self.movement['steps'][0]['requirement'][0]['body']],
+                (self.movement['steps'][1]['requirement'][0]['angle'],
+                 self.movement['steps'][0]['requirement'][0]['angle']),
+                (0, 100))
 
-            logger.debug(f'elbow {elbow} shoulder {shoulder} hip {hip}')
+            logger.debug(f'angles: {angles}')
+
             # Check to ensure right form before starting the program
-            self.right_form = self.right_form or (all_points_in_frame and (
-                    elbow > 160 and shoulder > 40 and hip > 160))
+            self.right_form = (self.right_form
+                               or (all_points_in_frame
+                                   and Annotator.step_is_validated(
+                                      self.movement['steps'][0]['requirement'],
+                                      angles)
+                                   ))
 
-            # Check for full range of motion for the push-up
+            # Check for full range of motion for the movement
             if not all_points_in_frame:
                 self.feedback = 'Get In Frame'
             elif self.right_form:
                 if self.per == 0:
-                    if elbow <= 90 and hip > 160:
-                        self.feedback = 'Up'
+                    step = self.movement['steps'][1]
+                    next_step = self.movement['steps'][0]
+                    if Annotator.step_is_validated(
+                            step['requirement'],
+                            angles):
+                        self.feedback = next_step['name']
                         if self.direction == 0:
                             count = 0.5
                             self.direction = 1
                     else:
                         self.feedback = 'Fix Form'
                 if self.per == 100:
-                    if elbow > 160 and shoulder > 40 and hip > 160:
-                        self.feedback = 'Down'
+                    step = self.movement['steps'][0]
+                    next_step = self.movement['steps'][1]
+                    if Annotator.step_is_validated(
+                            step['requirement'],
+                            angles):
+                        self.feedback = next_step['name']
                         if self.direction == 1:
                             count = 0.5
                             self.direction = 0
@@ -87,7 +103,52 @@ class Annotator:
                                 self.recorded_count,
                                 self.per,
                                 self.direction,
-                                bar,
                                 self.right_form,
                                 success,
                                 angles)
+
+    @staticmethod
+    def step_is_validated(requirements, angles):
+        for key, value in angles.items():
+            for requirement in requirements:
+                if requirement['body'] == key:
+                    if not Annotator.covert_requirement_to_predicate(
+                            requirements,
+                            key,
+                            value):
+                        return False
+                else:
+                    continue
+        return True
+
+    @staticmethod
+    def covert_requirement_to_predicate(requirements, body_value, test_value):
+        for requirement in requirements:
+            body = requirement['body']
+            test = requirement['test']
+            angle = requirement['angle']
+            if body == body_value:
+                if test == 'gt':
+                    return test_value > angle
+                if test == 'gte':
+                    return test_value >= angle
+                if test == 'lt':
+                    return test_value < angle
+                if test == 'lte':
+                    return test_value <= angle
+        raise ValueError(f'{body_value} {test_value}')
+
+    @staticmethod
+    def parts_from_all_recipes(angles):
+        parts = []
+        for angle in angles:
+            for name in angle['recipe'].split(','):
+                parts.append(name)
+        return list(set(parts))
+
+    @staticmethod
+    def landmark_indices_from_parts(parts):
+        landmark_indices = []
+        for part in parts:
+            landmark_indices.append(landmarks[part])
+        return landmark_indices
