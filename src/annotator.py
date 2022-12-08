@@ -63,16 +63,12 @@ class Annotator:
                         if self.direction == 0:
                             count = 0.5
                             self.direction = 1
-                    else:
-                        self.feedback = 'Fix Form'
                 if self.per == 100:
                     if elbow > 160 and shoulder > 40 and hip > 160:
                         self.feedback = 'Down'
                         if self.direction == 1:
                             count = 0.5
                             self.direction = 0
-                    else:
-                        self.feedback = 'Fix Form'
             else:
                 self.feedback = 'Fix Form'
 
