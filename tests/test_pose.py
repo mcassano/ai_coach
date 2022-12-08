@@ -4,8 +4,7 @@ import unittest
 
 import cv2
 from src.pose import PoseDetector
-from src.pose_landmark import (LEFT_ELBOW, LEFT_HIP, LEFT_KNEE, LEFT_SHOULDER,
-                               LEFT_WRIST)
+from src.pose_landmark import landmarks
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -27,7 +26,11 @@ class TestPose(unittest.TestCase):
     def test_straight_arm_is_near_180_degrees(self):
         # Angle formed from shoulder to elbow to wrist
         angle = self.detector.find_and_draw_angle(
-            self.frame, LEFT_SHOULDER, LEFT_ELBOW, LEFT_WRIST, False)
+            self.frame,
+            landmarks['LEFT_SHOULDER'],
+            landmarks['LEFT_ELBOW'],
+            landmarks['LEFT_WRIST'],
+            False)
 
         # Then we found angle that is within 1 degree of 176
         self.assertTrue(math.isclose(169, angle, abs_tol=1))
@@ -35,7 +38,11 @@ class TestPose(unittest.TestCase):
     def test_torso_has_acute_angle_with_arm(self):
         # Angle formed from elbow to shoulder to hip
         angle = self.detector.find_and_draw_angle(
-            self.frame, LEFT_ELBOW, LEFT_SHOULDER, LEFT_HIP, False)
+            self.frame,
+            landmarks['LEFT_ELBOW'],
+            landmarks['LEFT_SHOULDER'],
+            landmarks['LEFT_HIP'],
+            False)
 
         # Then we found angle that is within 1 degree of 66
         self.assertTrue(math.isclose(63, angle, abs_tol=1))
@@ -43,7 +50,11 @@ class TestPose(unittest.TestCase):
     def test_glutes_inline_with_shoulder_and_knee(self):
         # Angle formed from shoulder to hip to knee
         angle = self.detector.find_and_draw_angle(
-            self.frame, LEFT_SHOULDER, LEFT_HIP, LEFT_KNEE, False)
+            self.frame,
+            landmarks['LEFT_SHOULDER'],
+            landmarks['LEFT_HIP'],
+            landmarks['LEFT_KNEE'],
+            False)
 
         # Then we found angle that is within 1 degree of 167
         self.assertTrue(math.isclose(179, angle, abs_tol=1))
