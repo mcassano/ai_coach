@@ -58,7 +58,7 @@
         ],
         "steps": [
             {
-                "name": "Out",
+                "name": "Up",
                 "audio": "./audio/up.mp3",
                 "requirement": [
                     {
@@ -74,7 +74,7 @@
                 ]
             },
             {
-                "name": "In",
+                "name": "Down",
                 "audio": "./audio/down.mp3",
                 "requirement": [
                     {
