@@ -1,10 +1,13 @@
 import json
 
+MOVEMENT_CONFIGURATION_FILE = './movements.json'
+
 
 class MovementExtractor:
     @staticmethod
     def get_movement(movement_name):
-        movements = MovementExtractor.read_movements('./movements.json')
+        movements = MovementExtractor.read_movements(
+                            MOVEMENT_CONFIGURATION_FILE)
 
         movement = None
         for each_movement in movements:
@@ -14,7 +17,7 @@ class MovementExtractor:
 
         if movement is None:
             raise ValueError(
-                "Movement '%s' not found in movements.json" % (movement_name))
+                "Movement '%s' not found in movements.json" % movement_name)
 
         return movement
 
@@ -23,3 +26,12 @@ class MovementExtractor:
         with open(path) as the_file:
             movements = json.load(the_file)
         return movements
+
+    @staticmethod
+    def get_list_of_movements():
+        movements = MovementExtractor.read_movements(
+                            MOVEMENT_CONFIGURATION_FILE)
+        movement_names = []
+        for movement in movements:
+            movement_names.append(movement['name'])
+        return movement_names
