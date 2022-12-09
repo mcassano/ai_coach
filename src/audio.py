@@ -43,9 +43,9 @@ class Audio:
                 play_audio_file_unblocking(AdviceSteps.DONE.value.audio_path)
             # Give specific count every quarter of target
             elif count % (target / 4) == 0:
-                path = './audio/count/%d.mp3' % count
+                path = f'./audio/count/{count}.mp3'
                 if not os.path.exists(path):
-                    tts = gTTS(text='%d' % count, lang='en', slow=False)
+                    tts = gTTS(str(count), lang='en', slow=False)
                     tts.save(path)
                 play_audio_file_unblocking(path)
             else:
