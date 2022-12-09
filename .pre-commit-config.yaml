@@ -44,7 +44,6 @@ repos:
   hooks:
     - id: pylint
       args:
-        - --disable=consider-using-f-string
         - --disable=consider-using-in
         - --disable=disallowed-name
         - --disable=import-error
