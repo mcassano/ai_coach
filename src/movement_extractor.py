@@ -1,37 +1,29 @@
 import json
+from typing import Sequence
 
 MOVEMENT_CONFIGURATION_FILE = './movements.json'
 
 
 class MovementExtractor:
     @staticmethod
-    def get_movement(movement_name):
+    def get_movement(movement_name: str):
         movements = MovementExtractor.read_movements(
                             MOVEMENT_CONFIGURATION_FILE)
-
-        movement = None
-        for each_movement in movements:
-            if each_movement['name'] == movement_name:
-                movement = each_movement
-                break
-
-        if movement is None:
+        try:
+            return next(
+                mov for mov in movements if mov['name'] == movement_name)
+        except StopIteration as err:
             raise ValueError(
-                "Movement '%s' not found in movements.json" % movement_name)
-
-        return movement
+                f"Movement '{movement_name}' not found in movements.json") \
+                from err
 
     @staticmethod
-    def read_movements(path):
+    def read_movements(path: str):
         with open(path) as the_file:
-            movements = json.load(the_file)
-        return movements
+            return json.load(the_file)
 
     @staticmethod
-    def get_list_of_movements():
-        movements = MovementExtractor.read_movements(
-                            MOVEMENT_CONFIGURATION_FILE)
-        movement_names = []
-        for movement in movements:
-            movement_names.append(movement['name'])
-        return movement_names
+    def get_list_of_movements() -> Sequence[str]:
+        return [mov['name']
+                for mov in MovementExtractor.read_movements(
+                MOVEMENT_CONFIGURATION_FILE)]
