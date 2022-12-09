@@ -21,15 +21,16 @@ def main():
     audio = Audio()
     display = Display('AI Coach')
 
-    print("Using '%s' movement" % movement['name'])
-
     capture_input = args.video_file
     if not capture_input:
         # live capture from camera 0
         capture_input = 0
     cap = cv2.VideoCapture(capture_input)
     feedback = AdviceSteps.GET_IN_FRAME.value.title
-    target = movement['end_at']
+    target = args.target \
+        if args.target is not None \
+        else movement['default_target']
+    print(f'Using {movement["name"]} movement, target: {target}')
     while cap.isOpened():
         ret, frame = cap.read()
         if ret:
@@ -59,6 +60,10 @@ def run_argument_parser():
         choices=MovementExtractor.get_list_of_movements())
     parser.add_argument(
         '--video-file', help='File with video of exercise (example: file.mp4)')
+    parser.add_argument(
+        '--target', '-t',
+        help='The number of reps you would like to complete (example: 20)'
+    )
     args = parser.parse_args()
     return args
 
