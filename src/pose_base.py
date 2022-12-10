@@ -18,6 +18,9 @@ class BasePoseDetector:
                  smooth_landmarks=True, enable_segmentation=False,
                  smooth_segmentation=True, min_detection_confidence=0.5,
                  min_track_confidence=0.5):
+        """Arguments passed to mediapipe.solutions.pose.mp_pose.Pose
+
+        See also https://google.github.io/mediapipe/solutions/pose#python-solution-api"""  # noqa
         self.mp_draw = mp.solutions.drawing_utils
         self.mp_pose = mp.solutions.pose
         self.pose_process_results = None
