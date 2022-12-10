@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 class Audio:
     def __init__(self):
-        self._last_audio_time = time.time()
+        self._last_audio_time = 0
 
     def _play_audio_file(self, path: str):
         playsound(path, block=False)
