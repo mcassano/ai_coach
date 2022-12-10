@@ -73,11 +73,12 @@ def main():
                 result.count, target, result.feedback, prior_feedback)
 
             # Frames per second
-            fps.take_sample()
-            the_fps = fps.frames_per_second()
-            if the_fps and (fps.most_recent_time() - last_fps_print) > 1:
-                print(f'{the_fps:.2f} frames per second')
-                last_fps_print = fps.most_recent_time()
+            if args.show_frames_per_second:
+                fps.take_sample()
+                the_fps = fps.frames_per_second()
+                if the_fps and (fps.most_recent_time() - last_fps_print) > 1:
+                    print(f'{the_fps:.2f} frames per second')
+                    last_fps_print = fps.most_recent_time()
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -98,8 +99,11 @@ def run_argument_parser():
         '--video-file', help='File with video of exercise (example: file.mp4)')
     parser.add_argument(
         '--target', '-t',
-        help='The number of reps you would like to complete (example: 20)'
-    )
+        help='The number of reps you would like to complete (example: 20)')
+    parser.add_argument(
+        '--show-frames-per-second', '--fps',
+        action='store_true',
+        help='Show frames per second')
     args = parser.parse_args()
     return args
 
