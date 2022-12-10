@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 
+"""
+Example usage:
+
+$ bin/process_images.py data/pushup_up/*
+$ bin/process_images.py --show tests/mike_pushup_down_small.jpg
+"""
+
 import argparse
 import json
 
