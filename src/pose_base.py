@@ -14,32 +14,22 @@ class LandmarkLabel:
 
 
 class BasePoseDetector:
-    def __init__(self, mode=False, complexity=1, smooth_landmarks=True,
-                 enable_segmentation=False, smooth_segmentation=True,
-                 detection_con=0.5, track_con=0.5):
-        self.mode = mode
-        self.complexity = complexity
-        self.smooth_landmarks = smooth_landmarks
-        self.enable_segmentation = enable_segmentation
-        self.smooth_segmentation = smooth_segmentation
-        self.detection_con = detection_con
-        self.track_con = track_con
-
+    def __init__(self, static_image_mode=False, model_complexity=1,
+                 smooth_landmarks=True, enable_segmentation=False,
+                 smooth_segmentation=True, min_detection_confidence=0.5,
+                 min_track_confidence=0.5):
         self.mp_draw = mp.solutions.drawing_utils
         self.mp_pose = mp.solutions.pose
-        self.results = None
-        self.lm_list = []
-
-        # Set attributes in __init__ to make IDE happy
-        self.pose = None
-
-        self._reset_pose()
-
-    def _reset_pose(self):
+        self.pose_process_results = None
         self.pose = self.mp_pose.Pose(
-            self.mode, self.complexity, self.smooth_landmarks,
-            self.enable_segmentation, self.smooth_segmentation,
-            self.detection_con, self.track_con)
+            static_image_mode=static_image_mode,
+            model_complexity=model_complexity,
+            smooth_landmarks=smooth_landmarks,
+            enable_segmentation=enable_segmentation,
+            smooth_segmentation=smooth_segmentation,
+            min_detection_confidence=min_detection_confidence,
+            min_tracking_confidence=min_track_confidence)
+        self.lm_list = []
 
     def find_pose_and_draw_landmarks(self, img, draw=True):
         """Return img with landmarks drawn (if draw=True).
@@ -47,27 +37,26 @@ class BasePoseDetector:
         :param img  cv2 image (i.e. BGR)
         :param draw  If true, draw landmarks on img before returning it
 
-        Also store pose landmarks in self.results."""
-        # _reset_pose or it annotates with the wrong angles
-        # See https://github.com/mcassano/ai_coach/issues/60
-        self._reset_pose()
+        Also store pose landmarks in self.pose_process_results."""
         # If we've found a new pose, pitch the old lm_list from find_position
         self.lm_list = []
 
         # pose.process takes RGB
         img_rgb = img[:, :, ::-1]
-        self.results = self.pose.process(img_rgb)
+        self.pose_process_results = self.pose.process(img_rgb)
 
-        if self.results.pose_landmarks and draw:
-            self.mp_draw.draw_landmarks(img, self.results.pose_landmarks,
-                                        self.mp_pose.POSE_CONNECTIONS)
+        if self.pose_process_results.pose_landmarks and draw:
+            self.mp_draw.draw_landmarks(
+                img, self.pose_process_results.pose_landmarks,
+                self.mp_pose.POSE_CONNECTIONS)
 
         return img
 
     def find_position(self, img, draw=True):
         self.lm_list = []
-        if self.results.pose_landmarks:
-            for the_id, lm in enumerate(self.results.pose_landmarks.landmark):
+        if self.pose_process_results.pose_landmarks:
+            for the_id, lm in enumerate(
+                    self.pose_process_results.pose_landmarks.landmark):
                 # finding height, width of the image printed
                 h, w, _c = img.shape
                 # Determining the pixels of the landmarks
