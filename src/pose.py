@@ -2,11 +2,13 @@
 import math
 
 import cv2
-from src.base import BasePoseDetector
+from src.pose_base import BasePoseDetector
 
 
 class PoseDetector(BasePoseDetector):
     def find_and_draw_angle(self, img, p1, p2, p3, draw=True):
+        assert self.lm_list, 'Call self.find_position first'
+
         # Get the landmarks
         ll1 = self.lm_list[p1]
         x1, y1 = ll1.x, ll1.y

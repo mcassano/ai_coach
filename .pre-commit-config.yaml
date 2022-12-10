@@ -46,6 +46,7 @@ repos:
       args:
         - --disable=consider-using-in
         - --disable=disallowed-name
+        - --disable=fixme
         - --disable=import-error
         - --disable=logging-fstring-interpolation
         - --disable=missing-class-docstring

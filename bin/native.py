@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import argparse
+import time
+from collections import deque
 
 import cv2
 from src.advice_steps import AdviceSteps
@@ -9,6 +11,31 @@ from src.audio import Audio
 from src.display import Display
 from src.movement_extractor import MovementExtractor
 from src.util import logging_basic_config
+
+
+class FramesPerSecond:
+    """Track frames per second"""
+    def __init__(self):
+        # last 5 times
+        self.times = deque(maxlen=5)
+
+    def take_sample(self):
+        self.times.appendleft(time.time())
+
+    def most_recent_time(self):
+        return self.times[0]
+
+    def frames_per_second(self):
+        """Return frames per second if there are enough samples."""
+        # TODO: check that this is correct
+        num_times = len(self.times)
+        fps = None
+        if num_times >= 5:
+            prev_time = self.times.pop()
+            the_time = self.times[0]
+            fps = (num_times - 1) / (
+                    the_time - prev_time)
+        return fps
 
 
 def main():
@@ -31,9 +58,11 @@ def main():
         if args.target is not None \
         else movement['default_target']
     print(f'Using {movement["name"]} movement, target: {target}')
+    fps = FramesPerSecond()
+    last_fps_print = 0
     while cap.isOpened():
-        ret, frame = cap.read()
-        if ret:
+        success, frame = cap.read()
+        if success:
             prior_feedback = feedback
             result = annotator.annotate_frame(frame)
             feedback = result.feedback
@@ -42,6 +71,14 @@ def main():
 
             audio.play_sound_if_applicable(
                 result.count, target, result.feedback, prior_feedback)
+
+            # Frames per second
+            if args.show_frames_per_second:
+                fps.take_sample()
+                the_fps = fps.frames_per_second()
+                if the_fps and (fps.most_recent_time() - last_fps_print) > 1:
+                    print(f'{the_fps:.2f} frames per second')
+                    last_fps_print = fps.most_recent_time()
 
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
@@ -62,8 +99,11 @@ def run_argument_parser():
         '--video-file', help='File with video of exercise (example: file.mp4)')
     parser.add_argument(
         '--target', '-t',
-        help='The number of reps you would like to complete (example: 20)'
-    )
+        help='The number of reps you would like to complete (example: 20)')
+    parser.add_argument(
+        '--show-frames-per-second', '--fps',
+        action='store_true',
+        help='Show frames per second')
     args = parser.parse_args()
     return args
 

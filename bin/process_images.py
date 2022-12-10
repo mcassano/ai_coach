@@ -32,7 +32,10 @@ def main():
     logging_basic_config()
 
     movement = MovementExtractor.get_movement(args.movement)
-    annotator = Annotator(movement)
+    annotator = Annotator(
+        movement,
+        # annotate images that may be completely unrelated to each other
+        static_image_mode=True)
 
     print('[')
     idx = 0
