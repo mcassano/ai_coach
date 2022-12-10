@@ -80,7 +80,7 @@ def main():
                     print(f'{the_fps:.2f} frames per second')
                     last_fps_print = fps.most_recent_time()
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if cv2.waitKey(10) & 0xFF == ord('q'):
             break
 
     cap.release()
