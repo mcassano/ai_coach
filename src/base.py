@@ -48,10 +48,13 @@ class BasePoseDetector:
         :param draw  If true, draw landmarks on img before returning it
 
         Also store pose landmarks in self.results."""
-        # pose.process takes RGB
         # _reset_pose or it annotates with the wrong angles
         # See https://github.com/mcassano/ai_coach/issues/60
         self._reset_pose()
+        # If we've found a new pose, pitch the old lm_list from find_position
+        self.lm_list = []
+
+        # pose.process takes RGB
         img_rgb = img[:, :, ::-1]
         self.results = self.pose.process(img_rgb)
 
