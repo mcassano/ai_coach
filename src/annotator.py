@@ -16,10 +16,9 @@ class Annotator:
         """
         self.recorded_count = 0
         self.direction = 0
-        self.feedback = ''
-        self.per = 0
         self.detector = PoseDetector(**kwargs)
         self.movement = movement
+        # TODO: remove self.right_form.  It is transient.
         self.right_form = False
 
     def annotate_frame(self, frame):
@@ -35,6 +34,8 @@ class Annotator:
         # logger.debug(f'in_frame {all_points_in_frame} lm_list {lm_list}')
         logger.debug(f'in_frame {all_points_in_frame}')
         count = 0
+        feedback = "Can't see your face"
+        per = None
         success = False
         angles = {}
         if lm_list:
@@ -49,7 +50,7 @@ class Annotator:
                     landmarks[recipe_array[2]])
 
             # Percentage of success of movement
-            self.per = np.interp(
+            per = np.interp(
                 angles[self.movement['steps'][0]['requirement'][0]['body']],
                 (self.movement['steps'][1]['requirement'][0]['angle'],
                  self.movement['steps'][0]['requirement'][0]['angle']),
@@ -58,6 +59,9 @@ class Annotator:
             logger.debug(f'angles: {angles}')
 
             # Check to ensure right form before starting the program
+            # TODO: remove "self.right_form or"?
+            # Why is that there?  That allows True even if the form is no
+            # longer right
             self.right_form = (self.right_form
                                or (all_points_in_frame
                                    and Annotator.step_is_validated(
@@ -67,41 +71,41 @@ class Annotator:
 
             # Check for full range of motion for the movement
             if not all_points_in_frame:
-                self.feedback = 'Get In Frame'
+                feedback = 'Get In Frame'
             elif self.right_form:
-                if self.per == 0:
+                if per == 0:
                     step = self.movement['steps'][1]
                     next_step = self.movement['steps'][0]
                     if Annotator.step_is_validated(
                             step['requirement'],
                             angles):
-                        self.feedback = next_step['name']
+                        feedback = next_step['name']
                         if self.direction == 0:
                             count = 0.5
                             self.direction = 1
-                if self.per == 100:
+                if per == 100:
                     step = self.movement['steps'][0]
                     next_step = self.movement['steps'][1]
                     if Annotator.step_is_validated(
                             step['requirement'],
                             angles):
-                        self.feedback = next_step['name']
+                        feedback = next_step['name']
                         if self.direction == 1:
                             count = 0.5
                             self.direction = 0
             else:
-                self.feedback = 'Fix Form'
+                feedback = 'Fix Form'
 
             self.recorded_count = self.recorded_count + count
             success = True
         else:
             logger.debug('annotate frame found no pose ..')
 
-        logger.debug(f'\'{self.feedback}\' \'{self.recorded_count}\'')
+        logger.debug(f'\'{feedback}\' \'{self.recorded_count}\'')
         return AnnotationResult(frame,
-                                self.feedback,
+                                feedback,
                                 self.recorded_count,
-                                self.per,
+                                per,
                                 self.direction,
                                 self.right_form,
                                 success,

@@ -11,6 +11,11 @@ class Display:
         feedback = annotation_result.feedback
         per = annotation_result.per
         frame = annotation_result.frame
+
+        if per is None:
+            # We aren't actually in an exercise
+            return
+
         # Draw Bar
         if form:
             cv2.rectangle(frame, (580, 50), (600, 380), (0, 255, 0), 3)
