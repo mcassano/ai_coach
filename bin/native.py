@@ -16,7 +16,8 @@ from src.util import logging_basic_config
 class FramesPerSecond:
     """Track frames per second"""
     def __init__(self):
-        self.times = deque()
+        # last 5 times
+        self.times = deque(maxlen=5)
 
     def take_sample(self):
         self.times.appendleft(time.time())
