@@ -25,20 +25,15 @@ class TestAnnotator(unittest.TestCase):
         self.detector = PoseDetector()
 
     def test_up_down_up_down_good_results(self):
-        annotator = Annotator(MovementExtractor.get_movement('Push-up'))
+        annotator = Annotator(MovementExtractor.get_movement('Push-up'),
+                              static_image_mode=True)
 
         # Go up-down several times and check that the results are correct
         for idx in range(0, 5):
-            for _ in range(0, 5):
-                annotator.annotate_frame(
-                    load_frame(self.pushup_up_file_name))
             result = annotator.annotate_frame(
                 load_frame(self.pushup_up_file_name))
             self.check_results([idx, 'Down', True, 100.0, True], result)
 
-            for _ in range(0, 5):
-                annotator.annotate_frame(
-                    load_frame(self.pushup_down_file_name))
             result = annotator.annotate_frame(
                 load_frame(self.pushup_down_file_name))
             self.check_results([idx + 0.5, 'Up', True, 0.0, True], result)

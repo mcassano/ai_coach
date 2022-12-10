@@ -1,7 +1,9 @@
 import json
+import os
 from typing import Sequence
 
-MOVEMENT_CONFIGURATION_FILE = './movements.json'
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+MOVEMENT_CONFIGURATION_FILE = '../movements.json'
 
 
 class MovementExtractor:
@@ -19,7 +21,7 @@ class MovementExtractor:
 
     @staticmethod
     def read_movements(path: str) -> dict:
-        with open(path) as the_file:
+        with open(os.path.join(THIS_DIR, path)) as the_file:
             return json.load(the_file)
 
     @staticmethod
