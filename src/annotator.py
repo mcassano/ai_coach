@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 class Annotator:
-    def __init__(self, movement):
+    def __init__(self, movement: dict):
         self.recorded_count = 0
         self.direction = 0
         self.feedback = ''

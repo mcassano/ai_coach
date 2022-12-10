@@ -6,7 +6,7 @@ MOVEMENT_CONFIGURATION_FILE = './movements.json'
 
 class MovementExtractor:
     @staticmethod
-    def get_movement(movement_name: str):
+    def get_movement(movement_name: str) -> dict:
         movements = MovementExtractor.read_movements(
                             MOVEMENT_CONFIGURATION_FILE)
         try:
@@ -18,7 +18,7 @@ class MovementExtractor:
                 from err
 
     @staticmethod
-    def read_movements(path: str):
+    def read_movements(path: str) -> dict:
         with open(path) as the_file:
             return json.load(the_file)
 
