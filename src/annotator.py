@@ -9,12 +9,12 @@ logger = logging.getLogger(__name__)
 
 
 class Annotator:
-    def __init__(self, movement: dict):
+    def __init__(self, movement: dict, **kwargs):
         self.recorded_count = 0
         self.direction = 0
         self.feedback = ''
         self.per = 0
-        self.detector = PoseDetector()
+        self.detector = PoseDetector(**kwargs)
         self.movement = movement
         self.right_form = False
 
