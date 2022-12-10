@@ -27,12 +27,19 @@ class BasePoseDetector:
 
         self.mp_draw = mp.solutions.drawing_utils
         self.mp_pose = mp.solutions.pose
+        self.results = None
+        self.lm_list = []
+
+        # Set attributes in __init__ to make IDE happy
+        self.pose = None
+
+        self._reset_pose()
+
+    def _reset_pose(self):
         self.pose = self.mp_pose.Pose(
             self.mode, self.complexity, self.smooth_landmarks,
             self.enable_segmentation, self.smooth_segmentation,
             self.detection_con, self.track_con)
-        self.results = None
-        self.lm_list = []
 
     def find_pose_and_draw_landmarks(self, img, draw=True):
         """Return img with landmarks drawn (if draw=True).
@@ -42,6 +49,9 @@ class BasePoseDetector:
 
         Also store pose landmarks in self.results."""
         # pose.process takes RGB
+        # _reset_pose or it annotates with the wrong angles
+        # See https://github.com/mcassano/ai_coach/issues/60
+        self._reset_pose()
         img_rgb = img[:, :, ::-1]
         self.results = self.pose.process(img_rgb)
 
