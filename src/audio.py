@@ -25,11 +25,12 @@ class Audio:
     def _play_count(self, count):
         # make sure count isn't a decimal: 1.0 --> 1
         count = int(count)
-        path = os.path.join(THIS_DIR, '../audio', 'temp.mp3')
+        path = os.path.join(THIS_DIR, '../audio/count', f'{count}.mp3')
+        if not os.path.exists(path):
+            # generate count audio
+            tts = gTTS(str(count), lang='en', slow=False)
+            tts.save(path)
 
-        # generate count audio
-        tts = gTTS(str(count), lang='en', slow=False)
-        tts.save(path)
         self._play_audio_file(path)
 
     def play_sound_if_applicable(self, count, target, feedback,
