@@ -15,8 +15,13 @@ class Audio:
     def __init__(self):
         self._last_audio_time = 0
 
+    @staticmethod
+    def _audio_full_path(path):
+        return os.path.join(THIS_DIR, '../audio', path)
+
     def _play_audio_file(self, path: str):
-        playsound(os.path.join(THIS_DIR, '../audio', path), block=False)
+        playsound(self._audio_full_path(path), block=False)
+        logger.debug(f'Play audio {path}')
         self._last_audio_time = time.time()
 
     def _play_advice_step(self, step: AdviceSteps):
@@ -25,11 +30,12 @@ class Audio:
     def _play_count(self, count):
         # make sure count isn't a decimal: 1.0 --> 1
         count = int(count)
-        path = os.path.join(THIS_DIR, '../audio/count', f'{count}.mp3')
-        if not os.path.exists(path):
+        path = f'count/{count}.mp3'
+        fullpath = self._audio_full_path(path)
+        if not os.path.exists(fullpath):
             # generate count audio
             tts = gTTS(str(count), lang='en', slow=False)
-            tts.save(path)
+            tts.save(fullpath)
 
         self._play_audio_file(path)
 
