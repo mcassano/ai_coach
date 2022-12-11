@@ -16,7 +16,6 @@ class Audio:
         self._last_audio_time = 0
 
     def _play_audio_file(self, path: str):
-        logger.debug(f'path: {path}')
         playsound(os.path.join(THIS_DIR, '../audio', path), block=False)
         self._last_audio_time = time.time()
 
@@ -26,11 +25,11 @@ class Audio:
     def _play_count(self, count):
         # make sure count isn't a decimal: 1.0 --> 1
         count = int(count)
-        path = f'../audio/count/{count}.mp3'
-        if not os.path.exists(os.path.join(THIS_DIR, '../audio', path)):
-            # generate count audio
-            tts = gTTS(str(count), lang='en', slow=False)
-            tts.save(path)
+        path = os.path.join(THIS_DIR, '../audio', 'temp.mp3')
+
+        # generate count audio
+        tts = gTTS(str(count), lang='en', slow=False)
+        tts.save(path)
         self._play_audio_file(path)
 
     def play_sound_if_applicable(self, count, target, feedback,
