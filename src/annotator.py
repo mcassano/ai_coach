@@ -109,6 +109,7 @@ class Annotator:
         # generate feedback then give the same feedback as the prior frame
         if feedback is None:
             feedback = self.prior_feedback
+            logger.debug('feedback is None, use prior_feedback')
 
         # Store the current feedback because we might need it for next frame
         self.prior_feedback = feedback
