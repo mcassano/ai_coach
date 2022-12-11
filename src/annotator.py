@@ -35,6 +35,7 @@ class Annotator:
         # logger.debug(f'in_frame {all_points_in_frame} lm_list {lm_list}')
         logger.debug(f'in_frame {all_points_in_frame}')
         count = 0
+        rep_completed = False
         feedback = None
         per = None
         success = False
@@ -93,6 +94,7 @@ class Annotator:
                         feedback = next_step['name']
                         if self.direction == 1:
                             count = 0.5
+                            rep_completed = True
                             self.direction = 0
             else:
                 feedback = 'Fix Form'
@@ -109,12 +111,14 @@ class Annotator:
         # generate feedback then give the same feedback as the prior frame
         if feedback is None:
             feedback = self.prior_feedback
+            logger.debug('feedback is None, use prior_feedback')
 
         # Store the current feedback because we might need it for next frame
         self.prior_feedback = feedback
         return AnnotationResult(frame,
                                 feedback,
                                 self.recorded_count,
+                                rep_completed,
                                 per,
                                 self.direction,
                                 self.right_form,
