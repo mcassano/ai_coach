@@ -35,7 +35,7 @@ class Annotator:
         # logger.debug(f'in_frame {all_points_in_frame} lm_list {lm_list}')
         logger.debug(f'in_frame {all_points_in_frame}')
         count = 0
-        count_changed = False
+        rep_completed = False
         feedback = None
         per = None
         success = False
@@ -94,7 +94,7 @@ class Annotator:
                         feedback = next_step['name']
                         if self.direction == 1:
                             count = 0.5
-                            count_changed = True
+                            rep_completed = True
                             self.direction = 0
             else:
                 feedback = 'Fix Form'
@@ -118,7 +118,7 @@ class Annotator:
         return AnnotationResult(frame,
                                 feedback,
                                 self.recorded_count,
-                                count_changed,
+                                rep_completed,
                                 per,
                                 self.direction,
                                 self.right_form,

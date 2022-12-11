@@ -8,7 +8,7 @@ class AnnotationResult:
     frame: np.ndarray
     feedback: str
     count: float
-    count_changed: bool
+    rep_completed: bool
     per: float
     direction: int
     form: bool
