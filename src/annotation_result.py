@@ -1,12 +1,16 @@
+from dataclasses import dataclass
+
+import numpy as np
+
+
+@dataclass
 class AnnotationResult:
-    def __init__(self, frame, feedback: str, count: float,
-                 per: float, direction: int, form: bool,
-                 success, angles: dict):
-        self.frame = frame
-        self.feedback = feedback
-        self.count = count
-        self.per = per
-        self.direction = direction
-        self.form = form
-        self.success = success
-        self.angles = angles
+    frame: np.ndarray
+    feedback: str
+    count: float
+    count_changed: bool
+    per: float
+    direction: int
+    form: bool
+    success: bool
+    angles: dict

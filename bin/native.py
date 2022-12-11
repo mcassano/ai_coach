@@ -70,7 +70,8 @@ def main():
             display.display_result(result)
 
             audio.play_sound_if_applicable(
-                result.count, target, result.feedback, prior_feedback)
+                result.count, result.count_changed, target,
+                result.feedback, prior_feedback)
 
             # Frames per second
             if args.show_frames_per_second:

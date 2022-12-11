@@ -39,11 +39,21 @@ class Audio:
 
         self._play_audio_file(path)
 
-    def play_sound_if_applicable(self, count, target, feedback,
-                                 prior_feedback):
+    def play_sound_if_applicable(
+            self, count, count_changed, target, feedback,
+            prior_feedback):
         logger.debug(f'{count} {target} {feedback} {prior_feedback}')
         seconds_since_audio = time.time() - self._last_audio_time
 
+        # If the count changed, play the new one
+        if count_changed:
+            if count == target:
+                self._play_advice_step(AdviceSteps.DONE)
+            # Give specific count
+            elif count > 0:
+                self._play_count(count)
+            else:
+                self._play_advice_step(AdviceSteps.GOOD)
         # Get in Frame but only after some seconds
         if (feedback == AdviceSteps.GET_IN_FRAME.value.title
                 and seconds_since_audio > 2):
@@ -56,16 +66,6 @@ class Audio:
         elif (prior_feedback == AdviceSteps.DOWN.value.title
               and feedback == AdviceSteps.UP.value.title):
             self._play_advice_step(AdviceSteps.UP)
-        # Was coming up and completed a rep
-        elif (prior_feedback == AdviceSteps.UP.value.title
-              and feedback == AdviceSteps.DOWN.value.title):
-            if count == target:
-                self._play_advice_step(AdviceSteps.DONE)
-            # Give specific count
-            elif count > 0:
-                self._play_count(count)
-            else:
-                self._play_advice_step(AdviceSteps.GOOD)
         # Fixed form
         elif (prior_feedback == AdviceSteps.FIX_FORM.value.title
               and feedback == AdviceSteps.DOWN.value.title):
