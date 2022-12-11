@@ -20,6 +20,7 @@ class Annotator:
         self.movement = movement
         # TODO: remove self.right_form.  It is transient.
         self.right_form = False
+        self.prior_feedback = ''
 
     def annotate_frame(self, frame):
         # This was inspired from https://github.com/terminalai/PushUpCounter
@@ -34,7 +35,7 @@ class Annotator:
         # logger.debug(f'in_frame {all_points_in_frame} lm_list {lm_list}')
         logger.debug(f'in_frame {all_points_in_frame}')
         count = 0
-        feedback = "Can't see your face"
+        feedback = None
         per = None
         success = False
         angles = {}
@@ -99,9 +100,18 @@ class Annotator:
             self.recorded_count = self.recorded_count + count
             success = True
         else:
+            # Nothing was found, someone should get in the frame
+            feedback = "Can't see your face"
             logger.debug('annotate frame found no pose ..')
 
         logger.debug(f'\'{feedback}\' \'{self.recorded_count}\'')
+        # Store this for next frame, if the current frame does not
+        # generate feedback then give the same feedback as the prior frame
+        if feedback is None:
+            feedback = self.prior_feedback
+
+        # Store the current feedback because we might need it for next frame
+        self.prior_feedback = feedback
         return AnnotationResult(frame,
                                 feedback,
                                 self.recorded_count,
