@@ -13,7 +13,7 @@ import json
 import cv2
 import readchar
 from src.annotator import Annotator
-from src.movement_extractor import MovementExtractor
+from src.movement import Movement
 from src.util import logging_basic_config
 
 
@@ -23,7 +23,7 @@ def main():
         'imagefile', help='Image file(s) to annotate', nargs='+')
     parser.add_argument(
         '--movement', '-m', help='Movement name', default='Push-up',
-        choices=MovementExtractor.get_list_of_movements())
+        choices=Movement.get_list_of_movements())
     parser.add_argument(
         '--show-image', help='Show the image on the screen',
         action='store_true')
@@ -31,7 +31,7 @@ def main():
 
     logging_basic_config()
 
-    movement = MovementExtractor.get_movement(args.movement)
+    movement = Movement.get_movement(args.movement)
     annotator = Annotator(
         movement,
         # annotate images that may be completely unrelated to each other
