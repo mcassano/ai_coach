@@ -51,7 +51,7 @@ class Annotator:
             self.right_form = (
                     self.right_form
                     or (all_points_in_frame
-                        and self.movement.all_steps_validated(angles)))
+                        and self.movement.first_step_validated(angles)))
 
             # Check for full range of motion for the movement
             if not all_points_in_frame:

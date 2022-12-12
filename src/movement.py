@@ -82,8 +82,8 @@ class Movement:
             lm_list[idx].in_frame
             for idx in self._indexes_from_angles)
 
-    def all_steps_validated(self, angles):
-        return all(step.is_validated(angles) for step in self.steps)
+    def first_step_validated(self, angles):
+        return self.steps[0].is_validated(angles)
 
     @staticmethod
     def _landmark_indexes_from_all_angles(angles):
