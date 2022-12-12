@@ -56,8 +56,8 @@ def main():
     feedback = AdviceSteps.GET_IN_FRAME.value.title
     target = args.target \
         if args.target is not None \
-        else movement['default_target']
-    print(f'Using {movement["name"]} movement, target: {target}')
+        else movement.default_target
+    print(f'Using {movement.name} movement, target: {target}')
     fps = FramesPerSecond()
     last_fps_print = 0
     while cap.isOpened():

@@ -60,6 +60,7 @@ class Step:
 class Movement:
     def __init__(self, definition: dict):
         self.name = definition['name']
+        self.default_target = definition['default_target']
         self.angles = [Angle(defn) for defn in definition['angles']]
         self.steps = [Step(defn) for defn in definition['steps']]
         self._indexes_from_angles = self._landmark_indexes_from_all_angles(
