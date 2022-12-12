@@ -17,6 +17,7 @@ class TestMovementExtractor(unittest.TestCase):
 
         mov = Movement.get_movement('Push-up')
         self.assertEqual('Push-up', mov.name)
+        self.assertEqual(10, mov.default_target)
 
 
 class TestPredicates(unittest.TestCase):
