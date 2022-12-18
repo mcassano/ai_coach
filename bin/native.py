@@ -9,7 +9,7 @@ from src.advice_steps import AdviceSteps
 from src.annotator import Annotator
 from src.audio import Audio
 from src.display import Display
-from src.movement import Movement
+from src.exercise import Exercise
 from src.util import logging_basic_config
 
 
@@ -43,7 +43,7 @@ def main():
 
     logging_basic_config(args.log_level)
 
-    movement = Movement.get_movement(args.movement)
+    movement = Exercise.exercise(args.movement)
     annotator = Annotator(movement)
     audio = Audio()
     display = Display('AI Coach')
@@ -95,7 +95,7 @@ def run_argument_parser():
         choices=['NOTSET', 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'])
     parser.add_argument(
         '--movement', '-m', help='Movement name', default='Push-up',
-        choices=Movement.get_list_of_movements())
+        choices=Exercise.exercise_names())
     parser.add_argument(
         '--video-file', help='File with video of exercise (example: file.mp4)')
     parser.add_argument(

@@ -3,7 +3,7 @@ import unittest
 
 import cv2
 from src.annotator import Annotator
-from src.movement import Movement
+from src.exercise import Exercise
 from src.pose import PoseDetector
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -24,7 +24,7 @@ class TestAnnotator(unittest.TestCase):
         self.detector = PoseDetector()
 
     def test_up_down_up_down_good_results(self):
-        annotator = Annotator(Movement.get_movement('Push-up'),
+        annotator = Annotator(Exercise.exercise('Push-up'),
                               static_image_mode=True)
 
         # Go up-down several times and check that the results are correct
