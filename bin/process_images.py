@@ -22,7 +22,7 @@ def main():
     parser.add_argument(
         'imagefile', help='Image file(s) to annotate', nargs='+')
     parser.add_argument(
-        '--movement', '-m', help='Movement name', default='Push-up',
+        '--exercise', '-e', help='Exercise name', default='Push-up',
         choices=Exercise.exercise_names())
     parser.add_argument(
         '--show-image', help='Show the image on the screen',
@@ -31,9 +31,9 @@ def main():
 
     logging_basic_config()
 
-    movement = Exercise.exercise(args.movement)
+    exercise = Exercise.exercise(args.exercise)
     annotator = Annotator(
-        movement,
+        exercise,
         # annotate images that may be completely unrelated to each other
         static_image_mode=True)
 

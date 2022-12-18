@@ -43,8 +43,8 @@ def main():
 
     logging_basic_config(args.log_level)
 
-    movement = Exercise.exercise(args.movement)
-    annotator = Annotator(movement)
+    exercise = Exercise.exercise(args.exercise)
+    annotator = Annotator(exercise)
     audio = Audio()
     display = Display('AI Coach')
 
@@ -56,8 +56,8 @@ def main():
     feedback = AdviceSteps.GET_IN_FRAME.value.title
     target = args.target \
         if args.target is not None \
-        else movement.default_target
-    print(f'Using {movement.name} movement, target: {target}')
+        else exercise.default_target
+    print(f'Using {exercise.name} exercise, target: {target}')
     fps = FramesPerSecond()
     last_fps_print = 0
     while cap.isOpened():
@@ -94,7 +94,7 @@ def run_argument_parser():
         '--log-level', '-l', help='log level',
         choices=['NOTSET', 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'])
     parser.add_argument(
-        '--movement', '-m', help='Movement name', default='Push-up',
+        '--exercise', '-e', help='Exercise name', default='Push-up',
         choices=Exercise.exercise_names())
     parser.add_argument(
         '--video-file', help='File with video of exercise (example: file.mp4)')

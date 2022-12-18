@@ -40,7 +40,7 @@ class Annotator:
                 angles[angle.name] = self.detector.find_and_draw_angle(
                     frame, *angle.landmark_indexes)
 
-            # Percentage of success of movement
+            # Percentage of success of exercise
             per = self.exercise.percentage(angles)
 
             logger.debug(f'angles: {angles}')
@@ -54,7 +54,7 @@ class Annotator:
                     or (all_points_in_frame
                         and self.exercise.first_step_validated(angles)))
 
-            # Check for full range of motion for the movement
+            # Check for full range of motion for the exercise
             if not all_points_in_frame:
                 feedback = 'Get In Frame'
             elif self.right_form:
