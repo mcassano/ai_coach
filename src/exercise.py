@@ -40,8 +40,11 @@ class Requirement:
             return test_value < self.angle
         if self._test == 'lte':
             return test_value <= self.angle
+        if self._test == 'near':
+            return abs(test_value - self.angle) <= 5
 
-        raise ValueError(f'{body_value} {test_value}')
+        raise ValueError(
+            f'Unknown test {self._test}, {body_value} {test_value}')
 
     def __str__(self):
         return f'{self.body_angle} {self._test} {self.angle}'

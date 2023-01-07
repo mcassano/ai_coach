@@ -39,6 +39,24 @@
           }
       ],
 
+      "plank on elbows": [
+          {
+            "body_angle": "left_elbow",
+            "test": "near",
+            "angle": 90
+          },
+          {
+            "body_angle": "left_shoulder",
+            "test": "near",
+            "angle": 90
+          },
+          {
+            "body_angle": "left_hip",
+            "test": "near",
+            "angle": 180
+          }
+      ],
+
       "flapping cross up": [
         {
           "body_angle": "left_shoulder",
@@ -96,6 +114,17 @@
                 }
             ],
             "default_target_reps": 30
+        },
+        "Plank": {
+            "steps": [
+                {
+                    "name": "plank",
+                    "pose": "plank on elbows",
+                    "hold": true,
+                    "default_target_seconds": 30
+                }
+            ],
+            "default_target_reps": 1
         }
     }
 }
