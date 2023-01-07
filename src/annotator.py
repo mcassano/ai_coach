@@ -47,21 +47,13 @@ class Annotator:
                 angles[angle.name] = self.detector.find_and_draw_angle(
                     frame, *angle.landmark_indexes)
 
-            # Percentage of success of exercise
-            if num_steps == 2:
-                per = self.exercise.percentage(angles)
-            else:
-                assert num_steps == 1
-                per = 100
-
             logger.debug(f'angles: {angles}')
 
             # Check to ensure right form before starting the program
-            # TODO: remove "self.right_form or"?
-            # NOTE: currently, right_form is sticky, but that feels weird
-            # What if we get out of form for a one-step exercise?
-            # We want to say "Fix Form" but I think the stickiness will
-            # prevent it.
+            # TODO: remove "self.right_form or"
+            # NOTE: currently, right_form is sticky, but that is not great
+            # What if we get out of form?
+            # We should say "Fix Form" but the stickiness will prevent it.
             self.right_form = (
                     self.right_form
                     or (all_points_in_frame
@@ -72,14 +64,21 @@ class Annotator:
                 self.right_form_seconds = int(
                     time.time() - self.right_form_start)
 
+            # Percentage of success of exercise, and which step we're on
+            if num_steps == 2:
+                per = self.exercise.percentage(angles)
+            else:
+                assert num_steps == 1
+                per = 100
             current_step_idx = 0
             if num_steps == 2 and per == 0:
                 current_step_idx = 1
 
-            # Check for full range of motion for the exercise
+            # Validate step
             if not all_points_in_frame:
                 feedback = 'Get In Frame'
             elif self.right_form:
+                # Check the current step of the exercise
                 count, feedback, rep_completed = self._examine_step(
                     num_steps, current_step_idx, angles)
             else:
