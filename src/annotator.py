@@ -76,7 +76,7 @@ class Annotator:
             if not all_points_in_frame:
                 feedback = 'Get In Frame'
             elif self.right_form:
-                count, feedback, rep_completed = self.examine_step(
+                count, feedback, rep_completed = self._examine_step(
                     num_steps, angles, per)
             else:
                 feedback = 'Fix Form'
@@ -108,7 +108,7 @@ class Annotator:
                                 success,
                                 angles)
 
-    def examine_step(self, num_steps, angles, per):
+    def _examine_step(self, num_steps, angles, per):
         count = 0
         rep_completed = False
         feedback = None
