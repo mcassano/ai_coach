@@ -72,12 +72,16 @@ class Annotator:
                 self.right_form_seconds = int(
                     time.time() - self.right_form_start)
 
+            current_step_idx = 0
+            if num_steps == 2 and per == 0:
+                current_step_idx = 1
+
             # Check for full range of motion for the exercise
             if not all_points_in_frame:
                 feedback = 'Get In Frame'
             elif self.right_form:
                 count, feedback, rep_completed = self._examine_step(
-                    num_steps, angles, per)
+                    num_steps, current_step_idx, angles)
             else:
                 feedback = 'Fix Form'
 
@@ -108,24 +112,23 @@ class Annotator:
                                 success,
                                 angles)
 
-    def _examine_step(self, num_steps, angles, per):
-        count = 0
+    def _examine_step(self, num_steps: int, current_step_idx: int, angles):
+        count = 0.
         rep_completed = False
         feedback = None
+        current_step = self.exercise.steps[current_step_idx]
 
         if num_steps == 2:
-            if per == 0:
-                step = self.exercise.steps[1]
+            if current_step_idx == 1:
                 next_step = self.exercise.steps[0]
-                if step.pose.is_validated(angles):
+                if current_step.pose.is_validated(angles):
                     feedback = next_step.name
                     if self.direction == 0:
                         count = 0.5
                         self.direction = 1
-            if per == 100:
-                step = self.exercise.steps[0]
+            elif current_step_idx == 0:
                 next_step = self.exercise.steps[1]
-                if step.pose.is_validated(angles):
+                if current_step.pose.is_validated(angles):
                     feedback = next_step.name
                     if self.direction == 1:
                         count = 0.5
@@ -133,9 +136,8 @@ class Annotator:
                         self.direction = 0
         else:
             assert num_steps == 1
-            the_step = self.exercise.steps[0]
-            assert the_step.target_seconds > 0
-            if self.right_form_seconds >= the_step.target_seconds:
+            assert current_step.target_seconds > 0
+            if self.right_form_seconds >= current_step.target_seconds:
                 rep_completed = True
                 count = 1
 
