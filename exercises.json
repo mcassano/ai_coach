@@ -80,7 +80,7 @@
                     "pose": "pushup down"
                 }
             ],
-            "default_target": 10
+            "default_target_reps": 10
         },
         "Flapping-Cross": {
             "steps": [
@@ -95,7 +95,7 @@
                     "pose": "flapping cross down"
                 }
             ],
-            "default_target": 30
+            "default_target_reps": 30
         }
     }
 }

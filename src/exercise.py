@@ -91,7 +91,7 @@ class Exercise:
                  all_poses: dict[str, Pose],
                  definition: dict[str, dict]):
         self.name = name
-        self.default_target = definition['default_target']
+        self.default_target_reps = definition['default_target_reps']
         self.steps = [Step(step, all_poses) for step in definition['steps']]
 
         # all angles in all steps

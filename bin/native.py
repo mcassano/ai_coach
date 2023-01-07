@@ -54,10 +54,10 @@ def main():
         capture_input = 0
     cap = cv2.VideoCapture(capture_input)
     feedback = AdviceSteps.GET_IN_FRAME.value.title
-    target = args.target \
-        if args.target is not None \
-        else exercise.default_target
-    print(f'Using {exercise.name} exercise, target: {target}')
+    target_reps = args.target_reps \
+        if args.target_reps is not None \
+        else exercise.default_target_reps
+    print(f'Using {exercise.name} exercise, target_reps: {target_reps}')
     fps = FramesPerSecond()
     last_fps_print = 0
     while cap.isOpened():
@@ -70,7 +70,7 @@ def main():
             display.display_result(result)
 
             audio.play_sound_if_applicable(
-                result.count, result.rep_completed, target,
+                result.count, result.rep_completed, target_reps,
                 result.feedback, prior_feedback)
 
             # Frames per second
@@ -99,7 +99,7 @@ def run_argument_parser():
     parser.add_argument(
         '--video-file', help='File with video of exercise (example: file.mp4)')
     parser.add_argument(
-        '--target', '-t',
+        '--target-reps',
         help='The number of reps you would like to complete (example: 20)')
     parser.add_argument(
         '--show-frames-per-second', '--fps',

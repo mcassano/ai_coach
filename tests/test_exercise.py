@@ -17,7 +17,7 @@ class TestExerciseExtractor(TestCase):
 
         mov = Exercise.exercise('Push-up')
         self.assertEqual('Push-up', mov.name)
-        self.assertEqual(10, mov.default_target)
+        self.assertEqual(10, mov.default_target_reps)
 
 
 class TestAngle(TestCase):
