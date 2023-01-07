@@ -82,8 +82,7 @@ class Annotator:
                     two_step,
                     angles,
                     feedback,
-                    per,
-                    rep_completed)
+                    per)
             else:
                 feedback = 'Fix Form'
 
@@ -114,9 +113,9 @@ class Annotator:
                                 success,
                                 angles)
 
-    def examine_step(self, one_step, two_step, angles, feedback, per,
-                     rep_completed):
+    def examine_step(self, one_step, two_step, angles, feedback, per):
         count = 0
+        rep_completed = False
         if two_step:
             if per == 0:
                 step = self.exercise.steps[1]
