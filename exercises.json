@@ -3,6 +3,7 @@
         "left_elbow": "LEFT_SHOULDER,LEFT_ELBOW,LEFT_WRIST",
         "left_shoulder": "LEFT_ELBOW,LEFT_SHOULDER,LEFT_HIP",
         "left_hip": "LEFT_SHOULDER,LEFT_HIP,LEFT_KNEE",
+        "left_neck": "LEFT_EAR,LEFT_SHOULDER,LEFT_HIP",
 
         "right_shoulder": "RIGHT_ELBOW,RIGHT_SHOULDER,RIGHT_HIP"
     },
@@ -41,19 +42,28 @@
 
       "plank on elbows": [
           {
+            "body_angle": "left_neck",
+            "test": "near",
+            "angle": 180,
+            "near_degrees": 10
+          },
+          {
             "body_angle": "left_elbow",
             "test": "near",
-            "angle": 90
+            "angle": 70,
+            "near_degrees": 10
           },
           {
             "body_angle": "left_shoulder",
             "test": "near",
-            "angle": 90
+            "angle": 80,
+            "near_degrees": 10
           },
           {
             "body_angle": "left_hip",
             "test": "near",
-            "angle": 180
+            "angle": 170,
+            "near_degrees": 10
           }
       ],
 
