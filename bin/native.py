@@ -94,7 +94,7 @@ def run_argument_parser():
         '--log-level', '-l', help='log level',
         choices=['NOTSET', 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'])
     parser.add_argument(
-        '--exercise', '-e', help='Exercise name', default='Push-up',
+        '--exercise', '-e', help='Exercise name', required=True,
         choices=Exercise.exercise_names())
     parser.add_argument(
         '--video-file', help='File with video of exercise (example: file.mp4)')
