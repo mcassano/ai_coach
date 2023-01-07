@@ -24,7 +24,6 @@ class Annotator:
         self.right_form_seconds = None
         self.prior_feedback = ''
 
-    # TODO: Unit test annotate_frame
     def annotate_frame(self, frame):
         # This was inspired from https://github.com/terminalai/PushUpCounter
         frame = self.detector.find_pose_and_draw_landmarks(frame, False)
@@ -76,11 +75,11 @@ class Annotator:
                 feedback = 'Get In Frame'
             elif self.right_form:
                 if two_step:
-                    count, feedback, rep_completed = self.two_step_count(
+                    count, feedback, rep_completed = self._two_step_count(
                         angles, count, feedback, per, rep_completed)
                 else:
                     assert one_step
-                    count, rep_completed = self.one_step_count(
+                    count, rep_completed = self._one_step_count(
                         count, rep_completed)
             else:
                 feedback = 'Fix Form'
@@ -112,7 +111,7 @@ class Annotator:
                                 success,
                                 angles)
 
-    def one_step_count(self, count, rep_completed):
+    def _one_step_count(self, count, rep_completed):
         the_step = self.exercise.steps[0]
         assert the_step.target_seconds > 0
         if self.right_form_seconds >= the_step.target_seconds:
@@ -120,7 +119,7 @@ class Annotator:
             count = 1
         return count, rep_completed
 
-    def two_step_count(self, angles, count, feedback, per, rep_completed):
+    def _two_step_count(self, angles, count, feedback, per, rep_completed):
         if per == 0:
             step = self.exercise.steps[1]
             next_step = self.exercise.steps[0]
