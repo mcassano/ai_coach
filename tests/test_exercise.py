@@ -130,12 +130,15 @@ class TestPredicates(TestCase):
 
     def test_step_is_validated_all_not_good(self):
         angles = {'left_elbow': 80,
-                  'shoulder': 90,
-                  'hip': 100
+                  'left_shoulder': 39,
+                  'left_hip': 100
                   }
         step = Step({'name': 'step1', 'pose': 'pushup up'},
                     all_poses=self.all_poses)
         self.assertFalse(step.pose.is_validated(angles))
+        self.assertEqual(
+            {'left_elbow': False, 'left_hip': False, 'left_shoulder': False},
+            step.pose.validation_result(angles))
 
     def test_step_is_validated_one_not_good(self):
         angles = {'left_elbow': 170,
@@ -145,6 +148,9 @@ class TestPredicates(TestCase):
         step = Step({'name': 'step1', 'pose': 'pushup up'},
                     all_poses=self.all_poses)
         self.assertFalse(step.pose.is_validated(angles))
+        self.assertEqual(
+            {'left_elbow': True, 'left_hip': False, 'left_shoulder': True},
+            step.pose.validation_result(angles))
 
     def test_step_is_validated_all_good(self):
         angles = {'left_elbow': 170,
@@ -154,6 +160,9 @@ class TestPredicates(TestCase):
         step = Step({'name': 'step1', 'pose': 'pushup up'},
                     all_poses=self.all_poses)
         self.assertTrue(step.pose.is_validated(angles))
+        self.assertEqual(
+            {'left_elbow': True, 'left_hip': True, 'left_shoulder': True},
+            step.pose.validation_result(angles))
 
     def test_plank_is_validated_all_good(self):
         angles = {'left_elbow': 92,

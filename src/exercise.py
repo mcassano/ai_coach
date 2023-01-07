@@ -61,25 +61,28 @@ class Pose:
     def body_angles(self):
         return {req.body_angle for req in self.requirements}
 
-    def is_validated(self, angles: dict[str, float]):
-        match = 0
+    def validation_result(self, angles: dict[str, float]) -> dict[str, bool]:
+        """Dict with whether each pose angle is valid."""
+        match_result = {}
         for angle_name, angle_value in angles.items():
             logger.debug(f'angle {angle_name} value {angle_value}')
             for requirement in self.requirements:
                 if requirement.body_angle.name == angle_name:
-                    match += 1
                     logger.debug(
                         f'test req {requirement} with'
                         f' angle {angle_name} {angle_value}')
-                    if not requirement.test_req(
-                            requirement.angle, angle_value):
-                        return False
+                    match_result[angle_name] = requirement.test_req(
+                        requirement.angle, angle_value)
                 else:
                     continue
 
         # should have tested all requirements
-        assert match == len(self.requirements)
-        return True
+        assert len(match_result) == len(self.requirements), match_result
+        return match_result
+
+    def is_validated(self, angles: dict[str, float]):
+        """Return True if all pose angles are valid"""
+        return all(self.validation_result(angles).values())
 
 
 class Step:
