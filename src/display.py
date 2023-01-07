@@ -6,8 +6,8 @@ class Display:
         self.display_name = display_name
 
     def display_result(self, annotation_result):
-        count = annotation_result.count
-        form = annotation_result.form
+        count = annotation_result.rep_count
+        form = annotation_result.right_form
         feedback = annotation_result.feedback
         per = annotation_result.per
         frame = annotation_result.frame

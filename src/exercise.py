@@ -30,6 +30,7 @@ class Requirement:
         self.body_angle = all_angles[definition['body_angle']]
         self._test = definition['test']
         self.angle = definition['angle']
+        self._test_near_degrees = definition.get('near_degrees', None)
 
     def test_req(self, body_value, test_value):
         if self._test == 'gt':
@@ -41,7 +42,7 @@ class Requirement:
         if self._test == 'lte':
             return test_value <= self.angle
         if self._test == 'near':
-            return abs(test_value - self.angle) <= 5
+            return abs(test_value - self.angle) <= self._test_near_degrees
 
         raise ValueError(
             f'Unknown test {self._test}, {body_value} {test_value}')
@@ -84,6 +85,8 @@ class Pose:
 class Step:
     def __init__(self, definition: dict, all_poses: dict[str, Pose]):
         self.name = definition['name']
+        # Number of seconds to hold the pose
+        self.target_seconds = definition.get('default_target_seconds', None)
         # NOTE: audio is not currently used
         # self.audio = definition['audio']
         self.pose = all_poses[definition['pose']]

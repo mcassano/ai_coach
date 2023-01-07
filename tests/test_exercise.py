@@ -19,6 +19,12 @@ class TestExerciseExtractor(TestCase):
         self.assertEqual('Push-up', mov.name)
         self.assertEqual(10, mov.default_target_reps)
 
+    def test_plank(self):
+        exer = Exercise.exercise('Plank')
+        self.assertEqual('Plank', exer.name)
+        self.assertEqual(1, len(exer.steps))
+        self.assertEqual(30, exer.steps[0].target_seconds)
+
 
 class TestAngle(TestCase):
     def test_angle(self):
@@ -65,17 +71,20 @@ class TestPredicates(TestCase):
                     {
                         'body_angle': 'left_elbow',
                         'test': 'near',
-                        'angle': 90
+                        'angle': 90,
+                        'near_degrees': 5
                     },
                     {
                         'body_angle': 'left_shoulder',
                         'test': 'near',
-                        'angle': 90
+                        'angle': 90,
+                        'near_degrees': 5
                     },
                     {
                         'body_angle': 'left_hip',
                         'test': 'near',
-                        'angle': 180
+                        'angle': 180,
+                        'near_degrees': 5
                     },
                 ],
                 self.all_angles),
@@ -89,9 +98,16 @@ class TestPredicates(TestCase):
 
     def test_near_true(self):
         req = Requirement(
-            {'body_angle': 'left_elbow', 'test': 'near', 'angle': 90},
+            {'body_angle': 'left_elbow', 'test': 'near',
+             'angle': 90, 'near_degrees': 5},
             all_angles=self.all_angles)
         self.assertTrue(req.test_req('left_elbow', 92))
+
+        req = Requirement(
+            {'body_angle': 'left_elbow', 'test': 'near',
+             'angle': 90, 'near_degrees': 10},
+            all_angles=self.all_angles)
+        self.assertTrue(req.test_req('left_elbow', 98))
 
     def test_convert_requirement_to_predicate_false(self):
         req = Requirement(
@@ -101,7 +117,8 @@ class TestPredicates(TestCase):
 
     def test_near_false(self):
         req = Requirement(
-            {'body_angle': 'left_elbow', 'test': 'near', 'angle': 90},
+            {'body_angle': 'left_elbow', 'test':
+                'near', 'angle': 90, 'near_degrees': 5},
             all_angles=self.all_angles)
         self.assertFalse(req.test_req('left_elbow', 98))
 
