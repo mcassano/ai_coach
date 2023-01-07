@@ -38,10 +38,9 @@ class Annotator:
         success = False
         angles = {}
 
-        assert 1 <= len(self.exercise.steps) <= 2, (
+        num_steps = len(self.exercise.steps)
+        assert 1 <= num_steps <= 2, (
             'We only handle one or two step exercises')
-        two_step = 2 == len(self.exercise.steps)
-        one_step = 1 == len(self.exercise.steps)
 
         if lm_list:
             for angle in self.exercise.angles:
@@ -49,10 +48,10 @@ class Annotator:
                     frame, *angle.landmark_indexes)
 
             # Percentage of success of exercise
-            if two_step:
+            if num_steps == 2:
                 per = self.exercise.percentage(angles)
             else:
-                assert one_step
+                assert num_steps == 1
                 per = 100
 
             logger.debug(f'angles: {angles}')
@@ -78,11 +77,7 @@ class Annotator:
                 feedback = 'Get In Frame'
             elif self.right_form:
                 count, feedback, rep_completed = self.examine_step(
-                    one_step,
-                    two_step,
-                    angles,
-                    feedback,
-                    per)
+                    num_steps, angles, per)
             else:
                 feedback = 'Fix Form'
 
@@ -113,10 +108,12 @@ class Annotator:
                                 success,
                                 angles)
 
-    def examine_step(self, one_step, two_step, angles, feedback, per):
+    def examine_step(self, num_steps, angles, per):
         count = 0
         rep_completed = False
-        if two_step:
+        feedback = None
+
+        if num_steps == 2:
             if per == 0:
                 step = self.exercise.steps[1]
                 next_step = self.exercise.steps[0]
@@ -135,10 +132,11 @@ class Annotator:
                         rep_completed = True
                         self.direction = 0
         else:
-            assert one_step
+            assert num_steps == 1
             the_step = self.exercise.steps[0]
             assert the_step.target_seconds > 0
             if self.right_form_seconds >= the_step.target_seconds:
                 rep_completed = True
                 count = 1
+
         return count, feedback, rep_completed
