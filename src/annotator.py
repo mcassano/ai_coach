@@ -60,6 +60,9 @@ class Annotator:
             # Check to ensure right form before starting the program
             # TODO: remove "self.right_form or"?
             # NOTE: currently, right_form is sticky, but that feels weird
+            # What if we get out of form for a one-step exercise?
+            # We want to say "Fix Form" but I think the stickiness will
+            # prevent it.
             self.right_form = (
                     self.right_form
                     or (all_points_in_frame
@@ -74,13 +77,13 @@ class Annotator:
             if not all_points_in_frame:
                 feedback = 'Get In Frame'
             elif self.right_form:
-                if two_step:
-                    count, feedback, rep_completed = self._two_step_count(
-                        angles, count, feedback, per, rep_completed)
-                else:
-                    assert one_step
-                    count, rep_completed = self._one_step_count(
-                        count, rep_completed)
+                count, feedback, rep_completed = self.examine_step(
+                    one_step,
+                    two_step,
+                    angles,
+                    feedback,
+                    per,
+                    rep_completed)
             else:
                 feedback = 'Fix Form'
 
@@ -111,30 +114,32 @@ class Annotator:
                                 success,
                                 angles)
 
-    def _one_step_count(self, count, rep_completed):
-        the_step = self.exercise.steps[0]
-        assert the_step.target_seconds > 0
-        if self.right_form_seconds >= the_step.target_seconds:
-            rep_completed = True
-            count = 1
-        return count, rep_completed
-
-    def _two_step_count(self, angles, count, feedback, per, rep_completed):
-        if per == 0:
-            step = self.exercise.steps[1]
-            next_step = self.exercise.steps[0]
-            if step.pose.is_validated(angles):
-                feedback = next_step.name
-                if self.direction == 0:
-                    count = 0.5
-                    self.direction = 1
-        if per == 100:
-            step = self.exercise.steps[0]
-            next_step = self.exercise.steps[1]
-            if step.pose.is_validated(angles):
-                feedback = next_step.name
-                if self.direction == 1:
-                    count = 0.5
-                    rep_completed = True
-                    self.direction = 0
+    def examine_step(self, one_step, two_step, angles, feedback, per,
+                     rep_completed):
+        count = 0
+        if two_step:
+            if per == 0:
+                step = self.exercise.steps[1]
+                next_step = self.exercise.steps[0]
+                if step.pose.is_validated(angles):
+                    feedback = next_step.name
+                    if self.direction == 0:
+                        count = 0.5
+                        self.direction = 1
+            if per == 100:
+                step = self.exercise.steps[0]
+                next_step = self.exercise.steps[1]
+                if step.pose.is_validated(angles):
+                    feedback = next_step.name
+                    if self.direction == 1:
+                        count = 0.5
+                        rep_completed = True
+                        self.direction = 0
+        else:
+            assert one_step
+            the_step = self.exercise.steps[0]
+            assert the_step.target_seconds > 0
+            if self.right_form_seconds >= the_step.target_seconds:
+                rep_completed = True
+                count = 1
         return count, feedback, rep_completed
