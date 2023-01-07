@@ -21,6 +21,9 @@ def main():
         required=True)
     args = parser.parse_args()
 
+    print("Save frames with 's', next frame with any other key")
+    print("When saving, use a label like 'good' or 'bad'")
+
     # Read the video from specified path
     cam = cv2.VideoCapture(args.video_file)
     stem = PurePath(args.video_file).stem
