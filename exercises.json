@@ -130,7 +130,6 @@
                 {
                     "name": "plank",
                     "pose": "plank on elbows",
-                    "hold": true,
                     "default_target_seconds": 30
                 }
             ],
