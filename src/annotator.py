@@ -37,6 +37,7 @@ class Annotator:
         per = None
         success = False
         angles = {}
+        angle_validation = {}
 
         num_steps = len(self.exercise.steps)
         assert 1 <= num_steps <= 2, (
@@ -83,6 +84,8 @@ class Annotator:
                     num_steps, current_step_idx, angles)
             else:
                 feedback = 'Fix Form'
+                angle_validation = self.exercise.steps[
+                    current_step_idx].pose.validation_result(angles)
 
             self.recorded_count = self.recorded_count + count
             success = True
@@ -108,6 +111,7 @@ class Annotator:
                                 self.direction,
                                 self.right_form,
                                 self.right_form_seconds,
+                                angle_validation,
                                 success,
                                 angles)
 

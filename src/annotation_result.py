@@ -15,5 +15,7 @@ class AnnotationResult:
     right_form: bool
     # number of seconds the right form has been held
     right_form_seconds: int
+    # each angle, and whether it's valid or not
+    angle_validation: dict[str, bool]
     success: bool
     angles: dict

@@ -7,9 +7,9 @@ from collections import deque
 import cv2
 from src.advice_steps import AdviceSteps
 from src.annotator import Annotator
-from src.audio import Audio
 from src.display import Display
 from src.exercise import Exercise
+from src.feedback_giver import FeedbackGiver
 from src.util import logging_basic_config
 
 
@@ -45,7 +45,7 @@ def main():
 
     exercise = Exercise.exercise(args.exercise)
     annotator = Annotator(exercise)
-    audio = Audio()
+    feedback_giver = FeedbackGiver()
     display = Display('AI Coach')
 
     capture_input = args.video_file
@@ -69,9 +69,10 @@ def main():
 
             display.display_result(result)
 
-            audio.play_sound_if_applicable(
+            feedback_giver.give_feedback(
                 result.rep_count, result.rep_completed, target_reps,
-                result.feedback, prior_feedback)
+                result.feedback, prior_feedback,
+                result.angle_validation)
 
             # Frames per second
             if args.show_frames_per_second:

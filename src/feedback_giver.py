@@ -11,7 +11,7 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 logger = logging.getLogger(__name__)
 
 
-class Audio:
+class FeedbackGiver:
     def __init__(self):
         self._last_audio_time = 0
 
@@ -28,20 +28,26 @@ class Audio:
         self._play_audio_file(step.value.audio_path)
 
     def _play_count(self, count):
+        """Generate and play an integer count"""
         # make sure count isn't a decimal: 1.0 --> 1
-        count = int(count)
-        path = f'count/{count}.mp3'
+        self._play_text(str(int(count)))
+
+    def _play_text(self, text):
+        """Generate and play any text passed"""
+        path = f'generated/{text}.mp3'
         fullpath = self._audio_full_path(path)
         if not os.path.exists(fullpath):
-            # generate count audio
-            tts = gTTS(str(count), lang='en', slow=False)
+            # generate audio
+            tts = gTTS(text, lang='en', slow=False)
             tts.save(fullpath)
 
         self._play_audio_file(path)
 
-    def play_sound_if_applicable(
+    def give_feedback(
             self, count, rep_completed, target_reps, feedback,
-            prior_feedback):
+            prior_feedback,
+            angle_validation: dict[str, bool]):
+        """Give feedback if applicable (i.e. not too often)"""
         logger.debug(f'{count} {target_reps} {feedback} {prior_feedback}')
         seconds_since_audio = time.time() - self._last_audio_time
 
@@ -61,7 +67,21 @@ class Audio:
         # Fix form but only after some seconds
         elif (feedback == AdviceSteps.FIX_FORM.value.title
               and seconds_since_audio > 2):
-            self._play_advice_step(AdviceSteps.FIX_FORM)
+            # say how to fix the form by mentioning the first bad angle
+            logger.warning(f'Angle validation: {angle_validation}')
+            bad_angles = [key for key in angle_validation
+                          if not angle_validation[key]]
+            if bad_angles:
+                # Find first invalid angle
+                first_bad_angle = bad_angles[0]
+                # HACK?  Take angle name like "left_neck" and make it words
+                # like "left neck"
+                first_bad_angle = 'fix ' + first_bad_angle.replace('_', ' ')
+                self._play_text(first_bad_angle)
+            else:
+                # If there's not at least one bad angle, then I think
+                # the user never got into a good starting position
+                self._play_advice_step(AdviceSteps.FIX_FORM)
         # Was going down and now go up
         elif (prior_feedback == AdviceSteps.DOWN.value.title
               and feedback == AdviceSteps.UP.value.title):
