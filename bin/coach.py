@@ -7,6 +7,7 @@ from collections import deque
 import cv2
 from src.advice_steps import AdviceSteps
 from src.annotator import Annotator
+from src.audio import play_text
 from src.display import Display
 from src.exercise import Exercise
 from src.feedback_giver import FeedbackGiver
@@ -47,6 +48,8 @@ def main():
     annotator = Annotator(exercise)
     feedback_giver = FeedbackGiver()
     display = Display('AI Coach')
+
+    play_text(f'Exercise is {args.exercise}', block=True)
 
     capture_input = args.video_file
     if not capture_input:
