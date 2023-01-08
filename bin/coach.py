@@ -78,6 +78,7 @@ def main():
                 target_reps,
                 result.right_form_seconds,
                 result.feedback,
+                result.angles,
                 result.angle_validation)
 
             # Frames per second

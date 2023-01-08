@@ -40,6 +40,7 @@ class FeedbackGiver:
             target_reps: int,
             right_form_seconds: Optional[int],
             feedback: str,
+            angles: dict[str, float],
             angle_validation: dict[str, bool]):
         """Give feedback if applicable (i.e. not too often)"""
         logger.debug(
@@ -76,7 +77,8 @@ class FeedbackGiver:
         elif (feedback == AdviceSteps.FIX_FORM.value.title
               and seconds_since_audio > 2):
             # say how to fix the form by mentioning the first bad angle
-            logger.warning(f'Angle validation: {angle_validation}')
+            logger.warning(
+                f'Angle validation: {angle_validation} angles {angles}')
             bad_angles = [key for key in angle_validation
                           if not angle_validation[key]]
             if bad_angles:
