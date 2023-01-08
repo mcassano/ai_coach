@@ -103,6 +103,7 @@ class Exercise:
         self.name = name
         self.default_target_reps = definition['default_target_reps']
         self.steps = [Step(step, all_poses) for step in definition['steps']]
+        # What if multiple steps have default_target_seconds?  Is that a thing?
         self.default_target_seconds = self.steps[0].default_target_seconds
 
         # all angles in all steps
