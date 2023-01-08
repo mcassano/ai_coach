@@ -9,6 +9,7 @@ $ bin/process_images.py --show tests/mike_pushup_down_small.jpg
 
 import argparse
 import json
+import sys
 
 import cv2
 import readchar
@@ -22,12 +23,14 @@ def main():
     parser.add_argument(
         'imagefile', help='Image file(s) to annotate', nargs='+')
     parser.add_argument(
-        '--exercise', '-e', help='Exercise name', default='Push-up',
+        '--exercise', '-e', help='Exercise name', required=True,
         choices=Exercise.exercise_names())
     parser.add_argument(
         '--show-image', help='Show the image on the screen',
         action='store_true')
     args = parser.parse_args()
+
+    print(f"Annotate for exercise '{args.exercise}'", file=sys.stderr)
 
     logging_basic_config()
 
@@ -45,7 +48,9 @@ def main():
         if idx > 0:
             print(', ', end='')
         data = {'angles': result.angles,
-                'file': image_file}
+                'file': image_file,
+                'feedback': result.feedback,
+                'right_form': result.right_form}
         print(json.dumps(data))
 
         if args.show_image:

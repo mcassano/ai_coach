@@ -47,19 +47,19 @@ export PYTHONPATH=.
 Run with default camera chosen by OpenCV:
 
 ```
-./bin/native.py
+./bin/coach.py
 ```
 
 Run with a video file (referenced video file doesn't exist in repo):
 
 ```
-./bin/native.py --video-file ./trimmed-pushup.mp4
+./bin/coach.py --video-file ./trimmed-pushup.mp4
 ```
 
 Run with a static image:
 
 ```
-./bin/native.py --video-file ./tests/mike_pushup_up_small.jpg
+./bin/coach.py --video-file ./tests/mike_pushup_up_small.jpg
 ```
 
 # Run the tests

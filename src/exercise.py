@@ -30,6 +30,7 @@ class Requirement:
         self.body_angle = all_angles[definition['body_angle']]
         self._test = definition['test']
         self.angle = definition['angle']
+        self._test_near_degrees = definition.get('near_degrees', None)
 
     def test_req(self, body_value, test_value):
         if self._test == 'gt':
@@ -40,8 +41,11 @@ class Requirement:
             return test_value < self.angle
         if self._test == 'lte':
             return test_value <= self.angle
+        if self._test == 'near':
+            return abs(test_value - self.angle) <= self._test_near_degrees
 
-        raise ValueError(f'{body_value} {test_value}')
+        raise ValueError(
+            f'Unknown test {self._test}, {body_value} {test_value}')
 
     def __str__(self):
         return f'{self.body_angle} {self._test} {self.angle}'
@@ -57,30 +61,36 @@ class Pose:
     def body_angles(self):
         return {req.body_angle for req in self.requirements}
 
-    def is_validated(self, angles: dict[str, float]):
-        match = 0
+    def validation_result(self, angles: dict[str, float]) -> dict[str, bool]:
+        """Dict with whether each pose angle is valid."""
+        match_result = {}
         for angle_name, angle_value in angles.items():
             logger.debug(f'angle {angle_name} value {angle_value}')
             for requirement in self.requirements:
                 if requirement.body_angle.name == angle_name:
-                    match += 1
                     logger.debug(
                         f'test req {requirement} with'
                         f' angle {angle_name} {angle_value}')
-                    if not requirement.test_req(
-                            requirement.angle, angle_value):
-                        return False
+                    match_result[angle_name] = requirement.test_req(
+                        requirement.angle, angle_value)
                 else:
                     continue
 
         # should have tested all requirements
-        assert match == len(self.requirements)
-        return True
+        assert len(match_result) == len(self.requirements), match_result
+        return match_result
+
+    def is_validated(self, angles: dict[str, float]):
+        """Return True if all pose angles are valid"""
+        return all(self.validation_result(angles).values())
 
 
 class Step:
     def __init__(self, definition: dict, all_poses: dict[str, Pose]):
         self.name = definition['name']
+        # Number of seconds to hold the pose
+        self.default_target_seconds = definition.get(
+            'default_target_seconds', None)
         # NOTE: audio is not currently used
         # self.audio = definition['audio']
         self.pose = all_poses[definition['pose']]
@@ -91,8 +101,10 @@ class Exercise:
                  all_poses: dict[str, Pose],
                  definition: dict[str, dict]):
         self.name = name
-        self.default_target = definition['default_target']
+        self.default_target_reps = definition['default_target_reps']
         self.steps = [Step(step, all_poses) for step in definition['steps']]
+        # What if multiple steps have default_target_seconds?  Is that a thing?
+        self.default_target_seconds = self.steps[0].default_target_seconds
 
         # all angles in all steps
         self.angles = [angle

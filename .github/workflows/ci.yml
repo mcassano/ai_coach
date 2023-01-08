@@ -22,11 +22,9 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        # check imports
-        python -c "from bin import native"
         # run unit tests
         python -m unittest discover tests
         # check if it starts, -h sets return code to 0
-        python ./bin/native.py -h
+        python ./bin/coach.py -h
       env:
         PYTHONPATH: .
