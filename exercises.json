@@ -56,7 +56,7 @@
           {
             "body_angle": "left_shoulder",
             "test": "near",
-            "angle": 80,
+            "angle": 70,
             "near_degrees": 10
           },
           {
