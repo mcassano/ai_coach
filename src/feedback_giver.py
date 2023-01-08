@@ -1,12 +1,8 @@
 import logging
-import os.path
 import time
 
-from gtts import gTTS
-from playsound import playsound
 from src.advice_steps import AdviceSteps
-
-THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+from src.audio import generate_audio_file, play_audio_file
 
 logger = logging.getLogger(__name__)
 
@@ -15,13 +11,8 @@ class FeedbackGiver:
     def __init__(self):
         self._last_audio_time = 0
 
-    @staticmethod
-    def _audio_full_path(path):
-        return os.path.join(THIS_DIR, '../audio', path)
-
     def _play_audio_file(self, path: str):
-        playsound(self._audio_full_path(path), block=False)
-        logger.debug(f'Play audio {path}')
+        play_audio_file(path)
         self._last_audio_time = time.time()
 
     def _play_advice_step(self, step: AdviceSteps):
@@ -34,14 +25,8 @@ class FeedbackGiver:
 
     def _play_text(self, text):
         """Generate and play any text passed"""
-        path = f'generated/{text}.mp3'
-        fullpath = self._audio_full_path(path)
-        if not os.path.exists(fullpath):
-            # generate audio
-            tts = gTTS(text, lang='en', slow=False)
-            tts.save(fullpath)
-
-        self._play_audio_file(path)
+        fullpath = generate_audio_file(text)
+        self._play_audio_file(fullpath)
 
     def give_feedback(
             self, count, rep_completed, target_reps, feedback,
