@@ -48,7 +48,7 @@ class TestAnnotator(unittest.TestCase):
         # First time plank is seen, form is good but not long enough
         result = annotator.annotate_frame(load_frame(self.plank_file_name))
         self.assertEqual(0, result.rep_count)
-        self.assertEqual('', result.feedback)
+        self.assertEqual('Hold', result.feedback)
         self.assertTrue(result.right_form)
         self.assertFalse(result.rep_completed)
         self.assertEqual(0, result.right_form_seconds)
@@ -57,7 +57,7 @@ class TestAnnotator(unittest.TestCase):
         time.sleep(1)
         result = annotator.annotate_frame(load_frame(self.plank_file_name))
         self.assertEqual(1, result.rep_count)
-        self.assertEqual('', result.feedback)
+        self.assertEqual('Done', result.feedback)
         self.assertTrue(result.right_form)
         self.assertTrue(result.rep_completed)
         self.assertEqual(1, result.right_form_seconds)

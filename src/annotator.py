@@ -1,5 +1,6 @@
 import logging
 import time
+from typing import Optional
 
 from src.annotation_result import AnnotationResult
 from src.exercise import Exercise
@@ -20,11 +21,11 @@ class Annotator:
         self.exercise = exercise
         # TODO: remove self.right_form.  It is transient.
         self.right_form = False
-        self.right_form_start = None
-        self.right_form_seconds = None
+        self.right_form_start: Optional[float] = None
+        self.right_form_seconds: Optional[int] = None
         self.prior_feedback = ''
 
-    def annotate_frame(self, frame):
+    def annotate_frame(self, frame) -> AnnotationResult:
         # This was inspired from https://github.com/terminalai/PushUpCounter
         frame = self.detector.find_pose_and_draw_landmarks(frame, False)
         lm_list = self.detector.find_position(frame, False)
@@ -33,6 +34,7 @@ class Annotator:
         logger.debug(f'in_frame {all_points_in_frame}')
         count = 0
         rep_completed = False
+        seconds_left = None
         feedback = None
         per = None
         success = False
@@ -80,8 +82,8 @@ class Annotator:
                 feedback = 'Get In Frame'
             elif self.right_form:
                 # Check the current step of the exercise
-                count, feedback, rep_completed = self._examine_step(
-                    num_steps, current_step_idx, angles)
+                count, feedback, rep_completed, seconds_left = (
+                    self._examine_step(num_steps, current_step_idx, angles))
             else:
                 feedback = 'Fix Form'
                 angle_validation = self.exercise.steps[
@@ -91,6 +93,7 @@ class Annotator:
             success = True
         else:
             # Nothing was found, someone should get in the frame
+            # TODO: Play audio for this
             feedback = "Can't see your face"
             logger.debug('annotate frame found no pose ..')
 
@@ -103,23 +106,27 @@ class Annotator:
 
         # Store the current feedback because we might need it for next frame
         self.prior_feedback = feedback
-        return AnnotationResult(frame,
-                                feedback,
-                                self.recorded_count,
-                                rep_completed,
-                                per,
-                                self.direction,
-                                self.right_form,
-                                self.right_form_seconds,
-                                angle_validation,
-                                success,
-                                angles)
+        return AnnotationResult(
+            frame,
+            feedback,
+            self.recorded_count,
+            rep_completed,
+            per,
+            self.direction,
+            self.right_form,
+            self.right_form_seconds,
+            seconds_left,
+            angle_validation,
+            success,
+            angles,
+            num_steps)
 
     def _examine_step(self, num_steps: int, current_step_idx: int, angles):
         count = 0.
         rep_completed = False
         feedback = None
         current_step = self.exercise.steps[current_step_idx]
+        seconds_left = None
 
         if num_steps == 2:
             if current_step_idx == 1:
@@ -143,5 +150,10 @@ class Annotator:
             if self.right_form_seconds >= current_step.target_seconds:
                 rep_completed = True
                 count = 1
+                feedback = 'Done'
+            else:
+                seconds_left = (
+                        current_step.target_seconds - self.right_form_seconds)
+                feedback = 'Hold'
 
-        return count, feedback, rep_completed
+        return count, feedback, rep_completed, seconds_left

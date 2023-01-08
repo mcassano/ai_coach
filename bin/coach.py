@@ -49,7 +49,7 @@ def main():
     feedback_giver = FeedbackGiver()
     display = Display('AI Coach')
 
-    play_text(f'Exercise is {args.exercise}', block=True)
+    play_text(args.exercise, block=True)
 
     capture_input = args.video_file
     if not capture_input:
@@ -73,7 +73,9 @@ def main():
             display.display_result(result)
 
             feedback_giver.give_feedback(
-                result.rep_count, result.rep_completed, target_reps,
+                result.exercise_num_steps,
+                result.rep_count, result.rep_completed,
+                target_reps, result.right_form_seconds,
                 result.feedback, prior_feedback,
                 result.angle_validation)
 
