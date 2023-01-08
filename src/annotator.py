@@ -2,6 +2,7 @@ import logging
 import time
 from typing import Optional
 
+from src.advice_steps import AdviceSteps
 from src.annotation_result import AnnotationResult
 from src.exercise import Exercise
 from src.pose import PoseDetector
@@ -10,9 +11,12 @@ logger = logging.getLogger(__name__)
 
 
 class Annotator:
-    def __init__(self, exercise: Exercise, **kwargs):
+    def __init__(self, exercise: Exercise,
+                 target_seconds: Optional[int],
+                 **kwargs):
         """
         :param exercise:  Exercise
+        :param target_seconds:  Number of seconds to hold an exercise
         :param kwargs:   Arguments passed to PoseDetector
         """
         self.recorded_count = 0
@@ -24,6 +28,7 @@ class Annotator:
         self.right_form_start: Optional[float] = None
         self.right_form_seconds: Optional[int] = None
         self.prior_feedback = ''
+        self.target_seconds = target_seconds
 
     def annotate_frame(self, frame) -> AnnotationResult:
         # This was inspired from https://github.com/terminalai/PushUpCounter
@@ -79,7 +84,7 @@ class Annotator:
 
             # Validate step
             if not all_points_in_frame:
-                feedback = 'Get In Frame'
+                feedback = AdviceSteps.GET_IN_FRAME.value.title
             elif self.right_form:
                 # Check the current step of the exercise
                 count, feedback, rep_completed, seconds_left = (
@@ -146,14 +151,15 @@ class Annotator:
                         self.direction = 0
         else:
             assert num_steps == 1
-            assert current_step.target_seconds > 0
-            if self.right_form_seconds >= current_step.target_seconds:
+            assert self.target_seconds is not None and self.target_seconds > 0
+            assert self.right_form_seconds is not None
+
+            if self.right_form_seconds >= self.target_seconds:
                 rep_completed = True
                 count = 1
                 feedback = 'Done'
             else:
-                seconds_left = (
-                        current_step.target_seconds - self.right_form_seconds)
+                seconds_left = self.target_seconds - self.right_form_seconds
                 feedback = 'Hold'
 
         return count, feedback, rep_completed, seconds_left

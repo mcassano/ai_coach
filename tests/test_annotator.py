@@ -26,8 +26,9 @@ class TestAnnotator(unittest.TestCase):
         self.detector = PoseDetector()
 
     def test_up_down_up_down_good_results(self):
-        annotator = Annotator(Exercise.exercise('Push-up'),
-                              static_image_mode=True)
+        exer = Exercise.exercise('Push-up')
+        target_seconds = None
+        annotator = Annotator(exer, target_seconds, static_image_mode=True)
 
         # Go up-down several times and check that the results are correct
         for idx in range(0, 5):
@@ -42,8 +43,8 @@ class TestAnnotator(unittest.TestCase):
     def test_plank_good_results(self):
         exer = Exercise.exercise('Plank')
         # only hold plank for one second for testing
-        exer.steps[0].target_seconds = 1
-        annotator = Annotator(exer, static_image_mode=True)
+        target_seconds = 1
+        annotator = Annotator(exer, target_seconds, static_image_mode=True)
 
         # First time plank is seen, form is good but not long enough
         result = annotator.annotate_frame(load_frame(self.plank_file_name))

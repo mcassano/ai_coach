@@ -13,6 +13,8 @@ class FeedbackGiver:
 
     def __init__(self):
         self._last_audio_time = 0
+        self._prior_feedback = None
+        self._prior_right_form_seconds = None
 
     def _play_audio_file(self, path: str):
         play_audio_file(path)
@@ -37,12 +39,12 @@ class FeedbackGiver:
             count: float, rep_completed: bool,
             target_reps: int,
             right_form_seconds: Optional[int],
-            feedback: str, prior_feedback: str,
+            feedback: str,
             angle_validation: dict[str, bool]):
         """Give feedback if applicable (i.e. not too often)"""
         logger.debug(
             f'count {count} target_reps {target_reps}'
-            f' feedback "{feedback}" prior_feedback "{prior_feedback}"'
+            f' feedback "{feedback}" prior_feedback "{self._prior_feedback}"'
             f' right_form_seconds {right_form_seconds}'
             f' exercise_num_steps {exercise_num_steps}')
         seconds_since_audio = time.time() - self._last_audio_time
@@ -59,12 +61,11 @@ class FeedbackGiver:
         elif exercise_num_steps == 1 and right_form_seconds:
             # This is a one-step exercise we hold
             # Let's count the seconds
-            # TODO: how to not skip counting some seconds?
-            # "seconds_since_audio" >= 1 above is not cutting it
             if feedback != 'Done':
-                if seconds_since_audio >= 1:
+                if self._prior_right_form_seconds != right_form_seconds:
                     self._play_count(right_form_seconds)
-            elif feedback == 'Done' and prior_feedback != 'Done':
+                    self._prior_right_form_seconds = right_form_seconds
+            elif feedback == 'Done' and self._prior_feedback != 'Done':
                 assert rep_completed
                 self._play_advice_step(AdviceSteps.DONE)
         # Get in Frame but only after some seconds
@@ -90,14 +91,16 @@ class FeedbackGiver:
                 # the user never got into a good starting position
                 self._play_advice_step(AdviceSteps.FIX_FORM)
         # Was going down and now go up
-        elif (prior_feedback == AdviceSteps.DOWN.value.title
+        elif (self._prior_feedback == AdviceSteps.DOWN.value.title
               and feedback == AdviceSteps.UP.value.title):
             self._play_advice_step(AdviceSteps.UP)
         # Fixed form
-        elif (prior_feedback == AdviceSteps.FIX_FORM.value.title
+        elif (self._prior_feedback == AdviceSteps.FIX_FORM.value.title
               and feedback == AdviceSteps.DOWN.value.title):
             self._play_advice_step(AdviceSteps.GOOD)
-        elif feedback == 'Good' and prior_feedback != 'Good':
+        elif feedback == 'Good' and self._prior_feedback != 'Good':
             # This may overlap with previous audio.
             # TODO: Unoverlap this by remembering it for long enough
             self._play_text('Good')
+
+        self._prior_feedback = feedback

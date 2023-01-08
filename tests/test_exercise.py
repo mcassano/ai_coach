@@ -23,7 +23,7 @@ class TestExerciseExtractor(TestCase):
         exer = Exercise.exercise('Plank')
         self.assertEqual('Plank', exer.name)
         self.assertEqual(1, len(exer.steps))
-        self.assertEqual(30, exer.steps[0].target_seconds)
+        self.assertEqual(30, exer.steps[0].default_target_seconds)
 
 
 class TestAngle(TestCase):

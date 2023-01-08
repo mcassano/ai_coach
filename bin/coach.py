@@ -5,7 +5,6 @@ import time
 from collections import deque
 
 import cv2
-from src.advice_steps import AdviceSteps
 from src.annotator import Annotator
 from src.audio import play_text
 from src.display import Display
@@ -45,7 +44,14 @@ def main():
     logging_basic_config(args.log_level)
 
     exercise = Exercise.exercise(args.exercise)
-    annotator = Annotator(exercise)
+    target_reps = (args.target_reps
+                   if args.target_reps is not None
+                   else exercise.default_target_reps)
+    target_seconds = (args.target_seconds
+                      if args.target_seconds is not None
+                      else exercise.default_target_seconds)
+
+    annotator = Annotator(exercise, target_seconds)
     feedback_giver = FeedbackGiver()
     display = Display('AI Coach')
 
@@ -56,27 +62,22 @@ def main():
         # live capture from camera 0
         capture_input = 0
     cap = cv2.VideoCapture(capture_input)
-    feedback = AdviceSteps.GET_IN_FRAME.value.title
-    target_reps = args.target_reps \
-        if args.target_reps is not None \
-        else exercise.default_target_reps
     print(f'Using {exercise.name} exercise, target_reps: {target_reps}')
     fps = FramesPerSecond()
     last_fps_print = 0
     while cap.isOpened():
         success, frame = cap.read()
         if success:
-            prior_feedback = feedback
             result = annotator.annotate_frame(frame)
-            feedback = result.feedback
-
             display.display_result(result)
 
             feedback_giver.give_feedback(
                 result.exercise_num_steps,
-                result.rep_count, result.rep_completed,
-                target_reps, result.right_form_seconds,
-                result.feedback, prior_feedback,
+                result.rep_count,
+                result.rep_completed,
+                target_reps,
+                result.right_form_seconds,
+                result.feedback,
                 result.angle_validation)
 
             # Frames per second
@@ -105,8 +106,11 @@ def run_argument_parser():
     parser.add_argument(
         '--video-file', help='File with video of exercise (example: file.mp4)')
     parser.add_argument(
-        '--target-reps',
+        '--target-reps', type=int,
         help='The number of reps you would like to complete (example: 20)')
+    parser.add_argument(
+        '--target-seconds', type=int,
+        help='The number of seconds you would like to hold (example: 20)')
     parser.add_argument(
         '--show-frames-per-second', '--fps',
         action='store_true',

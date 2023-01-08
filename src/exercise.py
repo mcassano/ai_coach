@@ -89,7 +89,8 @@ class Step:
     def __init__(self, definition: dict, all_poses: dict[str, Pose]):
         self.name = definition['name']
         # Number of seconds to hold the pose
-        self.target_seconds = definition.get('default_target_seconds', None)
+        self.default_target_seconds = definition.get(
+            'default_target_seconds', None)
         # NOTE: audio is not currently used
         # self.audio = definition['audio']
         self.pose = all_poses[definition['pose']]
@@ -102,6 +103,7 @@ class Exercise:
         self.name = name
         self.default_target_reps = definition['default_target_reps']
         self.steps = [Step(step, all_poses) for step in definition['steps']]
+        self.default_target_seconds = self.steps[0].default_target_seconds
 
         # all angles in all steps
         self.angles = [angle
