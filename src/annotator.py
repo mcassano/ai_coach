@@ -155,6 +155,8 @@ class Annotator:
             assert self.right_form_seconds is not None
 
             if self.right_form_seconds >= self.target_seconds:
+                # TODO: fix bug here that counts reps rapidly, since
+                #   we remain done
                 rep_completed = True
                 count = 1
                 feedback = 'Done'
