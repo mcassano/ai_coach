@@ -3,7 +3,11 @@
 import argparse
 import time
 from collections import deque
-
+import os
+from datetime import datetime
+import pytz
+import readchar
+import requests
 import cv2
 from src.annotator import Annotator
 from src.audio import play_text
@@ -65,6 +69,7 @@ def main():
     print(f'Using {exercise.name} exercise, target_reps: {target_reps}')
     fps = FramesPerSecond()
     last_fps_print = 0
+    result = None
     while cap.isOpened():
         success, frame = cap.read()
         if success:
@@ -95,6 +100,33 @@ def main():
     cap.release()
     display.close()
 
+    api_key = os.getenv('AI_COACH_WEB_API_KEY')
+    if api_key:
+        hostname = os.getenv('AI_COACH_WEB_HOSTNAME')
+        if not hostname:
+            # If we didn't configure a hostname then try localhost
+            hostname = 'http://localhost:8000'
+
+        if result:
+            # we have an api_key, a hostname and a result, let's go!
+            url = f'{hostname}/exercise-sets/'
+            datetime_utc = datetime.now(pytz.utc)
+            time_str = datetime_utc.strftime('%Y-%m-%dT%H:%M:%SZ')
+            exercise_set = {'exercise_performed': {'name': exercise.name},
+                            'datetime_performed': time_str,
+                            'measurement': result.rep_count}
+            print(f'Would POST this: {exercise_set}')
+            print('Proceed? y/n:')
+            input_char = readchar.readchar()
+            if input_char == 'y':
+                response = requests.post(
+                    url,
+                    json=exercise_set,
+                    headers={'Authorization': f'Api-Key {api_key}'}
+                    )
+                print(f'Response: ({response.status_code}) {response.text}')
+            else:
+                print('Aborted')
 
 def run_argument_parser():
     parser = argparse.ArgumentParser()
