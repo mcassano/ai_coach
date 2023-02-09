@@ -114,7 +114,8 @@ def main():
             time_str = datetime_utc.strftime('%Y-%m-%dT%H:%M:%SZ')
             exercise_set = {'exercise_performed': {'name': exercise.name},
                             'datetime_performed': time_str,
-                            'measurement': result.rep_count}
+                            'num_reps': int(result.rep_count),
+                            'duration_seconds': result.right_form_seconds}
             print(f'Would POST this: {exercise_set}')
             print('Proceed? y/n:')
             input_char = readchar.readchar()
