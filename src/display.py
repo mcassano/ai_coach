@@ -25,7 +25,7 @@ class Display:
                         cv2.FONT_HERSHEY_PLAIN, 2,
                         (255, 0, 0), 2)
 
-        # Push up counter
+        # Counter
         cv2.rectangle(frame, (0, 380), (100, 480), (0, 255, 0), cv2.FILLED)
         cv2.putText(frame, str(int(count)), (25, 455),
                     cv2.FONT_HERSHEY_PLAIN, 5,
