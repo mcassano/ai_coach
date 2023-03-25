@@ -17,4 +17,4 @@ __pycache__
 .Rproj.user
 
 # count files are auto-generated
-audio/count/*.mp3
+audio/generated/*.mp3

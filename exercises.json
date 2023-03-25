@@ -134,6 +134,16 @@
                 }
             ],
             "default_target_reps": 1
+        },
+        "Standing-Cross": {
+            "steps": [
+                {
+                    "name": "stand",
+                    "pose": "flapping cross up",
+                    "default_target_seconds": 30
+                }
+            ],
+            "default_target_reps": 1
         }
     }
 }
