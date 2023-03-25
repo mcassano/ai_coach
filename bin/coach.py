@@ -66,7 +66,7 @@ def main():
         # live capture from camera 0
         capture_input = 0
     cap = cv2.VideoCapture(capture_input)
-    print(f'Using {exercise.name} exercise, target_reps: {target_reps}')
+    print(f'Using {exercise.name} exercise, target_reps: {target_reps}, target_seconds: {target_seconds}')
     fps = FramesPerSecond()
     last_fps_print = 0
     result = None
@@ -115,7 +115,10 @@ def main():
             exercise_set = {'exercise_performed': {'name': exercise.name},
                             'datetime_performed': time_str,
                             'num_reps': int(result.rep_count),
-                            'duration_seconds': result.right_form_seconds}
+                            'num_target_reps': int(target_reps),
+                            'duration_seconds': int(result.right_form_seconds)
+                            if result.right_form_seconds is not None else 0,
+                            'duration_target_seconds': int(target_seconds) if target_seconds is not None else 0}
             print(f'Would POST this: {exercise_set}')
             print('Proceed? y/n:')
             input_char = readchar.readchar()
@@ -124,10 +127,11 @@ def main():
                     url,
                     json=exercise_set,
                     headers={'Authorization': f'Api-Key {api_key}'}
-                    )
+                )
                 print(f'Response: ({response.status_code}) {response.text}')
             else:
                 print('Aborted')
+
 
 def run_argument_parser():
     parser = argparse.ArgumentParser()
