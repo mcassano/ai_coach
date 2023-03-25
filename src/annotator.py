@@ -47,6 +47,7 @@ class Annotator:
         angle_validation = {}
 
         num_steps = len(self.exercise.steps)
+        logger.debug(f'num_steps {num_steps}')
         assert 1 <= num_steps <= 2, (
             'We only handle one or two step exercises')
 
@@ -108,6 +109,8 @@ class Annotator:
         if feedback is None:
             feedback = self.prior_feedback
             logger.debug('feedback is None, use prior_feedback')
+
+        logger.debug('===============')
 
         # Store the current feedback because we might need it for next frame
         self.prior_feedback = feedback
