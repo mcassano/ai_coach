@@ -4,10 +4,6 @@ import argparse
 import time
 from collections import deque
 import os
-from datetime import datetime
-import pytz
-import readchar
-import requests
 import cv2
 from src.annotator import Annotator
 from src.audio import play_text
@@ -15,6 +11,7 @@ from src.display import Display
 from src.exercise import Exercise
 from src.feedback_giver import FeedbackGiver
 from src.util import logging_basic_config
+from src.result_poster import ResultPoster
 
 
 class FramesPerSecond:
@@ -99,38 +96,17 @@ def main():
 
     cap.release()
     display.close()
+    cap.release()
+
+    # Both of these together in this order are required to have CLI after the realtime video frame
+    # https://stackoverflow.com/questions/48868348/ \
+    # window-freezing-even-after-using-waitkey-and-destroyallwindows-in-opencv
+    cv2.destroyAllWindows()
+    cv2.waitKey(1)
 
     api_key = os.getenv('AI_COACH_WEB_API_KEY')
     if api_key:
-        hostname = os.getenv('AI_COACH_WEB_HOSTNAME')
-        if not hostname:
-            # If we didn't configure a hostname then try localhost
-            hostname = 'http://localhost:8000'
-
-        if result:
-            # we have an api_key, a hostname and a result, let's go!
-            url = f'{hostname}/exercise-sets/'
-            datetime_utc = datetime.now(pytz.utc)
-            time_str = datetime_utc.strftime('%Y-%m-%dT%H:%M:%SZ')
-            exercise_set = {'exercise_performed': {'name': exercise.name},
-                            'datetime_performed': time_str,
-                            'num_reps': int(result.rep_count),
-                            'num_target_reps': int(target_reps),
-                            'duration_seconds': int(result.right_form_seconds)
-                            if result.right_form_seconds is not None else 0,
-                            'duration_target_seconds': int(target_seconds) if target_seconds is not None else 0}
-            print(f'Would POST this: {exercise_set}')
-            print('Proceed? y/n:')
-            input_char = readchar.readchar()
-            if input_char == 'y':
-                response = requests.post(
-                    url,
-                    json=exercise_set,
-                    headers={'Authorization': f'Api-Key {api_key}'}
-                )
-                print(f'Response: ({response.status_code}) {response.text}')
-            else:
-                print('Aborted')
+        ResultPoster.http_post(api_key, exercise, target_reps, target_seconds, result)
 
 
 def run_argument_parser():
