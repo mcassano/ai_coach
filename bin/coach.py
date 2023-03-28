@@ -96,7 +96,6 @@ def main():
 
     cap.release()
     display.close()
-    cap.release()
 
     # Both of these together in this order are required to have CLI after the realtime video frame
     # https://stackoverflow.com/questions/48868348/ \
