@@ -35,7 +35,7 @@ def main():
     logging_basic_config()
 
     exercise = Exercise.exercise(args.exercise)
-    # TODO: set target_seconds more appropriately?
+    # TODO: set target_seconds more appropriately??
     target_seconds = None
     annotator = Annotator(
         exercise,
