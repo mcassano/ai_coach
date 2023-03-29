@@ -12,7 +12,7 @@ _THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def _audio_full_path(path):
     """Make full path used to store audio"""
-    return os.path.join(_THIS_DIR, '../audio', path)
+    return os.path.join(_THIS_DIR, "../audio", path)
 
 
 def play_audio_file(path: str, block=False):
@@ -20,18 +20,18 @@ def play_audio_file(path: str, block=False):
     if not os.path.isabs(path):
         path = _audio_full_path(path)
     playsound(path, block)
-    logger.debug(f'Play audio {path}')
+    logger.debug(f"Play audio {path}")
 
 
 def generate_audio_file(text: str):
     """Generate audio file of 'text', return path to file.
 
     If file already exists, just use it."""
-    path = f'generated/{text}.mp3'
+    path = f"generated/{text}.mp3"
     fullpath = _audio_full_path(path)
     if not os.path.exists(fullpath):
         # generate audio
-        tts = gTTS(text, lang='en', slow=False)
+        tts = gTTS(text, lang="en", slow=False)
         tts.save(fullpath)
     return fullpath
 

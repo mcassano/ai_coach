@@ -19,22 +19,34 @@ class Display:
         # Draw Bar
         if form:
             cv2.rectangle(frame, (580, 50), (600, 380), (0, 255, 0), 3)
-            cv2.rectangle(frame, (580, int(380-(380*per/100))), (600, 380),
-                          (0, 255, 0), cv2.FILLED)
-            cv2.putText(frame, f'{int(per)}%', (565, 430),
-                        cv2.FONT_HERSHEY_PLAIN, 2,
-                        (255, 0, 0), 2)
+            cv2.rectangle(
+                frame,
+                (580, int(380 - (380 * per / 100))),
+                (600, 380),
+                (0, 255, 0),
+                cv2.FILLED,
+            )
+            cv2.putText(
+                frame,
+                f"{int(per)}%",
+                (565, 430),
+                cv2.FONT_HERSHEY_PLAIN,
+                2,
+                (255, 0, 0),
+                2,
+            )
 
         # Counter
         cv2.rectangle(frame, (0, 380), (100, 480), (0, 255, 0), cv2.FILLED)
-        cv2.putText(frame, str(int(count)), (25, 455),
-                    cv2.FONT_HERSHEY_PLAIN, 5,
-                    (255, 0, 0), 5)
+        cv2.putText(
+            frame, str(int(count)), (25, 455), cv2.FONT_HERSHEY_PLAIN, 5, (255, 0, 0), 5
+        )
 
         # Feedback
         cv2.rectangle(frame, (500, 0), (640, 40), (255, 255, 255), cv2.FILLED)
-        cv2.putText(frame, feedback, (500, 40), cv2.FONT_HERSHEY_PLAIN, 2,
-                    (0, 255, 0), 2)
+        cv2.putText(
+            frame, feedback, (500, 40), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2
+        )
 
         cv2.imshow(self.display_name, frame)
 
