@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+
 import pytz
 import readchar
 import requests
@@ -24,7 +25,8 @@ class ResultPoster:
                             'num_target_reps': int(target_reps),
                             'duration_seconds': int(result.right_form_seconds)
                             if result.right_form_seconds is not None else 0,
-                            'duration_target_seconds': int(target_seconds) if target_seconds is not None else 0}
+                            'duration_target_seconds': int(target_seconds)
+                            if target_seconds is not None else 0}
             print(f'Would POST this: {exercise_set}')
             print('Proceed? y/n:')
             input_char = readchar.readchar()

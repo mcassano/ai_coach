@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 
 import argparse
+import os
 import time
 from collections import deque
-import os
+
 import cv2
 from src.annotator import Annotator
 from src.audio import play_text
 from src.display import Display
 from src.exercise import Exercise
 from src.feedback_giver import FeedbackGiver
-from src.util import logging_basic_config
 from src.result_poster import ResultPoster
+from src.util import logging_basic_config
 
 
 class FramesPerSecond:
@@ -63,7 +64,8 @@ def main():
         # live capture from camera 0
         capture_input = 0
     cap = cv2.VideoCapture(capture_input)
-    print(f'Using {exercise.name} exercise, target_reps: {target_reps}, target_seconds: {target_seconds}')
+    print(f'Using {exercise.name} exercise, target_reps: {target_reps},'
+          f' target_seconds: {target_seconds}')
     fps = FramesPerSecond()
     last_fps_print = 0
     result = None
@@ -97,15 +99,19 @@ def main():
     cap.release()
     display.close()
 
-    # Both of these together in this order are required to have CLI after the realtime video frame
-    # https://stackoverflow.com/questions/48868348/ \
+    # Both of these together in this order are required to have CLI after the
+    # realtime video frame https://stackoverflow.com/questions/48868348/ \
     # window-freezing-even-after-using-waitkey-and-destroyallwindows-in-opencv
     cv2.destroyAllWindows()
     cv2.waitKey(1)
 
     api_key = os.getenv('AI_COACH_WEB_API_KEY')
     if api_key:
-        ResultPoster.http_post(api_key, exercise, target_reps, target_seconds, result)
+        ResultPoster.http_post(api_key,
+                               exercise,
+                               target_reps,
+                               target_seconds,
+                               result)
 
 
 def run_argument_parser():

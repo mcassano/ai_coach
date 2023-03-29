@@ -22,6 +22,7 @@ Also install `pre-commit`:
 ```
 brew install pre-commit
 pre-commit install
+pre-commit autoupdate
 ```
 
 To run pre-commit on everything:
