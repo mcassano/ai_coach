@@ -1,149 +1,142 @@
 {
-    "angles": {
-        "left_elbow": "LEFT_SHOULDER,LEFT_ELBOW,LEFT_WRIST",
-        "left_shoulder": "LEFT_ELBOW,LEFT_SHOULDER,LEFT_HIP",
-        "left_hip": "LEFT_SHOULDER,LEFT_HIP,LEFT_KNEE",
-        "left_neck": "LEFT_EAR,LEFT_SHOULDER,LEFT_HIP",
-
-        "right_shoulder": "RIGHT_ELBOW,RIGHT_SHOULDER,RIGHT_HIP"
+  "angles": {
+    "left_elbow": "LEFT_SHOULDER,LEFT_ELBOW,LEFT_WRIST",
+    "left_shoulder": "LEFT_ELBOW,LEFT_SHOULDER,LEFT_HIP",
+    "left_hip": "LEFT_SHOULDER,LEFT_HIP,LEFT_KNEE",
+    "left_neck": "LEFT_EAR,LEFT_SHOULDER,LEFT_HIP",
+    "right_shoulder": "RIGHT_ELBOW,RIGHT_SHOULDER,RIGHT_HIP"
+  },
+  "poses": {
+    "pushup up": [
+      {
+        "body_angle": "left_elbow",
+        "test": "gt",
+        "angle": 160
+      },
+      {
+        "body_angle": "left_shoulder",
+        "test": "gt",
+        "angle": 40
+      },
+      {
+        "body_angle": "left_hip",
+        "test": "gt",
+        "angle": 160
+      }
+    ],
+    "pushup down": [
+      {
+        "body_angle": "left_elbow",
+        "test": "lte",
+        "angle": 90
+      },
+      {
+        "body_angle": "left_hip",
+        "test": "gt",
+        "angle": 160
+      }
+    ],
+    "plank on elbows": [
+      {
+        "body_angle": "left_neck",
+        "test": "near",
+        "angle": 180,
+        "near_degrees": 10
+      },
+      {
+        "body_angle": "left_elbow",
+        "test": "near",
+        "angle": 70,
+        "near_degrees": 10
+      },
+      {
+        "body_angle": "left_shoulder",
+        "test": "near",
+        "angle": 70,
+        "near_degrees": 10
+      },
+      {
+        "body_angle": "left_hip",
+        "test": "near",
+        "angle": 170,
+        "near_degrees": 10
+      }
+    ],
+    "flapping cross up": [
+      {
+        "body_angle": "left_shoulder",
+        "test": "gt",
+        "angle": 80
+      },
+      {
+        "body_angle": "right_shoulder",
+        "test": "gt",
+        "angle": 80
+      }
+    ],
+    "flapping cross down": [
+      {
+        "body_angle": "left_shoulder",
+        "test": "lt",
+        "angle": 30
+      },
+      {
+        "body_angle": "right_shoulder",
+        "test": "lt",
+        "angle": 30
+      }
+    ]
+  },
+  "exercises": {
+    "Push-up": {
+      "steps": [
+        {
+          "name": "Up",
+          "pose": "pushup up",
+          "audio": "./audio/up.mp3"
+        },
+        {
+          "name": "Down",
+          "audio": "./audio/down.mp3",
+          "pose": "pushup down"
+        }
+      ],
+      "default_target_reps": 10
     },
-
-    "poses": {
-        "pushup up": [
-          {
-            "body_angle": "left_elbow",
-            "test": "gt",
-            "angle": 160
-          },
-          {
-            "body_angle": "left_shoulder",
-            "test": "gt",
-            "angle": 40
-          },
-          {
-            "body_angle": "left_hip",
-            "test": "gt",
-            "angle": 160
-          }
-      ],
-
-      "pushup down": [
-          {
-            "body_angle": "left_elbow",
-            "test": "lte",
-            "angle": 90
-          },
-          {
-            "body_angle": "left_hip",
-            "test": "gt",
-            "angle": 160
-          }
-      ],
-
-      "plank on elbows": [
-          {
-            "body_angle": "left_neck",
-            "test": "near",
-            "angle": 180,
-            "near_degrees": 10
-          },
-          {
-            "body_angle": "left_elbow",
-            "test": "near",
-            "angle": 70,
-            "near_degrees": 10
-          },
-          {
-            "body_angle": "left_shoulder",
-            "test": "near",
-            "angle": 70,
-            "near_degrees": 10
-          },
-          {
-            "body_angle": "left_hip",
-            "test": "near",
-            "angle": 170,
-            "near_degrees": 10
-          }
-      ],
-
-      "flapping cross up": [
+    "Flapping-Cross": {
+      "steps": [
         {
-          "body_angle": "left_shoulder",
-          "test": "gt",
-          "angle": 80
+          "name": "Up",
+          "audio": "./audio/up.mp3",
+          "pose": "flapping cross up"
         },
         {
-          "body_angle": "right_shoulder",
-          "test": "gt",
-          "angle": 80
+          "name": "Down",
+          "audio": "./audio/down.mp3",
+          "pose": "flapping cross down"
         }
       ],
-
-      "flapping cross down": [
-        {
-          "body_angle": "left_shoulder",
-          "test": "lt",
-          "angle": 30
-        },
-        {
-          "body_angle": "right_shoulder",
-          "test": "lt",
-          "angle": 30
-        }
-      ]
+      "default_target_reps": 30
     },
-
-    "exercises": {
-        "Push-up": {
-            "steps": [
-                {
-                    "name": "Up",
-                    "pose": "pushup up",
-                    "audio": "./audio/up.mp3"
-                },
-                {
-                    "name": "Down",
-                    "audio": "./audio/down.mp3",
-                    "pose": "pushup down"
-                }
-            ],
-            "default_target_reps": 10
-        },
-        "Flapping-Cross": {
-            "steps": [
-                {
-                    "name": "Up",
-                    "audio": "./audio/up.mp3",
-                    "pose": "flapping cross up"
-                },
-                {
-                    "name": "Down",
-                    "audio": "./audio/down.mp3",
-                    "pose": "flapping cross down"
-                }
-            ],
-            "default_target_reps": 30
-        },
-        "Plank": {
-            "steps": [
-                {
-                    "name": "plank",
-                    "pose": "plank on elbows",
-                    "default_target_seconds": 30
-                }
-            ],
-            "default_target_reps": 1
-        },
-        "Standing-Cross": {
-            "steps": [
-                {
-                    "name": "stand",
-                    "pose": "flapping cross up",
-                    "default_target_seconds": 30
-                }
-            ],
-            "default_target_reps": 1
+    "Plank": {
+      "steps": [
+        {
+          "name": "plank",
+          "pose": "plank on elbows",
+          "default_target_seconds": 30
         }
+      ],
+      "default_target_reps": 1
+    },
+    "Standing-Cross": {
+      "steps": [
+        {
+          "name": "stand",
+          "pose": "flapping cross up",
+          "default_target_seconds": 30
+        }
+      ],
+      "default_target_reps": 1
     }
+  }
 }
