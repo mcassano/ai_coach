@@ -35,8 +35,11 @@ def main():
     logging_basic_config()
 
     exercise = Exercise.exercise(args.exercise)
+    # TODO: set target_seconds more appropriately?
+    target_seconds = None
     annotator = Annotator(
         exercise,
+        target_seconds,
         # annotate images that may be completely unrelated to each other
         static_image_mode=True)
 
