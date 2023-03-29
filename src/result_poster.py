@@ -8,7 +8,7 @@ import requests
 
 class ResultPoster:
     @staticmethod
-    def http_post(api_key, exercise, target_reps, target_seconds, result):
+    def http_post(api_key, exercise, target_reps, target_seconds, result, ask):
         hostname = os.getenv('AI_COACH_WEB_HOSTNAME')
         if not hostname:
             # If we didn't configure a hostname then try localhost
@@ -27,9 +27,15 @@ class ResultPoster:
                             if result.right_form_seconds is not None else 0,
                             'duration_target_seconds': int(target_seconds)
                             if target_seconds is not None else 0}
-            print(f'Would POST this: {exercise_set}')
-            print('Proceed? y/n:')
-            input_char = readchar.readchar()
+            print(f'POST: {exercise_set}')
+
+            input_char = None
+            if ask:
+                print('Proceed? y/n:')
+                input_char = readchar.readchar()
+            else:
+                input_char = 'y'
+
             if input_char == 'y':
                 response = requests.post(
                     url,

@@ -67,3 +67,10 @@ Run with a static image:
 ```
 python -m unittest discover tests
 ```
+
+# Setting environment variables for posting results to ai_coach_web
+```
+# Get an API key from ai_coach_web
+export AI_COACH_WEB_API_KEY=THE_KEY_YOU_GOT
+export AI_COACH_WEB_HOSTNAME=http://localhost:8000
+```
