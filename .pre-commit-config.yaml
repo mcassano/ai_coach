@@ -19,9 +19,8 @@ repos:
   - id: mixed-line-ending
   - id: trailing-whitespace
     exclude: (.csv|.tsv)$
-  # TODO: enable pretty-format-json
-  # - id: pretty-format-json
-  #   args: ['--no-sort-keys', '--autofix']
+  - id: pretty-format-json
+    args: ['--no-sort-keys', '--autofix']
   # don't commit directly to main or master
   - id: no-commit-to-branch
 
