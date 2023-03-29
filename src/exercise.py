@@ -1,7 +1,7 @@
 import json
 import logging
 import os
-from typing import Sequence
+from collections.abc import Sequence
 
 import numpy as np
 from src.pose_base import LandmarkLabel
@@ -114,7 +114,7 @@ class Exercise:
             self.angles)
 
     # TODO: Unit test percentage
-    def percentage(self, angles: dict[str, float]):
+    def percentage(self, angles: dict[str, float]) -> float:
         # arbitrarily pick req 0 to measure percentage on
         first_step_req = self.steps[0].pose.requirements[0]
         next_step_req = self.steps[1].pose.requirements[0]

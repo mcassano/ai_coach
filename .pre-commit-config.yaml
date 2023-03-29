@@ -85,6 +85,7 @@ repos:
         - --disable=too-many-branches
         - --disable=too-many-locals
         - --disable=unpacking-non-sequence
+        - --disable=unspecified-encoding
 
 - repo: https://github.com/pre-commit/mirrors-mypy
   rev: v1.1.1
