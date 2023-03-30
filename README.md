@@ -10,18 +10,27 @@ source my_venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-## Regenerate requirements.txt
+## Regenerate requirements.txt and requirements-silicon.txt
+We support (at least) three platforms in requirements.in: Apple Silicon Mac, Intel Mac and Ubuntu.  requirements.in has
+markers that pip-compile will pick up on to generate the lockfile.  requirements.txt is for Intel Mac and Ubuntu,
+requirements-silicon.txt is for Apple Silicon Mac.
 
+To generate requirements.txt, run from a Intel Mac or Ubuntu:
 ```
 pip-compile
 ```
 
+To generate requirements-silicon.txt, run from a Apple Silicon Mac:
+```
+pip-compile -o requirements-silicon.txt
+```
 
 Also install `pre-commit`:
 
 ```
 brew install pre-commit
 pre-commit install
+pre-commit autoupdate
 ```
 
 To run pre-commit on everything:
@@ -65,4 +74,11 @@ Run with a static image:
 # Run the tests
 ```
 python -m unittest discover tests
+```
+
+# Setting environment variables for posting results to ai_coach_web
+```
+# Get an API key from ai_coach_web
+export AI_COACH_WEB_API_KEY=THE_KEY_YOU_GOT
+export AI_COACH_WEB_HOSTNAME=http://localhost:8000
 ```

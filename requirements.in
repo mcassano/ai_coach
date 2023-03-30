@@ -7,6 +7,10 @@ playsound
 PyObjC; platform_system == "Darwin"
 pyttsx3
 readchar
+requests
+responses
+pytz
+types-pytz
 
 # explicitly list PyObjC dependencies to add markers
 # A dastardly hack from https://github.com/jazzband/pip-tools/issues/1749

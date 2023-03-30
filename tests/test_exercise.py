@@ -8,7 +8,10 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class TestExerciseExtractor(TestCase):
     def test_get_list(self):
-        self.assertEqual(['Push-up', 'Flapping-Cross', 'Plank', 'Standing-Cross'],
+        self.assertEqual(['Push-up',
+                          'Flapping-Cross',
+                          'Plank',
+                          'Standing-Cross'],
                          Exercise.exercise_names())
 
     def test_get_move(self):
