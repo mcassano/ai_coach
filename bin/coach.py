@@ -108,10 +108,11 @@ def main():
     api_key = os.getenv('AI_COACH_WEB_API_KEY')
     if api_key:
         ResultPoster.http_post(api_key,
-                               exercise,
+                               exercise.name,
                                target_reps,
                                target_seconds,
-                               result)
+                               result.rep_count,
+                               result.right_form_seconds)
 
 
 def run_argument_parser():
