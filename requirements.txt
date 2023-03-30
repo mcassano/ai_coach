@@ -4,35 +4,35 @@
 #
 #    pip-compile
 #
-absl-py==1.3.0
+absl-py==1.4.0
     # via mediapipe
-attrs==22.1.0
+attrs==22.2.0
     # via mediapipe
-certifi==2022.9.24
+certifi==2022.12.7
     # via requests
-charset-normalizer==2.1.1
+charset-normalizer==3.1.0
     # via requests
 click==8.1.3
     # via gtts
-contourpy==1.0.6
+contourpy==1.0.7
     # via matplotlib
 cycler==0.11.0
     # via matplotlib
 flatbuffers==23.3.3
     # via mediapipe
-fonttools==4.38.0
+fonttools==4.39.3
     # via matplotlib
-gtts==2.3.0
+gtts==2.3.1
     # via -r requirements.in
 idna==3.4
     # via requests
 kiwisolver==1.4.4
     # via matplotlib
-matplotlib==3.6.2
+matplotlib==3.7.1
     # via mediapipe
 mediapipe==0.9.2.1 ; (platform_system == "Darwin" and platform_machine != "arm64") or platform_system != "Darwin"
     # via -r requirements.in
-numpy==1.23.5
+numpy==1.24.2
     # via
     #   -r requirements.in
     #   contourpy
@@ -40,32 +40,35 @@ numpy==1.23.5
     #   mediapipe
     #   opencv-contrib-python
     #   opencv-python
-opencv-contrib-python==4.6.0.66
+opencv-contrib-python==4.7.0.72
     # via mediapipe
-opencv-python==4.6.0.66
+opencv-python==4.7.0.72
     # via -r requirements.in
-packaging==21.3
+packaging==23.0
     # via matplotlib
-pillow==9.3.0
+pillow==9.4.0
     # via matplotlib
 playsound==1.3.0
     # via -r requirements.in
 protobuf==3.20.3
     # via mediapipe
-pyobjc==9.0 ; platform_system == "Darwin"
+pyobjc==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyttsx3
-pyobjc-core==9.0 ; platform_system == "Darwin"
+pyobjc-core==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
+    #   pyobjc-framework-accessibility
     #   pyobjc-framework-accounts
     #   pyobjc-framework-addressbook
+    #   pyobjc-framework-adservices
     #   pyobjc-framework-adsupport
     #   pyobjc-framework-applescriptkit
     #   pyobjc-framework-applescriptobjc
     #   pyobjc-framework-applicationservices
+    #   pyobjc-framework-apptrackingtransparency
     #   pyobjc-framework-audiovideobridging
     #   pyobjc-framework-authenticationservices
     #   pyobjc-framework-automaticassessmentconfiguration
@@ -74,7 +77,9 @@ pyobjc-core==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-avkit
     #   pyobjc-framework-businesschat
     #   pyobjc-framework-calendarstore
+    #   pyobjc-framework-callkit
     #   pyobjc-framework-cfnetwork
+    #   pyobjc-framework-classkit
     #   pyobjc-framework-cloudkit
     #   pyobjc-framework-cocoa
     #   pyobjc-framework-collaboration
@@ -97,6 +102,7 @@ pyobjc-core==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-coretext
     #   pyobjc-framework-corewlan
     #   pyobjc-framework-cryptotokenkit
+    #   pyobjc-framework-datadetection
     #   pyobjc-framework-devicecheck
     #   pyobjc-framework-dictionaryservices
     #   pyobjc-framework-discrecording
@@ -121,13 +127,17 @@ pyobjc-core==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-installerplugins
     #   pyobjc-framework-instantmessage
     #   pyobjc-framework-intents
+    #   pyobjc-framework-intentsui
     #   pyobjc-framework-iosurface
     #   pyobjc-framework-ituneslibrary
+    #   pyobjc-framework-kernelmanagement
     #   pyobjc-framework-latentsemanticmapping
     #   pyobjc-framework-launchservices
     #   pyobjc-framework-libdispatch
     #   pyobjc-framework-linkpresentation
     #   pyobjc-framework-localauthentication
+    #   pyobjc-framework-localauthenticationembeddedui
+    #   pyobjc-framework-mailkit
     #   pyobjc-framework-mapkit
     #   pyobjc-framework-mediaaccessibility
     #   pyobjc-framework-medialibrary
@@ -136,6 +146,9 @@ pyobjc-core==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-metal
     #   pyobjc-framework-metalkit
     #   pyobjc-framework-metalperformanceshaders
+    #   pyobjc-framework-metalperformanceshadersgraph
+    #   pyobjc-framework-metrickit
+    #   pyobjc-framework-mlcompute
     #   pyobjc-framework-modelio
     #   pyobjc-framework-multipeerconnectivity
     #   pyobjc-framework-naturallanguage
@@ -146,6 +159,7 @@ pyobjc-core==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-opendirectory
     #   pyobjc-framework-osakit
     #   pyobjc-framework-oslog
+    #   pyobjc-framework-passkit
     #   pyobjc-framework-pencilkit
     #   pyobjc-framework-photos
     #   pyobjc-framework-photosui
@@ -153,15 +167,19 @@ pyobjc-core==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-pushkit
     #   pyobjc-framework-quartz
     #   pyobjc-framework-quicklookthumbnailing
+    #   pyobjc-framework-replaykit
     #   pyobjc-framework-safariservices
     #   pyobjc-framework-scenekit
+    #   pyobjc-framework-screencapturekit
     #   pyobjc-framework-screensaver
+    #   pyobjc-framework-screentime
     #   pyobjc-framework-scriptingbridge
     #   pyobjc-framework-searchkit
     #   pyobjc-framework-security
     #   pyobjc-framework-securityfoundation
     #   pyobjc-framework-securityinterface
     #   pyobjc-framework-servicemanagement
+    #   pyobjc-framework-shazamkit
     #   pyobjc-framework-social
     #   pyobjc-framework-soundanalysis
     #   pyobjc-framework-speech
@@ -170,87 +188,103 @@ pyobjc-core==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-syncservices
     #   pyobjc-framework-systemconfiguration
     #   pyobjc-framework-systemextensions
+    #   pyobjc-framework-uniformtypeidentifiers
     #   pyobjc-framework-usernotifications
+    #   pyobjc-framework-usernotificationsui
     #   pyobjc-framework-videosubscriberaccount
     #   pyobjc-framework-videotoolbox
+    #   pyobjc-framework-virtualization
     #   pyobjc-framework-vision
     #   pyobjc-framework-webkit
-pyobjc-framework-accounts==9.0 ; platform_system == "Darwin"
+pyobjc-framework-accessibility==9.0.1
+    # via pyobjc
+pyobjc-framework-accounts==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-cloudkit
-pyobjc-framework-addressbook==9.0 ; platform_system == "Darwin"
+pyobjc-framework-addressbook==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-adsupport==9.0 ; platform_system == "Darwin"
+pyobjc-framework-adservices==9.0.1
+    # via pyobjc
+pyobjc-framework-adsupport==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-applescriptkit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-applescriptkit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-applescriptobjc==9.0 ; platform_system == "Darwin"
+pyobjc-framework-applescriptobjc==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-applicationservices==9.0 ; platform_system == "Darwin"
+pyobjc-framework-applicationservices==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-audiovideobridging==9.0 ; platform_system == "Darwin"
+pyobjc-framework-apptrackingtransparency==9.0.1
+    # via pyobjc
+pyobjc-framework-audiovideobridging==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-authenticationservices==9.0 ; platform_system == "Darwin"
+pyobjc-framework-authenticationservices==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-automaticassessmentconfiguration==9.0 ; platform_system == "Darwin"
+pyobjc-framework-automaticassessmentconfiguration==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-automator==9.0 ; platform_system == "Darwin"
+pyobjc-framework-automator==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-avfoundation==9.0 ; platform_system == "Darwin"
+pyobjc-framework-avfoundation==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-mediaplayer
-pyobjc-framework-avkit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-avkit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-businesschat==9.0 ; platform_system == "Darwin"
+pyobjc-framework-businesschat==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-calendarstore==9.0 ; platform_system == "Darwin"
+pyobjc-framework-calendarstore==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-cfnetwork==9.0 ; platform_system == "Darwin"
+pyobjc-framework-callkit==9.0.1
+    # via pyobjc
+pyobjc-framework-cfnetwork==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-cloudkit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-classkit==9.0.1
+    # via pyobjc
+pyobjc-framework-cloudkit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-cocoa==9.0 ; platform_system == "Darwin"
+pyobjc-framework-cocoa==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
+    #   pyobjc-framework-accessibility
     #   pyobjc-framework-accounts
     #   pyobjc-framework-addressbook
+    #   pyobjc-framework-adservices
     #   pyobjc-framework-adsupport
     #   pyobjc-framework-applescriptkit
     #   pyobjc-framework-applescriptobjc
     #   pyobjc-framework-applicationservices
+    #   pyobjc-framework-apptrackingtransparency
     #   pyobjc-framework-audiovideobridging
     #   pyobjc-framework-authenticationservices
     #   pyobjc-framework-automaticassessmentconfiguration
@@ -259,7 +293,9 @@ pyobjc-framework-cocoa==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-avkit
     #   pyobjc-framework-businesschat
     #   pyobjc-framework-calendarstore
+    #   pyobjc-framework-callkit
     #   pyobjc-framework-cfnetwork
+    #   pyobjc-framework-classkit
     #   pyobjc-framework-cloudkit
     #   pyobjc-framework-collaboration
     #   pyobjc-framework-colorsync
@@ -280,6 +316,7 @@ pyobjc-framework-cocoa==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-coretext
     #   pyobjc-framework-corewlan
     #   pyobjc-framework-cryptotokenkit
+    #   pyobjc-framework-datadetection
     #   pyobjc-framework-devicecheck
     #   pyobjc-framework-discrecording
     #   pyobjc-framework-discrecordingui
@@ -304,15 +341,20 @@ pyobjc-framework-cocoa==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-intents
     #   pyobjc-framework-iosurface
     #   pyobjc-framework-ituneslibrary
+    #   pyobjc-framework-kernelmanagement
     #   pyobjc-framework-latentsemanticmapping
     #   pyobjc-framework-linkpresentation
     #   pyobjc-framework-localauthentication
+    #   pyobjc-framework-localauthenticationembeddedui
+    #   pyobjc-framework-mailkit
     #   pyobjc-framework-mapkit
     #   pyobjc-framework-mediaaccessibility
     #   pyobjc-framework-medialibrary
     #   pyobjc-framework-mediatoolbox
     #   pyobjc-framework-metal
     #   pyobjc-framework-metalkit
+    #   pyobjc-framework-metrickit
+    #   pyobjc-framework-mlcompute
     #   pyobjc-framework-modelio
     #   pyobjc-framework-multipeerconnectivity
     #   pyobjc-framework-naturallanguage
@@ -323,6 +365,7 @@ pyobjc-framework-cocoa==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-opendirectory
     #   pyobjc-framework-osakit
     #   pyobjc-framework-oslog
+    #   pyobjc-framework-passkit
     #   pyobjc-framework-pencilkit
     #   pyobjc-framework-photos
     #   pyobjc-framework-photosui
@@ -330,14 +373,17 @@ pyobjc-framework-cocoa==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-pushkit
     #   pyobjc-framework-quartz
     #   pyobjc-framework-quicklookthumbnailing
+    #   pyobjc-framework-replaykit
     #   pyobjc-framework-safariservices
     #   pyobjc-framework-scenekit
     #   pyobjc-framework-screensaver
+    #   pyobjc-framework-screentime
     #   pyobjc-framework-scriptingbridge
     #   pyobjc-framework-security
     #   pyobjc-framework-securityfoundation
     #   pyobjc-framework-securityinterface
     #   pyobjc-framework-servicemanagement
+    #   pyobjc-framework-shazamkit
     #   pyobjc-framework-social
     #   pyobjc-framework-soundanalysis
     #   pyobjc-framework-speech
@@ -346,330 +392,356 @@ pyobjc-framework-cocoa==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-syncservices
     #   pyobjc-framework-systemconfiguration
     #   pyobjc-framework-systemextensions
+    #   pyobjc-framework-uniformtypeidentifiers
     #   pyobjc-framework-usernotifications
+    #   pyobjc-framework-usernotificationsui
     #   pyobjc-framework-videosubscriberaccount
     #   pyobjc-framework-videotoolbox
+    #   pyobjc-framework-virtualization
     #   pyobjc-framework-vision
     #   pyobjc-framework-webkit
-pyobjc-framework-collaboration==9.0 ; platform_system == "Darwin"
+pyobjc-framework-collaboration==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-colorsync==9.0 ; platform_system == "Darwin"
+pyobjc-framework-colorsync==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-contacts==9.0 ; platform_system == "Darwin"
+pyobjc-framework-contacts==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-contactsui
-pyobjc-framework-contactsui==9.0 ; platform_system == "Darwin"
+pyobjc-framework-contactsui==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-coreaudio==9.0 ; platform_system == "Darwin"
+pyobjc-framework-coreaudio==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-avfoundation
     #   pyobjc-framework-coreaudiokit
-pyobjc-framework-coreaudiokit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-coreaudiokit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-corebluetooth==9.0 ; platform_system == "Darwin"
+pyobjc-framework-corebluetooth==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-coredata==9.0 ; platform_system == "Darwin"
+pyobjc-framework-coredata==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-cloudkit
     #   pyobjc-framework-syncservices
-pyobjc-framework-corehaptics==9.0 ; platform_system == "Darwin"
+pyobjc-framework-corehaptics==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-corelocation==9.0 ; platform_system == "Darwin"
+pyobjc-framework-corelocation==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-cloudkit
     #   pyobjc-framework-mapkit
-pyobjc-framework-coremedia==9.0 ; platform_system == "Darwin"
+pyobjc-framework-coremedia==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-avfoundation
     #   pyobjc-framework-oslog
+    #   pyobjc-framework-screencapturekit
     #   pyobjc-framework-videotoolbox
-pyobjc-framework-coremediaio==9.0 ; platform_system == "Darwin"
+pyobjc-framework-coremediaio==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-coremidi==9.0 ; platform_system == "Darwin"
+pyobjc-framework-coremidi==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-coreml==9.0 ; platform_system == "Darwin"
+pyobjc-framework-coreml==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-vision
-pyobjc-framework-coremotion==9.0 ; platform_system == "Darwin"
+pyobjc-framework-coremotion==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-coreservices==9.0 ; platform_system == "Darwin"
+pyobjc-framework-coreservices==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-dictionaryservices
     #   pyobjc-framework-launchservices
     #   pyobjc-framework-searchkit
-pyobjc-framework-corespotlight==9.0 ; platform_system == "Darwin"
+pyobjc-framework-corespotlight==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-coretext==9.0 ; platform_system == "Darwin"
+pyobjc-framework-coretext==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-corewlan==9.0 ; platform_system == "Darwin"
+pyobjc-framework-corewlan==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-cryptotokenkit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-cryptotokenkit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-devicecheck==9.0 ; platform_system == "Darwin"
+pyobjc-framework-datadetection==9.0.1
+    # via pyobjc
+pyobjc-framework-devicecheck==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-dictionaryservices==9.0 ; platform_system == "Darwin"
+pyobjc-framework-dictionaryservices==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-discrecording==9.0 ; platform_system == "Darwin"
+pyobjc-framework-discrecording==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-discrecordingui
-pyobjc-framework-discrecordingui==9.0 ; platform_system == "Darwin"
+pyobjc-framework-discrecordingui==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-diskarbitration==9.0 ; platform_system == "Darwin"
+pyobjc-framework-diskarbitration==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-dvdplayback==9.0 ; platform_system == "Darwin"
+pyobjc-framework-dvdplayback==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-eventkit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-eventkit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-exceptionhandling==9.0 ; platform_system == "Darwin"
+pyobjc-framework-exceptionhandling==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-executionpolicy==9.0 ; platform_system == "Darwin"
+pyobjc-framework-executionpolicy==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-externalaccessory==9.0 ; platform_system == "Darwin"
+pyobjc-framework-externalaccessory==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-fileprovider==9.0 ; platform_system == "Darwin"
+pyobjc-framework-fileprovider==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-fileproviderui
-pyobjc-framework-fileproviderui==9.0 ; platform_system == "Darwin"
+pyobjc-framework-fileproviderui==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-findersync==9.0 ; platform_system == "Darwin"
+pyobjc-framework-findersync==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-fsevents==9.0 ; platform_system == "Darwin"
+pyobjc-framework-fsevents==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-coreservices
-pyobjc-framework-gamecenter==9.0 ; platform_system == "Darwin"
+pyobjc-framework-gamecenter==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-gamecontroller==9.0 ; platform_system == "Darwin"
+pyobjc-framework-gamecontroller==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-gamekit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-gamekit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-gameplaykit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-gameplaykit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-imagecapturecore==9.0 ; platform_system == "Darwin"
+pyobjc-framework-imagecapturecore==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-imserviceplugin==9.0 ; platform_system == "Darwin"
+pyobjc-framework-imserviceplugin==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-inputmethodkit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-inputmethodkit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-installerplugins==9.0 ; platform_system == "Darwin"
+pyobjc-framework-installerplugins==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-instantmessage==9.0 ; platform_system == "Darwin"
+pyobjc-framework-instantmessage==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-intents==9.0 ; platform_system == "Darwin"
+pyobjc-framework-intents==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-iosurface==9.0 ; platform_system == "Darwin"
+    #   pyobjc-framework-intentsui
+pyobjc-framework-intentsui==9.0.1
+    # via pyobjc
+pyobjc-framework-iosurface==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-ituneslibrary==9.0 ; platform_system == "Darwin"
+pyobjc-framework-ituneslibrary==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-latentsemanticmapping==9.0 ; platform_system == "Darwin"
+pyobjc-framework-kernelmanagement==9.0.1
+    # via pyobjc
+pyobjc-framework-latentsemanticmapping==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-launchservices==9.0 ; platform_system == "Darwin"
+pyobjc-framework-launchservices==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-libdispatch==9.0 ; platform_system == "Darwin"
+pyobjc-framework-libdispatch==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-linkpresentation==9.0 ; platform_system == "Darwin"
+pyobjc-framework-linkpresentation==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-localauthentication==9.0 ; platform_system == "Darwin"
+pyobjc-framework-localauthentication==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-mapkit==9.0 ; platform_system == "Darwin"
+    #   pyobjc-framework-localauthenticationembeddedui
+pyobjc-framework-localauthenticationembeddedui==9.0.1
+    # via pyobjc
+pyobjc-framework-mailkit==9.0.1
+    # via pyobjc
+pyobjc-framework-mapkit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-mediaaccessibility==9.0 ; platform_system == "Darwin"
+pyobjc-framework-mediaaccessibility==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-medialibrary==9.0 ; platform_system == "Darwin"
+pyobjc-framework-medialibrary==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-mediaplayer==9.0 ; platform_system == "Darwin"
+pyobjc-framework-mediaplayer==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-mediatoolbox==9.0 ; platform_system == "Darwin"
+pyobjc-framework-mediatoolbox==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-metal==9.0 ; platform_system == "Darwin"
+pyobjc-framework-metal==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-metalkit
     #   pyobjc-framework-metalperformanceshaders
-pyobjc-framework-metalkit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-metalkit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-metalperformanceshaders==9.0 ; platform_system == "Darwin"
+pyobjc-framework-metalperformanceshaders==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-modelio==9.0 ; platform_system == "Darwin"
+    #   pyobjc-framework-metalperformanceshadersgraph
+pyobjc-framework-metalperformanceshadersgraph==9.0.1
+    # via pyobjc
+pyobjc-framework-metrickit==9.0.1
+    # via pyobjc
+pyobjc-framework-mlcompute==9.0.1
+    # via pyobjc
+pyobjc-framework-modelio==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-multipeerconnectivity==9.0 ; platform_system == "Darwin"
+pyobjc-framework-multipeerconnectivity==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-naturallanguage==9.0 ; platform_system == "Darwin"
+pyobjc-framework-naturallanguage==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-netfs==9.0 ; platform_system == "Darwin"
+pyobjc-framework-netfs==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-network==9.0 ; platform_system == "Darwin"
+pyobjc-framework-network==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-networkextension==9.0 ; platform_system == "Darwin"
+pyobjc-framework-networkextension==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-notificationcenter==9.0 ; platform_system == "Darwin"
+pyobjc-framework-notificationcenter==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-opendirectory==9.0 ; platform_system == "Darwin"
+pyobjc-framework-opendirectory==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-osakit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-osakit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-oslog==9.0 ; platform_system == "Darwin"
+pyobjc-framework-oslog==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-pencilkit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-passkit==9.0.1
+    # via pyobjc
+pyobjc-framework-pencilkit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-photos==9.0 ; platform_system == "Darwin"
+pyobjc-framework-photos==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-photosui==9.0 ; platform_system == "Darwin"
+pyobjc-framework-photosui==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-preferencepanes==9.0 ; platform_system == "Darwin"
+pyobjc-framework-preferencepanes==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-pushkit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-pushkit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-quartz==9.0 ; platform_system == "Darwin"
+pyobjc-framework-quartz==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
+    #   pyobjc-framework-accessibility
     #   pyobjc-framework-applicationservices
     #   pyobjc-framework-avfoundation
     #   pyobjc-framework-avkit
@@ -686,117 +758,130 @@ pyobjc-framework-quartz==9.0 ; platform_system == "Darwin"
     #   pyobjc-framework-spritekit
     #   pyobjc-framework-videotoolbox
     #   pyobjc-framework-vision
-pyobjc-framework-quicklookthumbnailing==9.0 ; platform_system == "Darwin"
+pyobjc-framework-quicklookthumbnailing==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-safariservices==9.0 ; platform_system == "Darwin"
+pyobjc-framework-replaykit==9.0.1
+    # via pyobjc
+pyobjc-framework-safariservices==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-scenekit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-scenekit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-screensaver==9.0 ; platform_system == "Darwin"
+pyobjc-framework-screencapturekit==9.0.1
+    # via pyobjc
+pyobjc-framework-screensaver==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-scriptingbridge==9.0 ; platform_system == "Darwin"
+pyobjc-framework-screentime==9.0.1
+    # via pyobjc
+pyobjc-framework-scriptingbridge==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-searchkit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-searchkit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-security==9.0 ; platform_system == "Darwin"
+pyobjc-framework-security==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-localauthentication
     #   pyobjc-framework-securityfoundation
     #   pyobjc-framework-securityinterface
-pyobjc-framework-securityfoundation==9.0 ; platform_system == "Darwin"
+pyobjc-framework-securityfoundation==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-securityinterface==9.0 ; platform_system == "Darwin"
+pyobjc-framework-securityinterface==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-servicemanagement==9.0 ; platform_system == "Darwin"
+pyobjc-framework-servicemanagement==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-social==9.0 ; platform_system == "Darwin"
+pyobjc-framework-shazamkit==9.0.1
+    # via pyobjc
+pyobjc-framework-social==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-soundanalysis==9.0 ; platform_system == "Darwin"
+pyobjc-framework-soundanalysis==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-speech==9.0 ; platform_system == "Darwin"
+pyobjc-framework-speech==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-spritekit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-spritekit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
     #   pyobjc-framework-gameplaykit
-pyobjc-framework-storekit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-storekit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-syncservices==9.0 ; platform_system == "Darwin"
+pyobjc-framework-syncservices==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-systemconfiguration==9.0 ; platform_system == "Darwin"
+pyobjc-framework-systemconfiguration==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-systemextensions==9.0 ; platform_system == "Darwin"
+pyobjc-framework-systemextensions==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-usernotifications==9.0 ; platform_system == "Darwin"
+pyobjc-framework-uniformtypeidentifiers==9.0.1
+    # via pyobjc
+pyobjc-framework-usernotifications==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-videosubscriberaccount==9.0 ; platform_system == "Darwin"
+    #   pyobjc-framework-usernotificationsui
+pyobjc-framework-usernotificationsui==9.0.1
+    # via pyobjc
+pyobjc-framework-videosubscriberaccount==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-videotoolbox==9.0 ; platform_system == "Darwin"
+pyobjc-framework-videotoolbox==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-vision==9.0 ; platform_system == "Darwin"
+pyobjc-framework-virtualization==9.0.1
+    # via pyobjc
+pyobjc-framework-vision==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
-pyobjc-framework-webkit==9.0 ; platform_system == "Darwin"
+pyobjc-framework-webkit==9.0.1 ; platform_system == "Darwin"
     # via
     #   -r requirements.in
     #   pyobjc
 pyparsing==3.0.9
-    # via
-    #   matplotlib
-    #   packaging
+    # via matplotlib
 python-dateutil==2.8.2
     # via matplotlib
 pyttsx3==2.90
     # via -r requirements.in
-pytz==2022.7.1
+pytz==2023.3
     # via -r requirements.in
 pyyaml==6.0
     # via responses
-readchar==4.0.3
+readchar==4.0.5
     # via -r requirements.in
-requests==2.28.1
+requests==2.28.2
     # via
     #   -r requirements.in
     #   gtts
@@ -804,14 +889,12 @@ requests==2.28.1
 responses==0.23.1
     # via -r requirements.in
 six==1.16.0
-    # via
-    #   gtts
-    #   python-dateutil
-types-pytz==2022.7.1.0
+    # via python-dateutil
+types-pytz==2023.3.0.0
     # via -r requirements.in
 types-pyyaml==6.0.12.9
     # via responses
-urllib3==1.26.13
+urllib3==1.26.15
     # via
     #   requests
     #   responses
