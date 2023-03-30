@@ -2,13 +2,12 @@ import os
 from datetime import datetime
 
 import pytz
-import readchar
 import requests
 
 
 class ResultPoster:
     @staticmethod
-    def http_post(api_key, exercise, target_reps, target_seconds, result, ask):
+    def http_post(api_key, exercise, target_reps, target_seconds, result):
         hostname = os.getenv('AI_COACH_WEB_HOSTNAME')
         if not hostname:
             # If we didn't configure a hostname then try localhost
@@ -29,19 +28,9 @@ class ResultPoster:
                             if target_seconds is not None else 0}
             print(f'POST: {exercise_set}')
 
-            input_char = None
-            if ask:
-                print('Proceed? y/n:')
-                input_char = readchar.readchar()
-            else:
-                input_char = 'y'
-
-            if input_char == 'y':
-                response = requests.post(
-                    url,
-                    json=exercise_set,
-                    headers={'Authorization': f'Api-Key {api_key}'}
-                )
-                print(f'Response: ({response.status_code}) {response.text}')
-            else:
-                print('Aborted')
+            response = requests.post(
+                url,
+                json=exercise_set,
+                headers={'Authorization': f'Api-Key {api_key}'}
+            )
+            print(f'Response: ({response.status_code}) {response.text}')

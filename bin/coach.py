@@ -111,8 +111,7 @@ def main():
                                exercise,
                                target_reps,
                                target_seconds,
-                               result,
-                               True)
+                               result)
 
 
 def run_argument_parser():
