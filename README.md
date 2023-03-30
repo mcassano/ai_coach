@@ -10,12 +10,20 @@ source my_venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-## Regenerate requirements.txt
+## Regenerate requirements.txt and requirements-silicon.txt
+We support (at least) three platforms in requirements.in: Apple Silicon Mac, Intel Mac and Ubuntu.  requirements.in has
+markers that pip-compile will pick up on to generate the lockfile.  requirements.txt is for Intel Mac and Ubuntu,
+requirements-silicon.txt is for Apple Silicon Mac.
 
+To generate requirements.txt, run from a Intel Mac or Ubuntu:
 ```
 pip-compile
 ```
 
+To generate requirements-silicon.txt, run from a Apple Silicon Mac:
+```
+pip-compile -o requirements-silicon.txt
+```
 
 Also install `pre-commit`:
 
