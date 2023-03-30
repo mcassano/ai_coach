@@ -1,8 +1,11 @@
+import logging
 import os
 from datetime import datetime
 
 import pytz
 import requests
+
+logger = logging.getLogger(__name__)
 
 
 class ResultPoster:
@@ -32,11 +35,11 @@ class ResultPoster:
                         if duration is not None else 0,
                         'duration_target_seconds': target_seconds
                         if target_seconds is not None else 0}
-        print(f'POST: {exercise_set}')
+        logger.info(f'POST: {exercise_set}')
 
         response = requests.post(
             url,
             json=exercise_set,
             headers={'Authorization': f'Api-Key {api_key}'}
         )
-        print(f'Response: ({response.status_code}) {response.text}')
+        logger.info(f'Response: ({response.status_code}) {response.text}')

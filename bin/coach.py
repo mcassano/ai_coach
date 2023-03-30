@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
+import logging
 import os
 import time
 from collections import deque
@@ -13,6 +14,8 @@ from src.exercise import Exercise
 from src.feedback_giver import FeedbackGiver
 from src.result_poster import ResultPoster
 from src.util import logging_basic_config
+
+logger = logging.getLogger(__name__)
 
 
 class FramesPerSecond:
@@ -64,8 +67,8 @@ def main():
         # live capture from camera 0
         capture_input = 0
     cap = cv2.VideoCapture(capture_input)
-    print(f'Using {exercise.name} exercise, target_reps: {target_reps},'
-          f' target_seconds: {target_seconds}')
+    logger.info(f'Using {exercise.name} exercise, target_reps: {target_reps},'
+                f' target_seconds: {target_seconds}')
     fps = FramesPerSecond()
     last_fps_print = 0
     result = None
@@ -90,7 +93,7 @@ def main():
                 fps.take_sample()
                 the_fps = fps.frames_per_second()
                 if the_fps and (fps.most_recent_time() - last_fps_print) > 1:
-                    print(f'{the_fps:.2f} frames per second')
+                    logger.info(f'{the_fps:.2f} frames per second')
                     last_fps_print = fps.most_recent_time()
 
         if cv2.waitKey(10) & 0xFF == ord('q'):
@@ -100,8 +103,8 @@ def main():
     display.close()
 
     # Both of these together in this order are required to have CLI after the
-    # realtime video frame https://stackoverflow.com/questions/48868348/ \
-    # window-freezing-even-after-using-waitkey-and-destroyallwindows-in-opencv
+    # realtime video frame:
+    # https://stackoverflow.com/questions/48868348/window-freezing-even-after-using-waitkey-and-destroyallwindows-in-opencv # noqa: E501 # pylint: disable=C0301
     cv2.destroyAllWindows()
     cv2.waitKey(1)
 

@@ -7,7 +7,7 @@ def logging_basic_config(level=None):
 
     If level is not given, default to env var LOG_LEVEL, or WARNING."""
     if not level:
-        level = os.getenv('LOG_LEVEL', 'WARNING')
+        level = os.getenv('LOG_LEVEL', 'INFO')
     logging.basicConfig(
         level=level,
         format='%(asctime)s %(levelname)s %(name)s: %(message)s')
